@@ -30,11 +30,7 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ## 🖥️ Systems Engineering View
 Provide a diagram and narrative describing how Marimo fits into the environment:
-- Users (developers, analysts, researchers)
-- Marimo server (edit vs. run mode)
-- Authentication and access control systems
-- External services (databases, APIs, cloud storage)
-- Security boundaries (network, identity, data flow)
+Diagram here
 
 ---
 
