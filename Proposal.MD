@@ -54,12 +54,49 @@ Explain why your group selected Marimo:
 ---
 
 ## 📖 OSS Project Description
-Provide background on Marimo as an open-source project:
-- **What is it?**
-- **Contributors and community activity**
-- **Popularity (stars, forks, adoption)**
-- **Languages and platform**
-- **Documentation sources**
+### What is it?
+
+Marimo is a **reactive Python-based notebook** for developers.  
+It leverages Jupyter and other data tools for visualization and styling.  
+This allows you to write notebooks like Python files that can run in a cell.  
+Features include:
+
+- Automatic dependency tracking  
+- Deployment of dependencies as **scripts** or even **web applications**  
+
+---
+
+### Contributors and Community Activity
+
+- **Contributors:** 179 (at the time of writing)  
+- **Community activity:** Very active, with updates to non-main branches from today and going back a few weeks.  
+
+---
+
+### Popularity (Stars, Forks, Adoption)
+
+- **Stars:** 15.9k  
+- **Forks:** 681  
+- **Adoption:** Fairly popular with a sizable community and consistent engagement.  
+
+---
+
+### Languages and Platform
+
+- **Primary Language:** Python  
+- **Additional Language:** TypeScript (used mainly for Playwright tools supporting regression and validation testing)  
+
+---
+
+### Documentation Sources
+
+The project’s documentation is limited to the following markdown files:
+
+- `README.md`  
+- `LICENSE`  
+- `CODE_OF_CONDUCT.md`  
+- `CONTRIBUTING.md`  
+- `SECURITY.md`  
 
 ---
 
