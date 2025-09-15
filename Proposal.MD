@@ -26,9 +26,9 @@ Marimo is actively developed and widely adopted in research, education, and ente
 ## 🏢 Hypothetical Operational Environment
 Describe the enterprise, hospital, government, or research setting in which Marimo will be deployed, focusing on how users expect security functionality.
 
-The hypothetical environment chosen for this project is a Bank, where users would use Marimo software as an enterprise analytics software.
+- The hypothetical environment chosen for this project is a Bank, where users would use Marimo software as an enterprise analytics software.
 
-A bank's analytics team uses Marimo as a tool to process financial and customer data. In this situation the security features expected are sensitive data must remain confidential and in some cases encrypted depending on the type of data. The audit logs must be tracked to ensure proper utilization and access management policies. In case of any apps or software were linked to the tool, proper authentication must happen so that only authorized members are able to access data and environment.
+- A bank's analytics team uses Marimo as a tool to process financial and customer data. In this situation the security features expected are sensitive data must remain confidential and in some cases encrypted depending on the type of data. The audit logs must be tracked to ensure proper utilization and access management policies. In case of any apps or software were linked to the tool, proper authentication must happen so that only authorized members are able to access data and environment.
 ---
 
 ## 🖥️ Systems Engineering View
