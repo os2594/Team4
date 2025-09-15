@@ -45,11 +45,26 @@ Diagram here
 ---
 
 ## 🎯 Team Motivation
-Explain why your group selected Marimo:
-- Popularity and active development
-- Enterprise or educational use cases
-- Clear security considerations
-- Rich opportunities for assurance analysis
+
+For this assignment, our team was required to evaluate and select an open-source software project that offers meaningful opportunities for **security and assurance analysis**. After considering multiple options, we chose **Marimo** because it stood out as both technically innovative and highly relevant to real organizational use cases.
+
+Marimo is a **reactive Python notebook environment** that addresses long-standing issues with tools like Jupyter, including hidden state, reproducibility challenges, and limited auditability. By storing notebooks as pure Python (`.py`) files, Marimo enables greater transparency, version control, and security-aware workflows. Its **reactive execution model** ensures results remain consistent, while deployment modes (edit vs. run-only, server-based vs. browser-based) provide flexibility for both secure collaboration and development.
+
+Our motivation for selecting Marimo is based on several key factors:
+
+- **Popularity and Active Development**  
+  Marimo is under active development, with a growing contributor base and regular releases. Its presence on GitHub and in developer communities shows strong momentum and engagement.
+
+- **Enterprise and Educational Use Cases**  
+  Marimo is already used across **universities, research institutions, and organizations** that require reproducibility and secure collaboration. Its design also makes it a strong theoretical fit for enterprise and government settings where security and assurance are critical.
+
+- **Clear Security Considerations**  
+  Features like token-based authentication, TLS/SSL support, encrypted backups, hidden state elimination, and integration with external identity providers give Marimo a distinct **security surface** to analyze. At the same time, current gaps (RBAC, audit logging, full encryption at rest) provide room to reason about trust and improvement opportunities.
+
+- **Rich Opportunities for Assurance Analysis**  
+  Marimo operates at the intersection of code execution, data handling, and collaborative use. This allows us to systematically examine trust boundaries, risk scenarios, and assurance measures across multiple components, from authentication and data privacy to dependency management and deployment controls.
+
+In summary, Marimo was selected because it is not just an innovative notebook tool—it is a **maturing open-source platform** with real adoption, meaningful security requirements, and clear opportunities for systematic assurance evaluation. This combination makes it an intelligent and well-justified choice for our team’s project.
 
 ---
 
