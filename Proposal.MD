@@ -179,14 +179,17 @@ Briefly cover:
 ## 📋 Project Planning, Tracking & Reflection
 - **Planning & Tracking**: Use GitHub Project Board to assign tasks, link issues, and monitor progress.
 - **Reflection**: Each member adds an individual reflection:
+
   *Justin Tobiason*
   - What did I learn from this assignment?
     - I definetly understand a bit more regarding the information that an OSS needs to share and maintain for both leagal and ehtical reasons.
   - What was most useful to me?  
     - The most valuable thing I took away is it's important to incorporate a Contributor License Agreement to ensure that your contributors and open up a civil disagreement about logic they commited. 
+
   *Member 2*
   - What did I learn from this assignment?
   - What was most useful to me?  
+
   *Member 3*
   - What did I learn from this assignment?
   - What was most useful to me?  
