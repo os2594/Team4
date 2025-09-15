@@ -1,5 +1,9 @@
 # 📝 Project Proposal: Marimo
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/os2594/Team4/main/assets/bar-widget.gif" alt="Marimo Bar Widget Demo" width="700"/>
+</p>
+
 ---
 
 ## 🌟 Introduction
