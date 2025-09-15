@@ -64,10 +64,70 @@ Provide background on Marimo as an open-source project:
 ---
 
 ## 📜 License Summary & Contribution Agreement
-Summarize:
-- Marimo’s license type (Apache 2.0)
-- Contribution process (issues, pull requests, `good first issue` labels)
-- Contributor agreements or CLA requirements
+
+The **Marimo project** uses the **Apache License Version 2.0**.  
+This license defines the spirit of open-source software, allowing us to contribute and make changes freely.  
+
+By leveraging this license, our team can contribute effectively, complete analysis, and improve software assurance.  
+
+#### What This License Allows
+- **Use it freely**: You can use the software for personal, educational, or commercial purposes without needing permission or paying royalties.  
+- **Modify it**: You can change the source code however you like.  
+- **Distribute it**: You can share the original or your modified version.  
+- **Sell it**: You can use it in a product you sell (including closed-source products), if you follow the rules.  
+- **Sublicense**: You can bundle it with other software, including proprietary software.  
+
+**License**: [Apache License 2.0](https://github.com/marimo-team/marimo/blob/main/LICENSE)
+
+---
+
+### Code of Conduct
+
+The **Code of Conduct** outlines expectations for collaboration and contribution.  
+It emphasizes being **respectful, kind, and open**.  
+
+#### Maintainers’ Responsibilities
+- Project maintainers can set and enforce rules.  
+- They may remove, edit, or reject contributions, and enforce commitments against the project.  
+
+As a team, we must follow all rules associated with Marimo to remain in compliance.
+
+#### Reporting Issues
+- If you encounter misconduct or issues, you can report them.  
+- Use the official contact email: **contact@marimo.io**.  
+
+**Code of Conduct**: [Contributor Covenant](https://github.com/marimo-team/marimo/blob/main/CODE_OF_CONDUCT.md)
+
+---
+
+### Contribution Guidelines
+
+Contributing is defined in the **CONTRIBUTING.md** file.  
+The project accepts **code, tests, documentation, bug fixes, and even typo corrections**.  
+
+#### Before Submitting a Pull Request
+You are expected to:
+- Run linting, typechecking, and formatting → make sure your code follows style rules.  
+- Write tests for your code.  
+- Run all tests to ensure nothing breaks.  
+- Read and sign the **Contributor License Agreement (CLA)**.  
+
+The documentation also provides setup instructions and common commands.  
+You are expected to:
+- Keep code clean and consistent.  
+- Follow good programming practices (e.g., **single responsibility principle**).  
+- Write and run regression tests with **Playwright scripts**.  
+
+#### Contributor License Agreement (CLA)
+- You must state that you have read and signed the CLA on your **first pull request**.  
+- The CLA gives Marimo the right to use your contributions forever.  
+- You confirm that:
+  - You have the legal rights to contribute.  
+  - Any third-party code references are disclosed.  
+  - Contributions are provided **“as is”** without warranty or obligation for future support.  
+
+**CLA**: [Contributor License Agreement](https://marimo.io/cla)  
+**Contributing Guide**: [CONTRIBUTING.md](https://github.com/marimo-team/marimo/blob/main/CONTRIBUTING.md)
 
 ---
 
@@ -88,70 +148,6 @@ Briefly cover:
 
 ---
 
-# Contributing to the Marimo Project
 
-The **Marimo project** uses the **Apache License Version 2.0**.  
-This license defines the spirit of open-source software, allowing us to contribute and make changes freely.  
-
-By leveraging this license, our team can contribute effectively, complete analysis, and improve software assurance.  
-
-### What This License Allows
-- **Use it freely**: You can use the software for personal, educational, or commercial purposes without needing permission or paying royalties.  
-- **Modify it**: You can change the source code however you like.  
-- **Distribute it**: You can share the original or your modified version.  
-- **Sell it**: You can use it in a product you sell (including closed-source products), if you follow the rules.  
-- **Sublicense**: You can bundle it with other software, including proprietary software.  
-
-**License**: [Apache License 2.0](https://github.com/marimo-team/marimo/blob/main/LICENSE)
-
----
-
-## Code of Conduct
-
-The **Code of Conduct** outlines expectations for collaboration and contribution.  
-It emphasizes being **respectful, kind, and open**.  
-
-### Maintainers’ Responsibilities
-- Project maintainers can set and enforce rules.  
-- They may remove, edit, or reject contributions, and enforce commitments against the project.  
-
-As a team, we must follow all rules associated with Marimo to remain in compliance.
-
-### Reporting Issues
-- If you encounter misconduct or issues, you can report them.  
-- Use the official contact email: **contact@marimo.io**.  
-
-**Code of Conduct**: [Contributor Covenant](https://github.com/marimo-team/marimo/blob/main/CODE_OF_CONDUCT.md)
-
----
-
-## Contribution Guidelines
-
-Contributing is defined in the **CONTRIBUTING.md** file.  
-The project accepts **code, tests, documentation, bug fixes, and even typo corrections**.  
-
-### Before Submitting a Pull Request
-You are expected to:
-- Run linting, typechecking, and formatting → make sure your code follows style rules.  
-- Write tests for your code.  
-- Run all tests to ensure nothing breaks.  
-- Read and sign the **Contributor License Agreement (CLA)**.  
-
-The documentation also provides setup instructions and common commands.  
-You are expected to:
-- Keep code clean and consistent.  
-- Follow good programming practices (e.g., **single responsibility principle**).  
-- Write and run regression tests with **Playwright scripts**.  
-
-### Contributor License Agreement (CLA)
-- You must state that you have read and signed the CLA on your **first pull request**.  
-- The CLA gives Marimo the right to use your contributions forever.  
-- You confirm that:
-  - You have the legal rights to contribute.  
-  - Any third-party code references are disclosed.  
-  - Contributions are provided **“as is”** without warranty or obligation for future support.  
-
-**CLA**: [Contributor License Agreement](https://marimo.io/cla)  
-**Contributing Guide**: [CONTRIBUTING.md](https://github.com/marimo-team/marimo/blob/main/CONTRIBUTING.md)
 
 
