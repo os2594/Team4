@@ -305,9 +305,11 @@ Briefly cover:
   - What was most useful to me?  
     - The most valuable thing I took away is it's important to incorporate a Contributor License Agreement to ensure that your contributors and open up a civil disagreement about logic they commited. 
 
-  *Member 2*
+  *Preeti Timalsina*
   - What did I learn from this assignment?
+    - I feel like I understand a little bit better on the specific security needs depending on the hypothetical enviroment and how it can vary with the usecase.
   - What was most useful to me?  
+    - One thing I can take away from reviewing this is that security is something that must go hand on hand even though technicnically majority may be focused on the functionality, If security is ignored the whole usecase may discmiss itself for a good project.
 
   *Member 3*
   - What did I learn from this assignment?
