@@ -38,7 +38,7 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ## 🖥️ Systems Engineering View
 
-![d](static\systemEngineeringDiagram.png)
+![diagram](static\systemEngineeringDiagram.png)
 
 ---
 
