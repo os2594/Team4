@@ -53,8 +53,17 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ## 🔐 Security Needs, Threats, and Features
 
-- **Security Needs**: Identify what organizations require from Marimo in this environment (e.g., confidentiality, integrity, auditability).
-- **Threats**: List potential risks perceived by users (e.g., unauthorized access, data leakage, malicious code execution).
+- **Security Needs**
+  - Confidentiality: Prevent unauthorized access to code, especially since it's all in .py.
+  - Integrity: Ensure all notebookes retain accuracy and have not been tampered.
+  - Isolation: Sandboxing, ensure that no use can see another user's notebook.
+  - Auditability: Ensure that all documentation is present, and that everything has written documentation,
+- **Threats**
+  - Malicious Code Execution: Since the notebooks are .py files, they could be tampered and malicious code can be written.
+  - Data Leak: No notebooks should have data leaks, and can only be seen by the authorized user.
+  - Lateral Movement: If there is no isolation, a threat actor can move around and try to escalate.
+  - Denial of Service: Overloading the application and exhausting all the resources.
+  
 
 ### Marimo: Security & Assurance Surface
 
