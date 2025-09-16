@@ -353,6 +353,15 @@ Briefly cover:
     - One thing I can take away from reviewing this is that security is something that must go hand on hand even though technicnically majority may be focused on the functionality, If security is ignored the whole usecase may discmiss itself for a good project.
 
 ---
+
+ *Osmar Carboney*
+  - What did I learn from this assignment?
+    - I learned how to easy is to create Projects and kanban boards in github to keep  track of tasks and issues. I also learned how our proposed open-source project can enhance the productivity of a bank by developing and testing pyhton code and lastly deploying web applications.
+  - What was most useful to me?  
+    - I think teams and github were very useful tool for this first assignment as it allowed the whole team to communicate almost instantly and also to share content/images. Also using copilot is useful for a quick analysis vs spending hours to figure out what a piece of code does. 
+
+
+---
 >>>>>>> d2ac4f268bb8a41e53332b426e35eda9a027f1c8
 ---
 
