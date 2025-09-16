@@ -1,4 +1,4 @@
-# 📝 Project Proposal: Marimo
+# Project Proposal: Marimo
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/os2594/Team4/main/assets/bar-widget.gif" alt="Marimo Bar Widget Demo" width="700"/>
@@ -6,7 +6,7 @@
 
 ---
 
-## 📖 OSS Project Description
+## OSS Project Description
 
 ### What is it?
 
@@ -21,7 +21,7 @@ Features in this project include:
 
 ---
 
-## 📌 Repository & Collaboration
+## Repository & Collaboration
 
 - **Team Repository Link:** https://github.com/os2594/Team4
 - **Project Board:** https://github.com/users/os2594/projects/3/views/1
@@ -29,7 +29,7 @@ Features in this project include:
 
 ---
 
-## 🏢 Hypothetical Operational Environment
+## Hypothetical Operational Environment
 
 Describe the enterprise, hospital, government, or research setting in which Marimo will be deployed, focusing on how users expect security functionality.
 
@@ -41,7 +41,7 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ---
 
-## 🖥️ Systems Engineering View
+## Systems Engineering View
 
 ![Bank Security Environment Diagram](static/systemEngineeringDiagram.png)
 
@@ -53,7 +53,7 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ---
 
-## 🔐 Security Needs, Threats, and Features
+## Security Needs, Threats, and Features
 
 - **Security Needs**
   - Confidentiality: Prevent unauthorized access to code, especially since it's all in .py.
@@ -75,9 +75,9 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-### ✅ Security Features
+### Security Features
 
-#### 🔐 Authentication & Access Control
+#### Authentication & Access Control
 - **Token / Password Protection**  
   Marimo servers can be configured with access tokens or passwords. This establishes a basic authentication mechanism, preventing anonymous or casual access to notebooks. From an assurance standpoint, this feature is necessary but should be combined with stronger identity management in sensitive deployments.
 
@@ -89,7 +89,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-#### 🔒 Data Transmission & Privacy
+#### Data Transmission & Privacy
 - **TLS/SSL Encryption**  
   All data transmitted between the Marimo server and client browsers can be secured with TLS/SSL. This protects credentials, sensitive notebook content, and API keys from interception. Assurance requires verifying that TLS is enabled in production deployments.
 
@@ -101,7 +101,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-#### 🌀 Reproducibility & Hidden State Control
+#### Reproducibility & Hidden State Control
 - **Reactive Execution Model**  
   Marimo constructs a dependency graph of notebook cells. When a cell changes, downstream cells are automatically recalculated. This prevents stale data issues that undermine the integrity of analytical outputs. From an assurance perspective, this improves correctness and traceability of results.
 
@@ -113,7 +113,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-#### 🛡️ Deployment Modes
+#### Deployment Modes
 - **Read-Only Mode**  
   Marimo can run in a restricted mode where notebooks are executed but not editable. This control supports safe sharing of notebooks in environments where modification could introduce errors or malicious code.
 
@@ -128,7 +128,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-#### 📦 Dependency & Execution Safety
+#### Dependency & Execution Safety
 - **Serialized Package Requirements**  
   Marimo notebooks capture their dependency versions. This supports reproducibility and enables organizations to audit dependencies for known vulnerabilities, a key assurance activity.
 
@@ -140,7 +140,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-#### 🗄️ Privacy & Data Protection
+#### Privacy & Data Protection
 - **Encrypted Backups**  
   Backup encryption ensures data is protected if copies are leaked or stolen. This should be verified in operational testing.
 
@@ -152,7 +152,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-## ⚠️ Gaps & Areas to Improve
+## Gaps & Areas to Improve
 From a QA and assurance perspective, the following areas require further maturity:
 - **Role-Based Access Control (RBAC)**: No built-in multi-role system (admin, editor, viewer). Enterprises must implement externally.  
 - **Comprehensive Encryption at Rest**: Database contents should ideally be fully encrypted, not just backups.  
@@ -162,7 +162,7 @@ From a QA and assurance perspective, the following areas require further maturit
 
 ---
 
-## 📌 Assurance Significance
+## Assurance Significance
 Marimo demonstrates that it is more than a developer utility; it is a platform with **clear security considerations**:
 - Identity and authentication are flexible but must be configured carefully.  
 - Data integrity is strengthened by reactive execution and hidden state elimination.  
@@ -173,7 +173,7 @@ From a software assurance perspective, these features and gaps provide substanti
 
 ---
 
-## 🎯 Team Motivation
+## Team Motivation
 
 
 Explain why your group selected Marimo:
@@ -239,7 +239,7 @@ The project’s documentation is limited to the following markdown files:
 
 ---
 
-## 📜 License Summary & Contribution Agreement
+## License Summary & Contribution Agreement
 
 The **Marimo project** uses the **Apache License Version 2.0**.
 This license defines the spirit of open-source software, allowing us to contribute and make changes freely.
@@ -313,7 +313,7 @@ The documentation also provides setup instructions and common commands.You are e
 
 ---
 
-## 🕵️ Security History
+## Security History
 
 Briefly cover:
 
@@ -331,7 +331,7 @@ Briefly cover:
   - Auto exports and snapshots.
 ---
 
-## 📋 Project Planning, Tracking & Reflection
+## Project Planning, Tracking & Reflection
 
 - **Planning & Tracking**: Use GitHub Project Board to assign tasks, link issues, and monitor progress.
 - **Reflection**: Each member adds an individual reflection:
