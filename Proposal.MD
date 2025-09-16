@@ -51,7 +51,7 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 - **Security Needs**: Identify what organizations require from Marimo in this environment (e.g., confidentiality, integrity, auditability).
 - **Threats**: List potential risks perceived by users (e.g., unauthorized access, data leakage, malicious code execution).
 
-# Marimo: Security & Assurance Surface
+### Marimo: Security & Assurance Surface
 
 This document evaluates the **security-relevant features** of Marimo from a software assurance and quality perspective.  
 The intent is to identify controls, strengths, and gaps that affect assurance in enterprise or regulated environments.
