@@ -358,7 +358,11 @@ Briefly cover:
   - What was most useful to me?  
     - I think teams and github were very useful tool for this first assignment as it allowed the whole team to communicate almost instantly and also to share content/images. Also using copilot is useful for a quick analysis vs spending hours to figure out what a piece of code does. 
 
-
+*Zaid Kakish*
+- What did I learn from this assignment?
+  - I learned how to conduct a security assessment of past vulnerabilties and the strcuture of an open source systeem, by looking at the source code, and accurately identifying events to corresponds with CVEs
+- What was most useful to me?
+  - Understanding how contributions work to open source systems, and how  security is a measure that must be taken to protect all sorts of systems. It is harder for open source as the source code is there.
 ---
 
   *Member 3*
