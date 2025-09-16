@@ -322,6 +322,8 @@ Briefly cover:
 - **Planning & Tracking**: Use GitHub Project Board to assign tasks, link issues, and monitor progress.
 - **Reflection**: Each member adds an individual reflection:
 
+---
+
   *Justin Tobiason*
 
   - What did I learn from this assignment?
@@ -329,18 +331,27 @@ Briefly cover:
   - What was most useful to me?
     - The most valuable thing I took away is it's important to incorporate a Contributor License Agreement to ensure that your contributors and open up a civil disagreement about logic they commited.
 
-<<<<<<< HEAD
-  *Member 2*
+---
 
-  - What did I learn from this assignment?
-  - What was most useful to me?
-=======
+<<<<<<< HEAD
+  *Dominic Lanzante*
+  - What did I learn from this assignment?  
+    - I learned how important it is to evaluate open-source projects not just for functionality but also for their security and assurance features. This assignment showed me how systematic reasoning can be applied to real-world projects and why organizations rely on strong security models.  
+
+  - What was most useful to me?  
+    - The most useful part was applying the evaluation framework to an active project like Marimo. It gave me a better understanding of authentication, data protection, and reproducibility, and how these assurance principles directly affect trust decisions in organizational environments.  
+
+---
+
   *Preeti Timalsina*
   - What did I learn from this assignment?
     - I feel like I understand a little bit better on the specific security needs depending on the hypothetical enviroment and how it can vary with the usecase.
   - What was most useful to me?  
     - One thing I can take away from reviewing this is that security is something that must go hand on hand even though technicnically majority may be focused on the functionality, If security is ignored the whole usecase may discmiss itself for a good project.
+
+---
 >>>>>>> d2ac4f268bb8a41e53332b426e35eda9a027f1c8
+---
 
   *Member 3*
 
