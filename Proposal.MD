@@ -315,17 +315,17 @@ The documentation also provides setup instructions and common commands.You are e
 Briefly cover:
 
 - Past Vulnerabilities:
-  1- Transisitive dependency vulnerability: A public CVE examines a path-to-regexp dependency by patching and updating from v7.x to v8.x. 
+  - Transisitive dependency vulnerability: A public CVE examines a path-to-regexp dependency by patching and updating from v7.x to v8.x. 
 
 - Security-relevant design decisions (e.g., hidden state elimination, `.py` file format)
-  1- Most files are stored as .py notebooks, which increases functionality but can present some security concerns
-  2- No hidden state: UI interaction and deleting cell scrubs
-  3- Package Sandboxing: Store things in virtual notebooks to allow for synchronization
+  - Most files are stored as .py notebooks, which increases functionality but can present some security concerns
+  - No hidden state: UI interaction and deleting cell scrubs
+  - Package Sandboxing: Store things in virtual notebooks to allow for synchronization
 
 - Past or ongoing enhancements related to security
-  1- Auto updates: dependency updates to patch vulenrabilities like the path-to-regexp
-  2- Constant sandboxing updates
-  3- Auto exports and snapshots
+  - Auto updates: dependency updates to patch vulenrabilities like the path-to-regexp
+  - Constant sandboxing updates
+  - Auto exports and snapshots
 ---
 
 ## 📋 Project Planning, Tracking & Reflection
