@@ -6,23 +6,25 @@
 
 ---
 
-## 🌟 Introduction
+## 📖 OSS Project Description
 
-Marimo is a modern, **reactive Python notebook environment** designed to improve upon traditional tools like Jupyter.Unlike conventional notebooks that often suffer from hidden state and reproducibility issues, Marimo emphasizes:
+### What is it?
 
-- **Reproducibility**: All notebooks are stored as pure Python (`.py`) files, making them transparent, version-controllable, and auditable.
-- **Reactive Execution**: A built-in dependency graph ensures that when a cell changes, all dependent cells are automatically re-executed. This eliminates hidden state and reduces user error.
-- **Deployment Flexibility**: Notebooks can run in “edit mode” for developers, “read-only mode” for safe sharing, or even fully in-browser using WebAssembly (Pyodide).
-- **Security Awareness**: Features such as token-based access, TLS/SSL support, encrypted backups, and custom authentication middleware make it suitable for sensitive environments where trust and assurance matter.
+Marimo is a reactive Python-based notebook for developers. It leverages Jupyter and other data tools for visualization and styling. This allows you to write notebooks like Python files that can run in a cell. This project can help developers deploy notebooks as scripts or web apps, shortening the path from exploration to production.
 
-Marimo is actively developed and widely adopted in research, education, and enterprise data science workflows. Its focus on **assurance, transparency, and collaboration** makes it a strong candidate for evaluating real-world security needs in multi-user, enterprise, and regulated environments.
+Features in this project include:
+
+- Stores notebooks as pure Python files for version control and transparency
+- Automatic dependency tracking
+- Deployment of dependencies as **scripts** or even **web applications**
+- Security-aware features such as token-based access, TLS/SSL, encrypted backups, and pluggable authentication middleware suitable for sensitive environments
 
 ---
 
 ## 📌 Repository & Collaboration
 
-- **Team Repository Link:** [Insert your team’s GitHub repo link here]
-- **Project Board:** [Insert GitHub Project Board link here]
+- **Team Repository Link:** https://github.com/os2594/Team4
+- **Project Board:** https://github.com/users/os2594/projects/3/views/1
   (Tasks, issues, and cards linked to this board for progress tracking.)
 
 ---
@@ -32,6 +34,7 @@ Marimo is actively developed and widely adopted in research, education, and ente
 Describe the enterprise, hospital, government, or research setting in which Marimo will be deployed, focusing on how users expect security functionality.
 
 - The hypothetical environment chosen for this project is a Bank, where users would use Marimo software as an enterprise analytics software.
+- Primary users include data analysts, data scientists, risk and compliance teams, and DevOps personnel who collaborate on notebooks and deploy analytics artifacts.
 - A bank's analytics team uses Marimo as a tool to process financial and customer data. In this situation the security features expected are sensitive data must remain confidential and in some cases encrypted depending on the type of data. The audit logs must be tracked to ensure proper utilization and access management policies. In case of any apps or software were linked to the tool, proper authentication must happen so that only authorized members are able to access data and environment.
 
 ---
@@ -42,8 +45,10 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ### Other systems can include: 
 - Identity and Access Management (IAM) - SSO, MFA and RBAC enforcement.
+- Hardware Security Modules (HSM) - to provide fast and strong encryption/decryption operations.
 - Bank Security Operations Center SIEM tools - for continuos monitoring.
 - Compliance and Audit Systems.
+
 ---
 
 ## 🔐 Security Needs, Threats, and Features
@@ -188,21 +193,6 @@ In summary, Marimo was selected because it is not just an innovative notebook to
 
 ---
 
->>>>>>> d2ac4f268bb8a41e53332b426e35eda9a027f1c8
-
----
-
-## 📖 OSS Project Description
-
-### What is it?
-
-Marimo is a **reactive Python-based notebook** for developers.It leverages Jupyter and other data tools for visualization and styling.This allows you to write notebooks like Python files that can run in a cell.Features include:
-
-- Automatic dependency tracking
-- Deployment of dependencies as **scripts** or even **web applications**
-
----
-
 ### Contributors and Community Activity
 
 - **Contributors:** 179 (at the time of writing)
@@ -337,7 +327,6 @@ Briefly cover:
 
 ---
 
-<<<<<<< HEAD
   *Dominic Lanzante*
   - What did I learn from this assignment?  
     - I learned how important it is to evaluate open-source projects not just for functionality but also for their security and assurance features. This assignment showed me how systematic reasoning can be applied to real-world projects and why organizations rely on strong security models.  
@@ -362,8 +351,6 @@ Briefly cover:
     - I think teams and github were very useful tool for this first assignment as it allowed the whole team to communicate almost instantly and also to share content/images. Also using copilot is useful for a quick analysis vs spending hours to figure out what a piece of code does. 
 
 
----
->>>>>>> d2ac4f268bb8a41e53332b426e35eda9a027f1c8
 ---
 
   *Member 3*
