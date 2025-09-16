@@ -58,6 +58,7 @@ Describe the enterprise, hospital, government, or research setting in which Mari
   - Integrity: Ensure all notebookes retain accuracy and have not been tampered.
   - Isolation: Sandboxing, ensure that no use can see another user's notebook.
   - Auditability: Ensure that all documentation is present, and that everything has written documentation.
+
 - **Threats**
   - Malicious Code Execution: Since the notebooks are .py files, they could be tampered and malicious code can be written.
   - Data Leak: No notebooks should have data leaks, and can only be seen by the authorized user.
