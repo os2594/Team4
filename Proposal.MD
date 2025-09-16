@@ -38,7 +38,8 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ## 🖥️ Systems Engineering View
 
-![diagram](static\systemEngineeringDiagram.png)
+![Bank Security Environment Diagram](static/systemEngineeringDiagram.png)
+
 
 ---
 
