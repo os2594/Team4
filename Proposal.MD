@@ -36,6 +36,8 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 - The hypothetical environment chosen for this project is a Bank, where users would use Marimo software as an enterprise analytics software.
 - Primary users include data analysts, data scientists, risk and compliance teams, and DevOps personnel who collaborate on notebooks and deploy analytics artifacts.
 - A bank's analytics team uses Marimo as a tool to process financial and customer data. In this situation the security features expected are sensitive data must remain confidential and in some cases encrypted depending on the type of data. The audit logs must be tracked to ensure proper utilization and access management policies. In case of any apps or software were linked to the tool, proper authentication must happen so that only authorized members are able to access data and environment.
+- The investment firm uses market risk, fraud detection, and regulatory compliance to build dashboards and other scenarios in Marimo. By either leveraging real-time data or outputs from other systems they can run simulations and build visuals to determine risk factors. 
+- Engineers use the power of python based notebook to solve problems at an architectural level. Possible doing structural analysis on a new build of a skyscraper.
 
 ---
 
