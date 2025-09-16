@@ -55,9 +55,9 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-## ✅ Security Features
+### ✅ Security Features
 
-### 🔐 Authentication & Access Control
+#### 🔐 Authentication & Access Control
 - **Token / Password Protection**  
   Marimo servers can be configured with access tokens or passwords. This establishes a basic authentication mechanism, preventing anonymous or casual access to notebooks. From an assurance standpoint, this feature is necessary but should be combined with stronger identity management in sensitive deployments.
 
@@ -69,7 +69,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-### 🔒 Data Transmission & Privacy
+#### 🔒 Data Transmission & Privacy
 - **TLS/SSL Encryption**  
   All data transmitted between the Marimo server and client browsers can be secured with TLS/SSL. This protects credentials, sensitive notebook content, and API keys from interception. Assurance requires verifying that TLS is enabled in production deployments.
 
@@ -81,7 +81,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-### 🌀 Reproducibility & Hidden State Control
+#### 🌀 Reproducibility & Hidden State Control
 - **Reactive Execution Model**  
   Marimo constructs a dependency graph of notebook cells. When a cell changes, downstream cells are automatically recalculated. This prevents stale data issues that undermine the integrity of analytical outputs. From an assurance perspective, this improves correctness and traceability of results.
 
@@ -93,7 +93,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-### 🛡️ Deployment Modes
+#### 🛡️ Deployment Modes
 - **Read-Only Mode**  
   Marimo can run in a restricted mode where notebooks are executed but not editable. This control supports safe sharing of notebooks in environments where modification could introduce errors or malicious code.
 
@@ -108,7 +108,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-### 📦 Dependency & Execution Safety
+#### 📦 Dependency & Execution Safety
 - **Serialized Package Requirements**  
   Marimo notebooks capture their dependency versions. This supports reproducibility and enables organizations to audit dependencies for known vulnerabilities, a key assurance activity.
 
@@ -120,7 +120,7 @@ The intent is to identify controls, strengths, and gaps that affect assurance in
 
 ---
 
-### 🗄️ Privacy & Data Protection
+#### 🗄️ Privacy & Data Protection
 - **Encrypted Backups**  
   Backup encryption ensures data is protected if copies are leaked or stolen. This should be verified in operational testing.
 
