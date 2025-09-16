@@ -156,18 +156,16 @@ From a software assurance perspective, these features and gaps provide substanti
 
 ---
 
----
-
 ## 🎯 Team Motivation
 
-<<<<<<< HEAD
+
 Explain why your group selected Marimo:
 
 - Popularity and active development
 - Enterprise or educational use cases
 - Clear security considerations
 - Rich opportunities for assurance analysis
-=======
+
 For this assignment, our team was required to evaluate and select an open-source software project that offers meaningful opportunities for **security and assurance analysis**. After considering multiple options, we chose **Marimo** because it stood out as both technically innovative and highly relevant to real organizational use cases.
 
 Marimo is a **reactive Python notebook environment** that addresses long-standing issues with tools like Jupyter, including hidden state, reproducibility challenges, and limited auditability. By storing notebooks as pure Python (`.py`) files, Marimo enables greater transparency, version control, and security-aware workflows. Its **reactive execution model** ensures results remain consistent, while deployment modes (edit vs. run-only, server-based vs. browser-based) provide flexibility for both secure collaboration and development.
@@ -187,6 +185,9 @@ Our motivation for selecting Marimo is based on several key factors:
   Marimo operates at the intersection of code execution, data handling, and collaborative use. This allows us to systematically examine trust boundaries, risk scenarios, and assurance measures across multiple components, from authentication and data privacy to dependency management and deployment controls.
 
 In summary, Marimo was selected because it is not just an innovative notebook tool—it is a **maturing open-source platform** with real adoption, meaningful security requirements, and clear opportunities for systematic assurance evaluation. This combination makes it an intelligent and well-justified choice for our team’s project.
+
+---
+
 >>>>>>> d2ac4f268bb8a41e53332b426e35eda9a027f1c8
 
 ---
