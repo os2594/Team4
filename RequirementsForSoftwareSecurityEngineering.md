@@ -1,8 +1,8 @@
-**Requirements For SoftwareSecurity Engineering**
+# **Requirements For SoftwareSecurity Engineering**
 
-**Data exfiltration diagram**
+### **Data exfiltration**
 
-**Internal Misuse Case:** Rogue Employee
+###### **Internal Misuse Case:** Rogue Employee
 
 A financial analyst with elevated access uses Marimo to query sensitive customer data and exports it via an 						unmonitored notebook deployment.
 
@@ -10,7 +10,7 @@ A financial analyst with elevated access uses Marimo to query sensitive customer
 * **Aggravating Factors** : Loose access controls
 * **Mitigation** : Strict RBAC, access logging, deployment review workflows.
 
-**External Misuse Case:** External attacker
+###### **External Misuse Case:** External attacker
 
 An attacker discovers a misconfigured Marimo notebook deployed as a public web app and uses SQL injection to access backend financial data.
 
@@ -20,7 +20,7 @@ An attacker discovers a misconfigured Marimo notebook deployed as a public web a
 
 ![](assets/data_exfilitration_diagram.drawio.svg)
 
-**List of security requirements derived from data exfiltration analysis**
+###### **List of security requirements derived from data exfiltration analysis**
 
 Derived from the internal (rogue employee) and external (hacker via SQL injection) misuse scenarios, these requirements ensure Marimo in a financial institution resists data-exfiltration:
 
@@ -34,7 +34,7 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 4.  **SR-4: Input Validation & Parameterized Queries**
    All SQL cell executions shall use parameterized queries. User inputs must be sanitized or bound as parameters to eliminate injection vectors.
 
-**Alignment with Marimo’s Advertised Features**
+###### **Alignment with Marimo’s Advertised Features**
 
 * **Authentication & RBAC** : Marimo offers token abstractions (`AuthToken`) and ASGI middleware hooks, but does not ship with enterprise SSO, RBAC, or MFA integrations. Maybe these implementations are done through an other environment that Institutions must put in place.
 * **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors.
