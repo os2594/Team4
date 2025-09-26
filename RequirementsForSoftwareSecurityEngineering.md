@@ -38,3 +38,71 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 
 * **Authentication & RBAC** : Marimo offers token abstractions (`AuthToken`) and ASGI middleware hooks, but does not ship with enterprise SSO, RBAC, or MFA integrations. Maybe these implementations are done through an other environment that Institutions must put in place.
 * **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors.
+
+
+### **Candidate Essential Interaction**
+
+**Actor:** Financial Data Analyst  
+**Interaction:** Run Notebook Cell and See Results  
+
+**Description:**  
+The essential interaction is when a financial data analyst writes Python code in a notebook cell and executes it. The notebook environment evaluates the code, updates results (tables, outputs, or visualizations), and ensures computations remain reproducible and reactive.  
+
+---
+
+###### Why this is Essential
+- This represents the primary value proposition of the notebook system: interactive, reproducible computation.  
+- It links the financial analyst with the system in its operational environment which is meant to analyze financial data.  
+- It triggers the notebook’s dependency tracking and cell re-execution features.  
+
+---
+
+###### Anti Use Case
+
+**Normal Use Case**  
+- **Actor (User):** Financial Analyst  
+- **System-of-Interest:** Notebook executes analyst’s Python code in a reactive cell, tracks dependencies, and shows results.  
+
+---
+
+###### Misusers (Contextualized for an Enterprise Environment)
+
+1. **External Attacker**  
+   - **Motive:** Inject malicious payloads to run code in the notebook (e.g., cryptominer, data theft).  
+   - **Resources/Access:** Gains access via phishing, misconfiguration, or weak access controls.  
+   - **Attack of Choice:** Execute malicious code by abusing notebook execution to run system commands, launch API calls, or modify the system.  
+
+2. **Malicious Insider**  
+   - **Motive:** Abuse legitimate access to unauthorized code.  
+   - **Resources/Access:** Valid notebook credentials and execution rights.  
+   - **Attack of Choice:** Leverage cell execution to bypass sandboxing and attempt privilege escalation or data exfiltration.  
+
+---
+
+###### Misuse Cases
+- **Misuse Case 1:** Execute Malicious Code in Notebook Cell  
+- **Misuse Case 2:** Shell Escape / Execute Unauthorized System Commands  
+- **Misuse Case 3:** Abuse API Calls to Curl scripts outside of the environment  
+- **Misuse Case 4:** Execute Calls via Python to external sources (Network Traffic)  
+
+![](assets/MisuseCase-RunNotebook-V2.drawio.png)
+
+---
+
+###### Security Requirements (Countermeasures)
+
+1. **Sandbox Execution Environment**  
+   - All notebook cells must run in a restricted execution environment with minimum privileges.  
+   - Enforce read-only access to sensitive file paths.  
+   - Restrict installation of arbitrary dependencies.  
+
+2. **Disable Shell Escapes**  
+   - Remove the ability to invoke system-level commands from inside notebooks (`!bash`, `subprocess`, etc.).  
+
+3. **Controlled API Calls via Proxy**  
+   - Only allow outbound API requests to pre-approved destinations through a proxy on an allow list.  
+   - Deny all other API traffic.  
+
+4. **Audit Logging of Network Traffic**  
+   - Monitor and log all outbound connections from notebook kernels.  
+   - Generate alerts on anomalous patterns or unauthorized sites.  
