@@ -40,7 +40,7 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 * **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors.
 
 
-### **Candidate Essential Interaction**
+### **Malicious Code Execution**
 
 **Actor:** Financial Data Analyst  
 **Interaction:** Run Notebook Cell and See Results  
