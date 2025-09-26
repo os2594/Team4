@@ -18,7 +18,7 @@ An attacker discovers a misconfigured Marimo notebook deployed as a public web a
 * **Aggravating Factors** : Unvalidated inputs
 * **Mitigation** : Input sanitization
 
-![d](assets\data_exfilitration_diagram.drawio.png)
+![](assets/data_exfilitration_diagram.drawio.svg)
 
 **List of security requirements derived from data exfiltration analysis**
 
