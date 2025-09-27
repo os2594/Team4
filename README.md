@@ -1,4 +1,4 @@
-# CYBR-8420: Software Assurance – Team 4 (2024)
+# CYBR-8420: Software Assurance – Team 4 (2025)
 
 ## Team Members
 - Dominic Lanzante
