@@ -48,7 +48,7 @@ It serves as a central hub for:
 ---
 
 ## License
-This project is licensed under the [MIT License](./LICENSE).
+This project is licensed under the [MIT License](./MIT_LICENSE).
 
 This repository also contains references and contributions related to the [Marimo project](https://github.com/marimo-team/marimo),  
 which is licensed under the [Apache License 2.0](./APACHE_LICENSE).
