@@ -111,5 +111,5 @@ The essential interaction is when a financial data analyst writes Python code in
 
 # Summarization of Improvements for Marimo
 
-1. Importing a module that can trigger a package installation means all the runtime code and dependencry resolution are dynamic and this could definetly be exploited. This could provide an attack vector to a malicious actor looking to install something to give them more access, break the software, or retreive data. I would like to evaluate the functionality and how easy it is to install malicious packages.
-2. User isolation was another concern. If multiple financial analysts are using the notebook could they affect each others environment or read another user's data? I think we can experiment and validate the truth to this. 
+1. Importing a module that can trigger a package installation means all the runtime code and dependencry resolution are dynamic and this could definetly be exploited. This could provide an attack vector to a malicious actor looking to install something to give them more access, break the software, or retreive data. I would like to evaluate the functionality and how easy it is to install malicious packages. - JT
+2. User isolation was another concern. If multiple financial analysts are using the notebook could they affect each others environment or read another user's data? I think we can experiment and validate the truth to this. - JT
