@@ -18,10 +18,10 @@
 
 ## Table of Contents
 1. [Project Proposal](./docs/1.ProjectProposal/Proposal.MD)
-2. [Requirements for Software Security Engineering](./docs/Requirements/2.RequirementsForSoftwareSecurityEngineering.md)
-3. [Assurance Cases Software Security Engineering](./docs/AssuranceCases/3.AssuranceCasesforSoftwareSecurityEngineering.md)
-4. [Designing for Software Security Engineering](./docs/Design/4.DesigningforSoftwareSecurityEngineering.md)
-5. [Code Analysis for Software Security Engineering](./docs/CodeAnalysis/5.CodeAnalysisforSoftwareSecurityEngineering.md)
+2. [Requirements for Software Security Engineering](./docs/2.Requirements/RequirementsForSoftwareSecurityEngineering.md)
+3. [Assurance Cases Software Security Engineering](./docs/3.AssuranceCases/AssuranceCasesforSoftwareSecurityEngineering.md)
+4. [Designing for Software Security Engineering](./docs/4.Design/DesigningforSoftwareSecurityEngineering.md)
+5. [Code Analysis for Software Security Engineering](./docs/5.CodeAnalysis/CodeAnalysisforSoftwareSecurityEngineering.md)
 
 ---
 
