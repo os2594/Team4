@@ -29,10 +29,10 @@
 - **docs/**
   - **Proposal/** → `Proposal.md`
   - **Requirements/** → `RequirementsForSoftwareSecurityEngineering.md`
-  - **AssuranceCases/** → `AssuranceCases.md`
-  - **Design/** → design diagrams & architecture notes
-  - **CodeAnalysis/** → findings, static/dynamic analysis
-- **assets/** → diagrams, images
+  - **AssuranceCases/** → `AssuranceCasesforSoftwareSecurityEngineering.md`
+  - **Design/** → design diagrams & architecture notes for Software Security Engineering → `DesigningforSoftwareSecurityEngineering.md`
+  - **CodeAnalysis/** → findings, static/dynamic analysis → `CodeAnalysisforSoftwareSecurityEngineering.md`
+- **assets/** → diagrams, images, GIFs, etc.
 - **static/** → legacy diagrams or supporting files
 
 ---
