@@ -113,3 +113,202 @@ The essential interaction is when a financial data analyst writes Python code in
 
 1. Importing a module that can trigger a package installation means all the runtime code and dependencry resolution are dynamic and this could definetly be exploited. This could provide an attack vector to a malicious actor looking to install something to give them more access, break the software, or retreive data. I would like to evaluate the functionality and how easy it is to install malicious packages. - JT
 2. User isolation was another concern. If multiple financial analysts are using the notebook could they affect each others environment or read another user's data? I think we can experiment and validate the truth to this. - JT
+
+---
+
+---
+
+### Misuse Case #3 - Dominic Lanzante
+
+**Title:** Disclosure of Information via Publicly Exposed Marimo App  
+
+**Description:**  
+If a Marimo app is started without effective authentication or is bound to a public interface, anyone who can reach the URL may view internal dashboards or data.  
+
+**Actors & Motives:**  
+- **Curious Crawler** — opportunistic scanner that finds exposed apps  
+- **Rushed Researcher** — stumbles on exposure and posts details publicly instead of reporting privately  
+- **Harried Operator** — deploys with `--no-token` or `--host 0.0.0.0` due to time pressure  
+
+**Access Required:**  
+- Only a web browser or basic scanning tools; no insider privilege  
+
+---
+
+### Misuse → Mitigations → Requirements
+
+#### Stage 0 — Baseline Risk
+- Operator launches Marimo without auth, exposed to the internet  
+- **Impact:** Sensitive dashboards or data leakage  
+
+#### Stage 1 — Security Functions
+- Auth middleware & token flow (already documented)  
+- CLI defaults: bind to localhost, require token  
+- **Residual gap:** Users may override/ignore protections  
+
+#### Stage 2 — Stronger Controls
+- Add “Deploy Securely” checklist & proxy sample (TLS, rate-limits)  
+- Provide operator runbook for exposed instances  
+- **Residual gap:** Exposures may still be publicized before patch  
+
+#### Stage 3 — Vulnerability Management
+- Update `SECURITY.md` with SLA (72h acknowledgement), embargo wording, and attribution  
+
+#### Visual (from draw.io)
+![Misuse Case Diagram](https://raw.githubusercontent.com/os2594/Team4/main/docs/2.Requirements/Diagrams/MISUSECASE_FINAL.png)
+
+#### Text-based (Mermaid for GitHub rendering)
+
+```mermaid
+flowchart LR
+    %% Actors
+    A1([Harried Operator])
+    A2([Curious Crawler])
+    A3([Rushed Researcher])
+
+    %% Normal Use Case
+    U1([Serve Notebook as Web App])
+
+    %% Misuse Paths
+    M1([Runs with --no-token])
+    M2([Binds to 0.0.0.0 public])
+    M3([Unauthenticated Access])
+    M4([Finds Exposed Marimo App])
+    M5([Fetches Pages / Scrapes Data])
+    M6([Discovers Exposed Instance])
+    M7([Posts Details Publicly])
+    M8([Exposure Amplified])
+
+    %% Central Risk
+    R1([Disclosure of Information])
+
+    %% Security Requirements
+    SR1([TR-1 Auth Required by Default])
+    SR2([TR-2 Localhost Bind by Default])
+    SR3([TR-3 Deploy Securely Doc & Proxy])
+    SR4([PD-3 Operator Runbook])
+    SR5([PD-2 Coordinated Disclosure Policy])
+    SR6([TR-5 Parameterized SQL Examples])
+
+    %% Actor Links
+    A1 --> U1
+    U1 --> M1
+    U1 --> M2
+    A2 --> M4
+    A3 --> M6
+
+    %% Misuse Chains
+    M1 --> M3 --> R1
+    M2 --> M3
+    M4 --> M5 --> R1
+    M6 --> M7 --> M8 --> R1
+
+    %% Requirements Mitigations
+    R1 --> SR1
+    R1 --> SR2
+    R1 --> SR3
+    R1 --> SR4
+    R1 --> SR5
+    R1 --> SR6
+```
+
+---
+
+### Derived Security Requirements
+
+#### Process (Policy & Operations)
+
+- **PD-1 Private reporting channel with 72h SLA**  
+  - *Requirement:* `SECURITY.md` must specify private channels (GitHub advisory/email) and commit to acknowledgement within 72 hours  
+  - *Test:* Submit benign test advisory → receive auto acknowledgement within 72h  
+
+- **PD-2 Coordinated disclosure (no public PoCs pre-fix)**  
+  - *Requirement:* `SECURITY.md` requests no public PoCs/blogs until fix is released; offers attribution  
+  - *Test:* Policy text visible in repo  
+
+- **PD-3 Operator runbook for “Exposed Instance”**  
+  - *Requirement:* Add `docs/runbooks/exposed-instance.md` with disable/rotate/notify steps  
+  - *Test:* File exists with clear response actions  
+
+---
+
+#### Technical (Defaults, Docs, Guides)
+
+- **TR-1 Auth required by default**  
+  - *Requirement:* Default serving requires token/password; using `--no-token` prints visible warning  
+  - *Test:* Fresh run prompts for token; disabling prints warning  
+
+- **TR-2 Localhost bind by default**  
+  - *Requirement:* Default host = `127.0.0.1`; binding to `0.0.0.0` requires explicit flag and warning  
+  - *Test:* Fresh run binds locally; public bind prints warning  
+
+- **TR-3 “Deploy Securely” doc & proxy sample**  
+  - *Requirement:* New doc with TLS, rate-limits, request-size caps, and middleware snippet  
+  - *Test:* Following doc yields hardened HTTPS-only deployment  
+
+- **TR-4 Public sharing steered to WASM playground**  
+  - *Requirement:* Docs advise WASM playground for public embedding; server-backed apps reserved for private use  
+  - *Test:* Docs show explicit guidance  
+
+- **TR-5 Parameterized SQL in examples**  
+  - *Requirement:* Replace concatenated SQL with parameterized queries in docs  
+  - *Test:* Examples include “do/don’t” notes on safe queries  
+
+---
+
+### Alignment with Marimo Features
+- **Auth & middleware** → already documented; requirements strengthen defaults  
+- **CLI defaults** → already localhost; requirements add warnings for unsafe configs  
+- **WASM playground** → already provided; reinforced as safe sharing method  
+- **SQL integration** → update examples to highlight safe practices  
+- **Security policy** → exists but enhanced with SLA and disclosure guardrails  
+
+---
+
+### Part 1 — Reflection
+Working on this misuse case showed that defaults and documentation are as important as code in preventing exposures.
+A single CLI flag or unclear deployment doc can leak sensitive data.
+OSS projects must therefore combine technical controls (secure defaults) with process controls (coordinated disclosure, operator runbooks).
+My work here complements the other team interactions by ensuring secure deployment and policy baselines that reinforce their features.
+
+---
+
+## Part 2 — Documentation Review
+
+#### Existing
+- `SECURITY.md` with reporting info  
+- CLI docs showing localhost defaults  
+- Auth middleware examples  
+- WASM playground for safe public sharing  
+
+#### Gaps / Improvements
+- Create `docs/deploy-securely.md` (TLS, proxy configs, checklists)  
+- Stronger CLI warnings for `--no-token` and `--host 0.0.0.0`  
+- Add SLA + embargo policy to `SECURITY.md`  
+- Operator runbook for exposed instances  
+- Parameterized SQL in official docs  
+
+#### Planning Snapshot
+- **SECURITY.md** → add SLA + disclosure policy  
+- **Deploy Securely Doc** → create `docs/deploy-securely.md`  
+- **CLI Warnings** → highlight dangers of `--no-token` and public bind  
+- **Publishing Guidance** → WASM playground for public sharing  
+- **SQL Examples** → switch to parameterization  
+
+---
+
+### Reflection (Individual Contribution)
+This exercise reinforced that open-source maintainers must provide both **secure defaults** and **clear documentation** to reduce human error.  
+I also learned that security risks often arise from **how features are deployed**, not just how they are coded.  
+My contribution provides the **secure deployment baseline** for our team’s project deliverable.  
+
+---
+
+### AI Assistance Note
+I used AI tools to help **structure my misuse case analysis**.  
+Specifically, I asked for help in:  
+- Clarifying the misuse case and actors.  
+- Turning mitigations into **clear, testable requirements**.  
+- Thinking about **residual risks and stronger controls**.  
+
+All analysis, alignment to the rubric, and final documentation were my own work.
