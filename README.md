@@ -10,7 +10,7 @@
 ---
 
 ## Project Selection
-[Canvas-LMS or your chosen OSS project](#) <!-- Replace # with the actual project link -->
+[Marimo Project ](https://github.com/marimo-team/marimo) <!-- Replace # with the actual project link -->
 
 ---
 
