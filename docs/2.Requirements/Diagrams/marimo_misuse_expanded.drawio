@@ -1,0 +1,133 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2">
+  <diagram id="marimo-misuse-v2" name="Marimo Misuse Diagram (Expanded Paths)">
+    <mxGraphModel dx="1765" dy="776" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Marimo Misuse Case Diagram — Expanded Actor Paths" style="text;strokeColor=none;fillColor=none;align=center;fontSize=20;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="700" y="20" width="500" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-operator" value="Harried Operator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="150" y="250" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-crawler" value="Curious Crawler" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="130" y="525" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-researcher" value="Rushed Researcher" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="90" y="680" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="use-intended" value="Serve Notebook as Web App" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#333333;fillColor=#ffffff;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="300" y="250" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="misuse-disclosure" value="Disclosure of Information" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#000000;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="1260" y="480" width="260" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="mit-auth" value="&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Auth Required by Default&lt;/font&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9;" parent="1" vertex="1">
+          <mxGeometry x="1580" y="260" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mit-localhost" value="&lt;span&gt;Localhost Bind by Default&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="1580" y="350" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mit-deploy" value="&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Deploy Securely Doc &amp;amp; Proxy&lt;/font&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9;" parent="1" vertex="1">
+          <mxGeometry x="1580" y="440" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mit-runbook" value="&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Operator Runbook&lt;/font&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9;" parent="1" vertex="1">
+          <mxGeometry x="1580" y="530" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mit-disclosure" value="&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Coordinated Disclosure Policy&lt;/font&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9;" parent="1" vertex="1">
+          <mxGeometry x="1580" y="620" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mit-sql" value="&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Parameterized SQL Examples&lt;/font&gt;&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2e7d32;fillColor=#c8e6c9;" parent="1" vertex="1">
+          <mxGeometry x="1580" y="710" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="op-step1" value="Runs with --no-token" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="300" y="380" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="op-step2" value="Binds to 0.0.0.0 (public)" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="560" y="420" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="op-step3" value="Unauthenticated access possible" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="930" y="440" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cr-step1" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Scans IP ranges / ports&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="300" y="560" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cr-step2" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Finds exposed Marimo app&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="560" y="560" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cr-step3" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Fetches pages / scrapes data&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="930" y="550" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rr-step1" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Discovers exposed instance&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="295" y="700" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rr-step2" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Posts link/details publicly&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="600" y="700" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rr-step3" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Exposure amplified widely&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#777;fillColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="930" y="680" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-op-0" style="endArrow=block;html=1;" parent="1" source="actor-operator" target="use-intended" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-op-1" value="&lt;&lt;next&gt;&gt;" style="endArrow=block;html=1;dashed=1;" parent="1" source="use-intended" target="op-step1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-op-2" value="&lt;&lt;next&gt;&gt;" style="endArrow=block;html=1;dashed=1;" parent="1" source="op-step1" target="op-step2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-op-3" value="&lt;&lt;next&gt;&gt;" style="endArrow=block;html=1;dashed=1;" parent="1" source="op-step2" target="op-step3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-op-4" value="" style="endArrow=block;html=1;" parent="1" source="op-step3" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-cr-0" style="endArrow=block;html=1;" parent="1" source="actor-crawler" target="cr-step1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-cr-1" value="&lt;&lt;next&gt;&gt;" style="endArrow=block;html=1;dashed=1;" parent="1" source="cr-step1" target="cr-step2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-cr-2" value="&lt;&lt;next&gt;&gt;" style="endArrow=block;html=1;dashed=1;" parent="1" source="cr-step2" target="cr-step3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-cr-3" value="" style="endArrow=block;html=1;" parent="1" source="cr-step3" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-rr-0" style="endArrow=block;html=1;" parent="1" source="actor-researcher" target="rr-step1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-rr-1" value="&lt;&lt;next&gt;&gt;" style="endArrow=block;html=1;dashed=1;" parent="1" source="rr-step1" target="rr-step2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-rr-2" value="&lt;&lt;next&gt;&gt;" style="endArrow=block;html=1;dashed=1;" parent="1" source="rr-step2" target="rr-step3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-rr-3" value="" style="endArrow=block;html=1;" parent="1" source="rr-step3" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-use-threat" value="&lt;&lt;threatens&gt;&gt;" style="endArrow=block;dashed=1;html=1;strokeColor=#555555;" parent="1" source="use-intended" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-auth-prevent" value="&lt;&lt;prevents&gt;&gt;" style="endArrow=block;html=1;strokeColor=#2e7d32;" parent="1" source="mit-auth" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-localhost-prevent" value="&lt;&lt;prevents&gt;&gt;" style="endArrow=block;html=1;strokeColor=#2e7d32;" parent="1" source="mit-localhost" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-deploy-prevent" value="&lt;&lt;prevents&gt;&gt;" style="endArrow=block;html=1;strokeColor=#2e7d32;" parent="1" source="mit-deploy" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-runbook-responds" value="&lt;&lt;responds&gt;&gt;" style="endArrow=block;html=1;strokeColor=#1565c0;" parent="1" source="mit-runbook" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-disclosure-manages" value="&lt;&lt;manages&gt;&gt;" style="endArrow=block;html=1;strokeColor=#6a1b9a;" parent="1" source="mit-disclosure" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-sql-prevent" value="&lt;&lt;prevents&gt;&gt;" style="endArrow=block;html=1;strokeColor=#2e7d32;" parent="1" source="mit-sql" target="misuse-disclosure" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
