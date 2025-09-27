@@ -12,7 +12,7 @@
 ## Project - MARIMO PROJECT
 [Marimo Project ](https://github.com/marimo-team/marimo) 
 
-[Marimo | Next Generation Python Notebook](https://marimo.io/)
+[Marimo | Next-Generation Python Notebook](https://marimo.io/)
 
 ---
 
