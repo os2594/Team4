@@ -43,7 +43,7 @@ Describe the enterprise, hospital, government, or research setting in which Mari
 
 ## Systems Engineering View
 
-![Bank Security Environment Diagram](static/systemEngineeringDiagram.png)
+![Bank Security Environment Diagram](https://github.com/os2594/Team4/blob/main/assets/Diagrams/systemEngineeringDiagram.png)
 
 ### Other systems can include: 
 - Identity and Access Management (IAM) - SSO, MFA and RBAC enforcement.
