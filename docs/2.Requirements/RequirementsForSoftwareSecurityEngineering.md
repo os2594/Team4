@@ -1,6 +1,6 @@
 # **Requirements For SoftwareSecurity Engineering**
 
-### **1. Data exfiltration - Osmar Carboney**
+## **1. Data exfiltration - Osmar Carboney**
 
 ###### **Internal Misuse Case:** Rogue Employee
 
@@ -41,7 +41,7 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 
 ---
 
-### **2. Malicious Code Execution - Justin Tobiason**
+## **2. Malicious Code Execution - Justin Tobiason**
 
 **Actor:** Financial Data Analyst  
 **Interaction:** Run Notebook Cell and See Results  
