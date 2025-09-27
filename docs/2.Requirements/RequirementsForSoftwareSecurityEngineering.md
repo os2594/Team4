@@ -110,9 +110,7 @@ The essential interaction is when a financial data analyst writes Python code in
 
 ---
 
-### Misuse Case #3 - Dominic Lanzante
-
-**Title:** Disclosure of Information via Publicly Exposed Marimo App  
+##**Title:** Disclosure of Information via Publicly Exposed Marimo App - Dominic Lanzante  
 
 **Description:**  
 If a Marimo app is started without effective authentication or is bound to a public interface, anyone who can reach the URL may view internal dashboards or data.  
