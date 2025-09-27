@@ -107,15 +107,6 @@ The essential interaction is when a financial data analyst writes Python code in
    - Monitor and log all outbound connections from notebook kernels.  
    - Generate alerts on anomalous patterns or unauthorized sites.  
 
-
-
-# Summarization of Improvements for Marimo
-
-1. Importing a module that can trigger a package installation means all the runtime code and dependencry resolution are dynamic and this could definetly be exploited. This could provide an attack vector to a malicious actor looking to install something to give them more access, break the software, or retreive data. I would like to evaluate the functionality and how easy it is to install malicious packages. - JT
-2. User isolation was another concern. If multiple financial analysts are using the notebook could they affect each others environment or read another user's data? I think we can experiment and validate the truth to this. - JT
-
----
-
 ---
 
 ### Misuse Case #3 - Dominic Lanzante
@@ -312,3 +303,16 @@ Specifically, I asked for help in:
 - Thinking about **residual risks and stronger controls**.  
 
 All analysis, alignment to the rubric, and final documentation were my own work.
+
+
+
+---
+
+# Summarization of Improvements for Marimo
+
+1. Importing a module that can trigger a package installation means all the runtime code and dependencry resolution are dynamic and this could definetly be exploited. This could provide an attack vector to a malicious actor looking to install something to give them more access, break the software, or retreive data. I would like to evaluate the functionality and how easy it is to install malicious packages. - JT
+2. User isolation was another concern. If multiple financial analysts are using the notebook could they affect each others environment or read another user's data? I think we can experiment and validate the truth to this. - JT
+3. What I found most interesting about this assignment was seeing how a small configuration choice, like a CLI flag or default binding, can create a huge security risk if not properly managed. It showed me that security isn’t just about writing strong code but also about guiding users with safe defaults, warnings, and clear documentation. This made me appreciate how much influence deployment and human behavior have in shaping the overall security of an open-source system. - DL
+4. The main concern I identified in the Marimo project is that while it offers authentication middleware and defaults to localhost, these protections can be easily bypassed with simple flags like --no-token or --host 0.0.0.0. This creates the risk of exposing sensitive notebooks or dashboards to the public internet. By incorporating my misuse case into their roadmap, Marimo could improve security by making safer defaults non-optional, adding stronger CLI warnings, and creating clear deployment guides and operator runbooks. These steps would help prevent accidental disclosures and make it easier for maintainers and users to follow secure practices directly from the project’s GitHub. - DL
+
+---
