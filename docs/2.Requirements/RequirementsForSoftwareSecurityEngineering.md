@@ -18,7 +18,7 @@ An attacker discovers a misconfigured Marimo notebook deployed as a public web a
 * **Aggravating Factors** : Unvalidated inputs
 * **Mitigation** : Input sanitization
 
-![](assets/data_exfilitration_diagram.drawio.svg)
+![](docs/2.Requirements/Diagrams/data_exfilitration_diagram.drawio.svg)
 
 ###### **List of security requirements derived from data exfiltration analysis**
 
@@ -85,7 +85,7 @@ The essential interaction is when a financial data analyst writes Python code in
 - **Misuse Case 3:** Abuse API Calls to Curl scripts outside of the environment  
 - **Misuse Case 4:** Execute Calls via Python to external sources (Network Traffic)  
 
-![](assets/MisuseCase-RunNotebook-V2.drawio.png)
+![](docs/2.Requirements/Diagrams/MisuseCase-RunNotebook-V2.drawio.png)
 
 ---
 
