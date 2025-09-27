@@ -2,10 +2,10 @@
 
 ## Team Members
 - Dominic Lanzante
-- [Add teammate 2]
-- [Add teammate 3]
-- [Add teammate 4]
-- [Add teammate 5]
+- Justin Tobiason
+- Osmar Carboney
+- Preeti Timalsina
+- Zaid Kakish
 
 ---
 
@@ -16,7 +16,7 @@
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 1. [Project Proposal](./docs/Proposal/Proposal.md)
 2. [Requirements for Software Security Engineering](./docs/Requirements/RequirementsForSoftwareSecurityEngineering.md)
 3. [Assurance Cases Software Security Engineering](./docs/AssuranceCases/AssuranceCases.md)
@@ -25,7 +25,7 @@
 
 ---
 
-## 📌 Repository Structure
+## Repository Structure
 - **docs/**
   - **Proposal/** → `Proposal.md`
   - **Requirements/** → `RequirementsForSoftwareSecurityEngineering.md`
@@ -37,10 +37,17 @@
 
 ---
 
-## 🚀 Purpose
+## Purpose
 This repository contains Team 4’s deliverables for **CYBR-8420 Software Assurance**.  
 It serves as a central hub for:
 - Project proposals and planning  
 - Security requirements and assurance cases  
 - Secure design documentation  
 - Code analysis and evaluation
+
+---
+
+## License
+This project is licensed under the [MIT License](./LICENSE).
+
+---
