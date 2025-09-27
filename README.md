@@ -17,7 +17,7 @@
 ---
 
 ## Table of Contents
-1. [Project Proposal](./docs/Proposal/Proposal.md)
+1. [Project Proposal](./docs/ProjectProposal/Proposal.md)
 2. [Requirements for Software Security Engineering](./docs/Requirements/RequirementsForSoftwareSecurityEngineering.md)
 3. [Assurance Cases Software Security Engineering](./docs/AssuranceCases/AssuranceCasesforSoftwareSecurityEngineering.md)
 4. [Designing for Software Security Engineering](./docs/Design/DesigningforSoftwareSecurityEngineering.md)
