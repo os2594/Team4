@@ -39,6 +39,7 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 * **Authentication & RBAC** : Marimo offers token abstractions (`AuthToken`) and ASGI middleware hooks, but does not ship with enterprise SSO, RBAC, or MFA integrations. Maybe these implementations are done through an other environment that Institutions must put in place.
 * **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors.
 
+---
 
 ### **2. Malicious Code Execution - Justin Tobiason**
 
