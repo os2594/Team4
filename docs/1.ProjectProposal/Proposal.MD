@@ -1,7 +1,7 @@
 # Project Proposal: Marimo
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/os2594/Team4/assets/Gifs/bar-widget.gif" alt="Marimo Bar Widget Demo" width="700"/>
+  <img src="https://github.com/os2594/Team4/blob/main/assets/Gifs/bar-widget.gif" alt="Marimo Bar Widget Demo" width="700"/>
 </p>
 
 ---
