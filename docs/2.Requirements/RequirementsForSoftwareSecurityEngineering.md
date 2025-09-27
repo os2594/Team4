@@ -1,6 +1,6 @@
 # **Requirements For SoftwareSecurity Engineering**
 
-### **1. Data exfiltration**
+### **1. Data exfiltration - Osmar Carboney**
 
 ###### **Internal Misuse Case:** Rogue Employee
 
@@ -40,7 +40,7 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 * **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors.
 
 
-### **2. Malicious Code Execution**
+### **2. Malicious Code Execution - Justin Tobiason**
 
 **Actor:** Financial Data Analyst  
 **Interaction:** Run Notebook Cell and See Results  
