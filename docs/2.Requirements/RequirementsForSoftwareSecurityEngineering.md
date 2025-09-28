@@ -306,10 +306,10 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 - **SR-4: Concurrency Management**  
   - No more than three concurrent queries may be executed per user. Additional queries must be queued.
  
-  - **SR-5: Sandbox Enforcement**  
+- **SR-5: Sandbox Enforcement**  
   - Subprocess creation and unauthorized network calls must be blocked inside the notebook environment. All denied attempts must be logged.
  
-  - **SR-6: Monitoring & Alerts**  
+- **SR-6: Monitoring & Alerts**  
   - The system must log query kills, throttling, and sandbox violations. Alerts should trigger when kill rates or queue delays exceed thresholds (e.g., >5 kills/min or >120s queue wait).
 
 ---
