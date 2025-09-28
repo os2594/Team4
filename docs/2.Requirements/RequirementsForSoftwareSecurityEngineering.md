@@ -289,7 +289,7 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 - Attempted bypass by spawning subprocesses or unauthorized outbound calls.  
 
 #### Visual (from draw.io)
-
+- ![Misuse Case Diagram](https://github.com/os2594/Team4/blob/main/docs/2.Requirements/Diagrams/DoSPtimalsina.drawio)
 ---
 
 ### Mitigations and Derived Security Requirements
