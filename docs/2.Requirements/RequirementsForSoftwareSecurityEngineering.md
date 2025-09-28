@@ -259,6 +259,71 @@ flowchart LR
 
 ---
 
+## 4. Denial of Service (DoS) – Preeti Timalsina  
+
+**Description:**  
+In a financial enterprise environment, analysts rely on marimo notebooks to run interactive queries against large transaction datasets. If queries are poorly designed or maliciously crafted, they can consume excessive memory, CPU, or database I/O. This leads to system slowdowns, notebook crashes, or even complete service outages, preventing other analysts from completing their work.   
+
+**Actors & Misusers:**  
+- **Accidental Analyst** — unintentionally executes a heavy query (e.g., SELECT * on millions of rows).  
+- **Disruptive Insider** — deliberately runs expensive queries or multiple sessions to degrade availability.  
+- **External Attacker** — abuses misconfigured deployments to flood the system with costly requests.  
+
+**Access Required:**  
+- Only a web browser or basic scanning tools; no insider privilege  
+
+---
+
+### Misuse Cases
+
+#### Misuse Case 1
+- Single runaway query that consumes excessive CPU or RAM.     
+
+#### Misuse Case 2
+- Repeated medium-cost queries that evade single-query caps (“low-and-slow” attack). 
+
+#### Misuse Case 3
+- Parallel notebooks or sessions opened to overwhelm shared resources.  
+
+#### Misuse Case 4
+- Attempted bypass by spawning subprocesses or unauthorized outbound calls.  
+
+#### Visual (from draw.io)
+
+---
+
+### Mitigations and Derived Security Requirements
+
+- **SR-1: Execution Limits**  
+  - Each notebook cell must enforce runtime and memory thresholds (e.g., 120s, 2GB). Queries exceeding these limits must be terminated automatically.  
+
+- **SR-2: Query Governor**  
+  - Before execution, queries should be cost-estimated. High-cost patterns (cartesian joins, unbounded scans) must be blocked or require approval. 
+
+- **SR-3: Rate Limiting & Resource Budgets**  
+  - Analyst accounts must be limited to a fixed number of queries per minute and rolling daily CPU/IO budgets. Excess queries must be queued or denied. 
+
+- **SR-4: Concurrency Management**  
+  - No more than three concurrent queries may be executed per user. Additional queries must be queued.
+ 
+  - **SR-5: Sandbox Enforcement**  
+  - Subprocess creation and unauthorized network calls must be blocked inside the notebook environment. All denied attempts must be logged.
+ 
+  - **SR-6: Monitoring & Alerts**  
+  - The system must log query kills, throttling, and sandbox violations. Alerts should trigger when kill rates or queue delays exceed thresholds (e.g., >5 kills/min or >120s queue wait).
+
+---
+
+### Alignment with Marimo Features
+- **Strengths**
+- Marimo’s reactive notebooks and plain .py format support reproducibility and auditability. 
+- Deployment flexibility (e.g., containers, WASM) makes it compatible with external quota and isolation tools. 
+- **Gaps**
+- Marimo does not natively enforce runtime/memory caps, rate limits, or query governors.
+- Sandbox and workload isolation must be configured at the environment or orchestration layer. 
+- **Conclusion** While marimo provides the interactive notebook foundation, DoS protections must be layered in at deployment time to ensure availability and fairness in a financial enterprise setting.
+
+
 ### Part 1 — Reflection
 Working on this misuse case showed that defaults and documentation are as important as code in preventing exposures.
 A single CLI flag or unclear deployment doc can leak sensitive data.
