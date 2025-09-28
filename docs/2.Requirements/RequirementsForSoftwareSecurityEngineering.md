@@ -340,6 +340,9 @@ A single CLI flag or unclear deployment doc can leak sensitive data.
 OSS projects must therefore combine technical controls (secure defaults) with process controls (coordinated disclosure, operator runbooks).
 My work here complements the other team interactions by ensuring secure deployment and policy baselines that reinforce their features.
 
+**Preeti Timalsina**:
+Working on the Denial of Service misuse case showed me how to turn a broad availability risk into clear, testable requirements. I learned that DoS isn’t just heavy queries and it also includes patterns like storms and slow drains. Writing acceptance criteria was most useful because it made each requirement measurable and practical.
+
 ---
 
 ## Part 2 — Documentation Review
@@ -371,8 +374,6 @@ This exercise reinforced that open-source maintainers must provide both **secure
 I also learned that security risks often arise from **how features are deployed**, not just how they are coded.  
 My contribution provides the **secure deployment baseline** for our team’s project deliverable.
 
-**Preeti Timalsina**:
-Working on the Denial of Service misuse case showed me how to turn a broad availability risk into clear, testable requirements. I learned that DoS isn’t just heavy queries and it also includes patterns like storms and slow drains. Writing acceptance criteria was most useful because it made each requirement measurable and practical.
 
 ---
 
@@ -385,7 +386,12 @@ Specifically, I asked for help in:
 
 All analysis, alignment to the rubric, and final documentation were my own work.
 
+**Preeti Timalsina**: 
+AI Prompt Used: 
+I used the same prompt provided by the professor, but adapted it to my misuse case of Denial of Service. The prompt asked an expert software security requirements engineer to suggest misuse cases and countermeasures for the use case: “A financial analyst runs queries in a notebook to analyze large transaction datasets,” focusing on DoS risks like runaway queries, storms, and amplification patterns.
 
+Reflection: 
+The prompt was useful for identifying the right actors (analyst, insider, external attacker) and the specific actions they might take that could cause a Denial of Service. It also helped me think more thoroughly about how to define acceptance criteria for each security requirement so they would be clear and testable. In addition, I used the AI for minor guidance on designing my draw.io diagram, which made it easier to keep the layout consistent with my teammates’ diagrams.
 
 ---
 
