@@ -269,9 +269,6 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 - **Disruptive Insider** — deliberately runs expensive queries or multiple sessions to degrade availability.  
 - **External Attacker** — abuses misconfigured deployments to flood the system with costly requests.  
 
-**Access Required:**  
-- Only a web browser or basic scanning tools; no insider privilege  
-
 ---
 
 ### Misuse Cases
@@ -290,7 +287,7 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 
 #### Visual (from draw.io)
 - ![Misuse Case Diagram](https://github.com/os2594/Team4/blob/main/docs/2.Requirements/Diagrams/DoSPtimalsina.drawio)
----
+---<img width="1242" height="1045" alt="image" src="https://github.com/user-attachments/assets/af823ccd-f981-482d-8643-69734681fb04" />
 
 ### Mitigations and Derived Security Requirements
 
@@ -323,6 +320,7 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 - Sandbox and workload isolation must be configured at the environment or orchestration layer. 
 - **Conclusion** While marimo provides the interactive notebook foundation, DoS protections must be layered in at deployment time to ensure availability and fairness in a financial enterprise setting.
 
+---
 
 ### Part 1 — Reflection
 Working on this misuse case showed that defaults and documentation are as important as code in preventing exposures.
