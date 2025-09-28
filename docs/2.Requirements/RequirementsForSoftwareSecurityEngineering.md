@@ -2,9 +2,18 @@
 
 ## **1. Data exfiltration - Osmar Carboney**
 
+**Actor:** Financial Analyst or External Attacker 
+**Interaction:** Export Notebook or Execute SQL Query via Web Interface
+
+**Description:** The essential interaction occurs when a financial analyst uses Marimo to query sensitive customer data and exports results for reporting or analysis. This interaction is central to the notebook’s value in the financial institution enabling reproducible, data-driven insights. However, the same export and query mechanisms can be abused by an insider or external attacker to extract confidential data.
+
+**Why This Is Essential**
+
+This interaction represents a core operational capability: transforming raw financial data into actionable insights. Analysts rely on notebook exports to share dashboards, generate reports, and collaborate across teams.
+
 ###### **Internal Misuse Case:** Rogue Employee
 
-A financial analyst with elevated access uses Marimo to query sensitive customer data and exports it via an 						unmonitored notebook deployment.
+A financial analyst with elevated access uses Marimo to query sensitive customer data and exports it via an unmonitored notebook deployment.
 
 * **Threat** : Data exfiltration
 * **Aggravating Factors** : Loose access controls
@@ -14,7 +23,7 @@ A financial analyst with elevated access uses Marimo to query sensitive customer
 
 An attacker discovers a misconfigured Marimo notebook deployed as a public web app and uses SQL injection to access backend financial data.
 
-* **Threat** : Unauthorized data access
+* **Threat** : Data exfilitration via unauthorized data access
 * **Aggravating Factors** : Unvalidated inputs
 * **Mitigation** : Input sanitization
 
@@ -33,11 +42,6 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 
 4.  **SR-4: Input Validation & Parameterized Queries**
    All SQL cell executions shall use parameterized queries. User inputs must be sanitized or bound as parameters to eliminate injection vectors.
-
-###### **Alignment with Marimo’s Advertised Features**
-
-* **Authentication & RBAC** : Marimo offers token abstractions (`AuthToken`) and ASGI middleware hooks, but does not ship with enterprise SSO, RBAC, or MFA integrations. Maybe these implementations are done through an other environment that Institutions must put in place.
-* **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors.
 
 ---
 
@@ -313,5 +317,7 @@ All analysis, alignment to the rubric, and final documentation were my own work.
 2. User isolation was another concern. If multiple financial analysts are using the notebook could they affect each others environment or read another user's data? I think we can experiment and validate the truth to this. - JT
 3. What I found most interesting about this assignment was seeing how a small configuration choice, like a CLI flag or default binding, can create a huge security risk if not properly managed. It showed me that security isn’t just about writing strong code but also about guiding users with safe defaults, warnings, and clear documentation. This made me appreciate how much influence deployment and human behavior have in shaping the overall security of an open-source system. - DL
 4. The main concern I identified in the Marimo project is that while it offers authentication middleware and defaults to localhost, these protections can be easily bypassed with simple flags like --no-token or --host 0.0.0.0. This creates the risk of exposing sensitive notebooks or dashboards to the public internet. By incorporating my misuse case into their roadmap, Marimo could improve security by making safer defaults non-optional, adding stronger CLI warnings, and creating clear deployment guides and operator runbooks. These steps would help prevent accidental disclosures and make it easier for maintainers and users to follow secure practices directly from the project’s GitHub. - DL
+5. **Authentication & RBAC** : Marimo offers token abstractions (`AuthToken`) and ASGI middleware hooks, but does not ship with enterprise SSO, RBAC, or MFA integrations. Maybe these implementations are done through an other environment that Institutions must put in place. - Osmar C.
+6. **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors. - Osmar C.
 
 ---
