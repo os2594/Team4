@@ -289,35 +289,47 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 - ![Misuse Case Diagram](https://github.com/os2594/Team4/blob/main/docs/2.Requirements/Diagrams/DoSPtimalsina.drawio)
 ---<img width="1242" height="1045" alt="image" src="https://github.com/user-attachments/assets/af823ccd-f981-482d-8643-69734681fb04" />
 
-### Mitigations and Derived Security Requirements
+### Mitigations and Derived Security Requirements with Acceptance Criteria
 
 - **SR-1: Execution Limits**  
-  - Each notebook cell must enforce runtime and memory thresholds (e.g., 120s, 2GB). Queries exceeding these limits must be terminated automatically.  
+  - Each notebook cell must enforce runtime and memory thresholds (e.g., 120s, 2GB). Queries exceeding these limits must be terminated automatically.
+  - Acceptance Criteria
+    -- A query exceeding configured time or memory (e.g., 120s or 2 GiB) is automatically killed, the user sees a termination error, and the event is logged with user, session, query hash, and reason.
 
 - **SR-2: Query Governor**  
-  - Before execution, queries should be cost-estimated. High-cost patterns (cartesian joins, unbounded scans) must be blocked or require approval. 
+  - Before execution, queries should be cost-estimated. High-cost patterns (cartesian joins, unbounded scans) must be blocked or require approval.
+  - Acceptance Criteria
+    -- When a query matches a banned pattern or exceeds the cost threshold, execution is denied or requires explicit approval, and the action is logged.
 
 - **SR-3: Rate Limiting & Resource Budgets**  
-  - Analyst accounts must be limited to a fixed number of queries per minute and rolling daily CPU/IO budgets. Excess queries must be queued or denied. 
+  - Analyst accounts must be limited to a fixed number of queries per minute and rolling daily CPU/IO budgets. Excess queries must be queued or denied.
+  - Accptance Criteria
+    -- When a user exceeds rate or budget limits, further queries are queued or denied with a clear “rate limited” message, and the event is logged.
 
 - **SR-4: Concurrency Management**  
   - No more than three concurrent queries may be executed per user. Additional queries must be queued.
+  - Acceptance Criteria
+    -- Submitting more than the allowed concurrent queries runs only up to the limit while the rest are queued, preserving responsiveness for other tenants
  
 - **SR-5: Sandbox Enforcement**  
   - Subprocess creation and unauthorized network calls must be blocked inside the notebook environment. All denied attempts must be logged.
+  - Acceptance Criteria
+   -- Attempts to spawn a process or contact a disallowed host fail with a policy error and are recorded in the audit log.
  
 - **SR-6: Monitoring & Alerts**  
   - The system must log query kills, throttling, and sandbox violations. Alerts should trigger when kill rates or queue delays exceed thresholds (e.g., >5 kills/min or >120s queue wait).
+  - Acceptance Criteria
+    -- When kill rates or queue delays exceed thresholds (e.g., >5 kills/min or p95 wait >120s), an automated alert is sent to on-call staff with tenant/session details.
 
 ---
 
 ### Alignment with Marimo Features
 - **Strengths**
-- Marimo’s reactive notebooks and plain .py format support reproducibility and auditability. 
-- Deployment flexibility (e.g., containers, WASM) makes it compatible with external quota and isolation tools. 
+  Marimo’s reactive notebooks and plain .py format support reproducibility and auditability. 
+  Deployment flexibility (e.g., containers, WASM) makes it compatible with external quota and isolation tools. 
 - **Gaps**
-- Marimo does not natively enforce runtime/memory caps, rate limits, or query governors.
-- Sandbox and workload isolation must be configured at the environment or orchestration layer. 
+  Marimo does not natively enforce runtime/memory caps, rate limits, or query governors.
+  Sandbox and workload isolation must be configured at the environment or orchestration layer. 
 - **Conclusion** While marimo provides the interactive notebook foundation, DoS protections must be layered in at deployment time to ensure availability and fairness in a financial enterprise setting.
 
 ---
