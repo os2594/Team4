@@ -369,7 +369,10 @@ My work here complements the other team interactions by ensuring secure deployme
 ### Reflection (Individual Contribution)
 This exercise reinforced that open-source maintainers must provide both **secure defaults** and **clear documentation** to reduce human error.  
 I also learned that security risks often arise from **how features are deployed**, not just how they are coded.  
-My contribution provides the **secure deployment baseline** for our team’s project deliverable.  
+My contribution provides the **secure deployment baseline** for our team’s project deliverable.
+
+**Preeti Timalsina**:
+Working on the Denial of Service misuse case showed me how to turn a broad availability risk into clear, testable requirements. I learned that DoS isn’t just heavy queries and it also includes patterns like storms and slow drains. Writing acceptance criteria was most useful because it made each requirement measurable and practical.
 
 ---
 
