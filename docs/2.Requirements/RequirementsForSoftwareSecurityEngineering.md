@@ -70,17 +70,12 @@ The essential interaction is when a financial data analyst writes Python code in
 
 ---
 
-###### Misusers (Contextualized for an Enterprise Environment)
+###### Misusers 
 
 1. **External Attacker**  
    - **Motive:** Inject malicious payloads to run code in the notebook (e.g., cryptominer, data theft).  
    - **Resources/Access:** Gains access via phishing, misconfiguration, or weak access controls.  
    - **Attack of Choice:** Execute malicious code by abusing notebook execution to run system commands, launch API calls, or modify the system.  
-
-2. **Malicious Insider**  
-   - **Motive:** Abuse legitimate access to unauthorized code.  
-   - **Resources/Access:** Valid notebook credentials and execution rights.  
-   - **Attack of Choice:** Leverage cell execution to bypass sandboxing and attempt privilege escalation or data exfiltration.  
 
 ---
 
@@ -392,6 +387,13 @@ I used the same prompt provided by the professor, but adapted it to my misuse ca
 
 Reflection: 
 The prompt was useful for identifying the right actors (analyst, insider, external attacker) and the specific actions they might take that could cause a Denial of Service. It also helped me think more thoroughly about how to define acceptance criteria for each security requirement so they would be clear and testable. In addition, I used the AI for minor guidance on designing my draw.io diagram, which made it easier to keep the layout consistent with my teammates’ diagrams.
+
+**Justin Tobiason**: 
+AI Prompt Used: 
+I leveraged a prompt that guided my essential interaction and the possible misuse cases. It read, "A financial data analyst executes a python cell in marimo to return analytics". The prompt lead me down a path that focuses on the potential to run malicious code in the cell and what that could look like. Then I attempted to determine additional scenarios that could be achieved at each level by an attacker. 
+
+Reflection: 
+By using the prompt I was able to identify more scenarios in addition to the potential routes they could take. I was able to juxtapose some of the information into a diagram providing a clear picture of the threats and mitigations that make up the use case. 
 
 ---
 
