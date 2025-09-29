@@ -428,24 +428,24 @@ Debug mode is a very common misconfiguration in python and web applications in v
 
 **Misuse Cases:**
 
-1- Internal Attacker: 
+1- Internal Attacker
 - A developer or insider leaves debug mode set on True inside a development environment
-  - Threat: Data Breach
-  - Attack Vector: Exposed debug tools
-  - Mitigation: Ensure debug=False, Startup checks, Access Control
+  - **Threat**: Data Breach
+  - **Attack Vector**: Exposed debug tools
+  - **Mitigation**: Ensure debug=False, Startup checks, Access Control
  
-2 - External Attacker:
+2 - External Attacker
 - An attacker sends malformed input in a production environment and is able to intercept error messages which can provide insight on system paths, logs, and potential credentials. 
- - Threat: Unauthorized Access
- - Attack Vector: Debug interface messages and logs
- - Mitigation: Role Based Access Control for Debug, Alerts, IDS
+ - **Threat**: Unauthorized Access
+ - **Attack Vector**: Debug interface messages and logs
+ - **Mitigation**: Role Based Access Control for Debug, Alerts, IDS
 
 Security requirements to put into place:
 
-SR-001: The system should automatically prevent or refuse deployment in any environment that is labeled as production.
+1- SR-001 **Debug mode deployment checks**: The system should automatically prevent or refuse deployment in any environment that is labeled as production.
 
-SR-002: The system should not expose or issue any message that may identify system paths, stacks traces, variables, or logs, as part of debug mode.
+2- SR-002: **Error Message Security**: The system should not expose or issue any message that may identify system paths, stacks traces, variables, or logs, as part of debug mode.
 
-SR-003: All debug features and access should require the proper level of authetication and authroization.
+3- SR-003 **Role Based Access Control**: All debug features and access should require the proper level of authetication and authroization.
 
-SR-004; Debug mode may only be enabled by admins, and always require disabling before pushing.
+4- SR-004 **Alerts**: Alerts in place to warn the user if debug mode is active.
