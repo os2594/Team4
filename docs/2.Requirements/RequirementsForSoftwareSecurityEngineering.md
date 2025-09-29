@@ -414,11 +414,12 @@ The prompt was useful for identifying the right actors (analyst, insider, extern
 **Description:** Run the Marimo web application in debug mode during development to display detailed errors and logs.
 
 **Actors:**
-- External Actor: Unauthenticated user probing public application.
-- Internal Actor: An insider deploying the system without debug mode.
+- **External Actor:** Unauthenticated user probing the public application with the intention to attack the system.
+- **Internal Actor**: An insider threat purposefully deploying the system to production with debug mode.
 
 
 Interaction: The attacker runs debug mode to access logs and credential.
+
 
 **Why this is essential:**
 
@@ -435,8 +436,16 @@ Debug mode is a very common misconfiguration in python and web applications in v
  
 2 - External Attacker:
 - An attacker sends malformed input in a production environment and is able to intercept error messages which can provide insight on system paths, logs, and potential credentials. 
- - Threat: Anauthorized Access
+ - Threat: Unauthorized Access
  - Attack Vector: Debug interface messages and logs
  - Mitigation: Role Based Access Control for Debug, Alerts, IDS
 
-List of security requirements to put into place:
+Security requirements to put into place:
+
+SR-001: The system should automatically prevent or refuse deployment in any environment that is labeled as production.
+
+SR-002: The system should not expose or issue any message that may identify system paths, stacks traces, variables, or logs, as part of debug mode.
+
+SR-003: All debug features and access should require the proper level of authetication and authroization.
+
+SR-004; Debug mode may only be enabled by admins, and always require disabling before pushing.
