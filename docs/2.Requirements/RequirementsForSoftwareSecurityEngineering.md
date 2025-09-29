@@ -443,7 +443,8 @@ Debug mode is a very common misconfiguration in python and web applications in v
 ![Visual](https://raw.githubusercontent.com/os2594/Team4/refs/heads/main/docs/2.Requirements/Diagrams/Case.drawio)
 
 
-Security requirements to put into place:
+
+Security requirements to put into place
 
 1- SR-001 **Debug mode deployment checks**: The system should automatically prevent or refuse deployment in any environment that is labeled as production.
 
