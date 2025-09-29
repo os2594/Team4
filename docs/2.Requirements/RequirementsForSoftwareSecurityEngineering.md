@@ -441,6 +441,7 @@ Debug mode is a very common misconfiguration in python and web applications in v
  - **Mitigation**: Role Based Access Control for Debug, Alerts, IDS
 
 ![Visual](https://raw.githubusercontent.com/os2594/Team4/refs/heads/main/docs/2.Requirements/Diagrams/Case.drawio)
+![Visual](https://github.com/os2594/Team4/blob/main/docs/2.Requirements/Diagrams/Screenshot%202025-09-29%20153258.png)
 
 
 
