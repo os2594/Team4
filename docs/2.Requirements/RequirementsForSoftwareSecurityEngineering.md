@@ -407,3 +407,36 @@ The prompt was useful for identifying the right actors (analyst, insider, extern
 8. I also found that there’s little coverage of monitoring or alerting practices. Operators aren’t given examples of how to track unusual behavior such as repeated query crashes or spikes in resource use. Adding recommendations for integration with tools like Prometheus or Grafana would make it easier to catch and respond to issues early. – Preeti T.
 
 ---
+
+
+## 5. Debug Mode Exploitation – Zaid Kakish
+
+**Description:** Run the Marimo web application in debug mode during development to display detailed errors and logs.
+
+**Actors:**
+- External Actor: Unauthenticated user probing public application.
+- Internal Actor: An insider deploying the system without debug mode.
+
+
+Interaction: The attacker runs debug mode to access logs and credential.
+
+**Why this is essential:**
+
+Debug mode is a very common misconfiguration in python and web applications in various deployment environments If debug mode is present in production environments, it could leak out critical details such as system paths, logs, and potential credentials. Debug mode is not a code vulnerability, but instead an error when it comes to deploying code in production environemnts. This is a critical and easy mistake to make as it relies on ensuring that there are checks in place or alerts for debug mode. If no alerts are presents and a code goes live, it could not be noticed.
+
+
+**Misuse Cases:**
+
+1- Internal Attacker: 
+- A developer or insider leaves debug mode set on True inside a development environment
+  - Threat: Data Breach
+  - Attack Vector: Exposed debug tools
+  - Mitigation: Ensure debug=False, Startup checks, Access Control
+ 
+2 - External Attacker:
+- An attacker sends malformed input in a production environment and is able to intercept error messages which can provide insight on system paths, logs, and potential credentials. 
+ - Threat: Anauthorized Access
+ - Attack Vector: Debug interface messages and logs
+ - Mitigation: Role Based Access Control for Debug, Alerts, IDS
+
+List of security requirements to put into place:
