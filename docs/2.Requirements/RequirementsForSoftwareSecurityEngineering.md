@@ -440,7 +440,7 @@ By using the prompt I was able to identify more scenarios in addition to the pot
 6. **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors. - Osmar C.
 7. One area I noticed missing in Marimo’s documentation is guidance on resource management. There’s no mention of query timeouts, memory caps, or concurrency controls that could prevent users from unintentionally overloading the system. Clear documentation around these safeguards would help reduce the risk of denial of service. – Preeti T.
 8. I also found that there’s little coverage of monitoring or alerting practices. Operators aren’t given examples of how to track unusual behavior such as repeated query crashes or spikes in resource use. Adding recommendations for integration with tools like Prometheus or Grafana would make it easier to catch and respond to issues early. – Preeti T.
-
+9. With public facing notebooks, there absolutely needs to be some sort of authorization mechanism to ensure no one can get access to sensitive logs or staes from debug mode. By implementing some sort of authentication mechanism to ensure the person claims they are who they say there, and authorizing them to understand their level access, this could limit the issue of debug mode. - Zaid K
 ---
 
 
