@@ -329,6 +329,55 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 
 ---
 
+## 5. Debug Mode Exploitation – Zaid Kakish
+
+**Description:** Run the Marimo web application in debug mode during development to display detailed errors and logs.
+
+**Actors:**
+- **External Actor:** Unauthenticated user probing the public application with the intention to attack the system.
+- **Internal Actor**: An insider threat purposefully deploying the system to production with debug mode.
+
+
+Interaction: The attacker runs debug mode to access logs and credential.
+
+
+**Why this is essential:**
+
+Debug mode is a very common misconfiguration in python and web applications in various deployment environments If debug mode is present in production environments, it could leak out critical details such as system paths, logs, and potential credentials. Debug mode is not a code vulnerability, but instead an error when it comes to deploying code in production environemnts. This is a critical and easy mistake to make as it relies on ensuring that there are checks in place or alerts for debug mode. If no alerts are presents and a code goes live, it could not be noticed.
+
+
+**Misuse Cases:**
+
+1- Internal Attacker
+- A developer or insider leaves debug mode set on True inside a development environment
+  - **Threat**: Data Breach
+  - **Attack Vector**: Exposed debug tools
+  - **Mitigation**: Ensure debug=False, Startup checks, Access Control
+ 
+2 - External Attacker
+- An attacker sends malformed input in a production environment and is able to intercept error messages which can provide insight on system paths, logs, and potential credentials. 
+ - **Threat**: Unauthorized Access
+ - **Attack Vector**: Debug interface messages and logs
+ - **Mitigation**: Role Based Access Control for Debug, Alerts, IDS
+
+![Visual](https://raw.githubusercontent.com/os2594/Team4/refs/heads/main/docs/2.Requirements/Diagrams/Case.drawio)
+![Visual](https://github.com/os2594/Team4/blob/main/docs/2.Requirements/Diagrams/Screenshot%202025-09-29%20153258.png)
+
+
+
+Security requirements to put into place
+
+1- SR-001 **Debug mode deployment checks**: The system should automatically prevent or refuse deployment in any environment that is labeled as production.
+
+2- SR-002: **Error Message Security**: The system should not expose or issue any message that may identify system paths, stacks traces, variables, or logs, as part of debug mode.
+
+3- SR-003 **Role Based Access Control**: All debug features and access should require the proper level of authetication and authroization.
+
+4- SR-004 **Alerts**: Alerts in place to warn the user if debug mode is active.
+
+
+---
+
 ### Part 1 — Reflection
 Working on this misuse case showed that defaults and documentation are as important as code in preventing exposures.
 A single CLI flag or unclear deployment doc can leak sensitive data.
@@ -411,48 +460,3 @@ By using the prompt I was able to identify more scenarios in addition to the pot
 ---
 
 
-## 5. Debug Mode Exploitation – Zaid Kakish
-
-**Description:** Run the Marimo web application in debug mode during development to display detailed errors and logs.
-
-**Actors:**
-- **External Actor:** Unauthenticated user probing the public application with the intention to attack the system.
-- **Internal Actor**: An insider threat purposefully deploying the system to production with debug mode.
-
-
-Interaction: The attacker runs debug mode to access logs and credential.
-
-
-**Why this is essential:**
-
-Debug mode is a very common misconfiguration in python and web applications in various deployment environments If debug mode is present in production environments, it could leak out critical details such as system paths, logs, and potential credentials. Debug mode is not a code vulnerability, but instead an error when it comes to deploying code in production environemnts. This is a critical and easy mistake to make as it relies on ensuring that there are checks in place or alerts for debug mode. If no alerts are presents and a code goes live, it could not be noticed.
-
-
-**Misuse Cases:**
-
-1- Internal Attacker
-- A developer or insider leaves debug mode set on True inside a development environment
-  - **Threat**: Data Breach
-  - **Attack Vector**: Exposed debug tools
-  - **Mitigation**: Ensure debug=False, Startup checks, Access Control
- 
-2 - External Attacker
-- An attacker sends malformed input in a production environment and is able to intercept error messages which can provide insight on system paths, logs, and potential credentials. 
- - **Threat**: Unauthorized Access
- - **Attack Vector**: Debug interface messages and logs
- - **Mitigation**: Role Based Access Control for Debug, Alerts, IDS
-
-![Visual](https://raw.githubusercontent.com/os2594/Team4/refs/heads/main/docs/2.Requirements/Diagrams/Case.drawio)
-![Visual](https://github.com/os2594/Team4/blob/main/docs/2.Requirements/Diagrams/Screenshot%202025-09-29%20153258.png)
-
-
-
-Security requirements to put into place
-
-1- SR-001 **Debug mode deployment checks**: The system should automatically prevent or refuse deployment in any environment that is labeled as production.
-
-2- SR-002: **Error Message Security**: The system should not expose or issue any message that may identify system paths, stacks traces, variables, or logs, as part of debug mode.
-
-3- SR-003 **Role Based Access Control**: All debug features and access should require the proper level of authetication and authroization.
-
-4- SR-004 **Alerts**: Alerts in place to warn the user if debug mode is active.
