@@ -53,22 +53,16 @@ Derived from the internal (rogue employee) and external (hacker via SQL injectio
 **Description:**  
 The essential interaction is when a financial data analyst writes Python code in a notebook cell and executes it. The notebook environment evaluates the code, updates results (tables, outputs, or visualizations), and ensures computations remain reproducible and reactive.  
 
----
-
 ###### Why this is Essential
 - This represents the primary value proposition of the notebook system: interactive, reproducible computation.  
 - It links the financial analyst with the system in its operational environment which is meant to analyze financial data.  
 - It triggers the notebook’s dependency tracking and cell re-execution features.  
-
----
 
 ###### Anti Use Case
 
 **Normal Use Case**  
 - **Actor (User):** Financial Analyst  
 - **System-of-Interest:** Notebook executes analyst’s Python code in a reactive cell, tracks dependencies, and shows results.  
-
----
 
 ###### Misusers 
 
@@ -86,8 +80,6 @@ The essential interaction is when a financial data analyst writes Python code in
 - **Misuse Case 4:** Execute Calls via Python to external sources (Network Traffic)  
 
 ![](https://raw.githubusercontent.com/os2594/Team4/main/docs/2.Requirements/Diagrams/MisuseCase-RunNotebook-V2.drawio.png)
-
----
 
 ###### Security Requirements (Countermeasures)
 
@@ -121,8 +113,6 @@ If a Marimo app is started without effective authentication or is bound to a pub
 
 **Access Required:**  
 - Only a web browser or basic scanning tools; no insider privilege  
-
----
 
 ### Misuse → Mitigations → Requirements
 
@@ -201,8 +191,6 @@ flowchart LR
     R1 --> SR6
 ```
 
----
-
 ### Derived Security Requirements
 
 #### Process (Policy & Operations)
@@ -218,8 +206,6 @@ flowchart LR
 - **PD-3 Operator runbook for “Exposed Instance”**  
   - *Requirement:* Add `docs/runbooks/exposed-instance.md` with disable/rotate/notify steps  
   - *Test:* File exists with clear response actions  
-
----
 
 #### Technical (Defaults, Docs, Guides)
 
@@ -242,8 +228,6 @@ flowchart LR
 - **TR-5 Parameterized SQL in examples**  
   - *Requirement:* Replace concatenated SQL with parameterized queries in docs  
   - *Test:* Examples include “do/don’t” notes on safe queries  
-
----
 
 ### Alignment with Marimo Features
 - **Auth & middleware** → already documented; requirements strengthen defaults  
