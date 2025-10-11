@@ -88,7 +88,7 @@ This assurance case focuses on **Confidentiality of Data in Transit** within the
 
 The goal is to determine whether Marimo ensures that data exchanged between client and backend components remains **confidential, tamper-resistant, and protected** from interception or disclosure.  
 
-Because Marimo executes reactive Python code in a **client–server model**, safeguarding the confidentiality of transmitted information, including user code, notebook results, and execution metadata—is critical.  
+Because Marimo executes reactive Python code in a **client–server model**, safeguarding the confidentiality of transmitted information, including user code, notebook results, and execution metadata is critical.  
 
 If the transport layer is misconfigured, downgraded, or exposed through weak certificate validation, an attacker could intercept or manipulate sensitive data in transit.  
 
