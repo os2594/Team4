@@ -80,8 +80,109 @@ This exercise helped refine the clarity and depth of the argument, ensuring that
 
 ---
 
+## Assurance Case: Confidentiality of Data in Transit in Marimo - Dominic Lanzante  
+**Focus Area:** Data Confidentiality & Secure Transport
 
+### 1. Overview  
+This assurance case focuses on **Confidentiality of Data in Transit** within the Marimo open-source reactive Python notebook.  
 
+The goal is to determine whether Marimo ensures that data exchanged between client and backend components remains **confidential, tamper-resistant, and protected** from interception or disclosure.  
+
+Because Marimo executes reactive Python code in a **client–server model**, safeguarding the confidentiality of transmitted information—including user code, notebook results, and execution metadata—is critical.  
+
+If the transport layer is misconfigured, downgraded, or exposed through weak certificate validation, an attacker could intercept or manipulate sensitive data in transit.  
+
+This assurance claim evaluates Marimo’s **transport-layer security posture, authentication mechanisms, logging behavior, and continuous verification processes** that collectively protect data in motion.
+
+### 2. Top-Level Claim (C1)  
+
+**C1:** *Confidentiality of data in transit between client and backend is ensured.*
+
+**Intent:**  
+This claim asserts that all data transmitted between Marimo’s client interface and backend environment remains protected against unauthorized access or disclosure, provided that secure communication protocols (TLS 1.2+/1.3, HTTPS, HSTS) and verified encryption policies are correctly enforced.
+
+### 3. Argument Summary  
+
+The argument supporting this claim is structured around **five key assurance dimensions**, each validated through tangible evidence from the Marimo repository.  
+
+#### **1. Transport Security Enforced (C2)**  
+Marimo enforces HTTPS-only connections with TLS 1.2+/1.3 and HSTS to prevent downgrade or plaintext exposure.  
+
+- **Rebuttal R2:** Unless TLS is misconfigured or downgraded.  
+- **Evidence:**  
+  - `infra/nginx/nginx.conf`  
+  - `tests/test_loggers.py`
+
+#### **2. Authenticated Client–Server Exchange (C3)**  
+Server certificates and session tokens authenticate both endpoints to maintain message integrity and resist impersonation attacks.  
+
+- **Rebuttal R3:** Unless token leakage or invalid certificates occur.  
+- **Evidence:**  
+  - `marimo/_server/asgi.py`  
+  - `marimo/_server/tokens.py`
+
+#### **3. Safe Client Data Handling (C4)**  
+Input validation and log sanitization prevent leakage of sensitive data through HTTP headers, error traces, or application logs.  
+
+- **Undermine UM1:** If client input validation and logging sanitization are enforced, safe handling of transmitted data is maintained.  
+- **Rebuttal R4:** Unless CSP headers are missing or ignored.  
+- **Evidence:**  
+  - `marimo/tests/test_api.py`  
+  - `marimo/_server/logging.py`
+
+#### **4. Hardened Deployment (C5)**  
+Secure deployment practices and configuration hardening reduce exposure through reverse proxies and unpatched components.  
+
+- **Rebuttal R5:** Unless public exposure occurs via reverse proxy.  
+- **Evidence:**  
+  - `docs/programmatic_server.md`
+
+#### **5. Verified Encryption Policies (C6)**  
+Continuous integration (CI) tests verify encryption coverage and TLS configuration consistency across deployments.  
+
+- **Rebuttal R6:** Unless coverage gaps omit encryption validation.  
+- **Evidence:**  
+  - `marimo/tests/security/test_transport_tls.py`
+
+#### **Supporting Reasoning**
+
+**Inference Rule (IR1):**  
+If TLS and HSTS are enforced, and certificate validation is properly implemented, then data in transit remains confidential.  
+
+**Undercut (UC1):**  
+Unless certificate validation is bypassed.  
+
+These reasoning elements form the logical backbone of this assurance case, illustrating how multiple layers of evidence collectively strengthen the top-level claim.
+
+### 4. Diagram  
+![](https://github.com/os2594/Team4/blob/main/docs/3.AssuranceCases/Diagrams/Dlanzante_Software_Assurance_Confidentiality_of_Data.png)
+
+### 5. AI Summary  
+During the construction of this assurance case, I used **AI assistance selectively** to refine technical phrasing, improve structural consistency, and ensure alignment with formal assurance-case notation.  
+
+The AI tool helped improve readability and confirm that sub-claims, rebuttals, and inference rules followed the “good claim” criteria discussed in class.  
+
+However, I was **not solely reliant on AI**.  
+The core reasoning, evidence mapping, and diagram construction were developed manually based on my own prior analyses of Marimo’s architecture and source code.  
+
+In multiple instances, AI-generated content contained false or oversimplified assumptions, which I corrected through manual validation against the repository and class material.  
+
+Ultimately, the AI served as a **supplemental editor and brainstorming partner**, while the assurance logic, diagram design, and repository evidence were fully derived from my individual research and understanding of the system.
+
+### Final Note  
+This assurance case demonstrates a **comprehensive and technically coherent argument** that Marimo maintains confidentiality of data in transit through:  
+
+- Enforced transport-layer security (TLS 1.2+/1.3, HSTS)  
+- Authenticated client–server communication  
+- Safe handling and sanitization of transmitted data  
+- Hardened and secure deployment practices  
+- Verified encryption and continuous testing  
+
+The argument achieves both **breadth** and **depth**, addressing credible threats (misconfigurations, certificate bypass, insecure headers) while grounding all claims in verifiable project artifacts.  
+
+Together, these components establish strong evidence-based assurance that **Marimo preserves confidentiality of data in transit within its operational environment.**
+
+---
 # Part 2 - Reflection
 
 ## Justin Tobiason
