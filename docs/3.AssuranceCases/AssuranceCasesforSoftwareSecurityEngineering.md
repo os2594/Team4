@@ -199,11 +199,11 @@ I now see how assurance cases can be used not just for documentation, but as a s
 
 ## Dominic Lanzante  
 
-Working on this assurance case deepened my understanding of how security claims must be built on verifiable, technical evidence not just theoretical reasoning. Focusing on the confidentiality of data in transit taught me to think critically about **how TLS configurations, authentication, and encryption testing interact to preserve secure communication** in open-source systems like Marimo.  
+Working on this assurance case deepened my understanding of how security claims must be built on verifiable, technical evidence not just theoretical reasoning. Focusing on the confidentiality of data in transit taught me to think critically about how TLS configurations, authentication, and encryption testing interact to preserve secure communication in open-source systems like Marimo.  
 
-The biggest challenge I faced was translating the vision in my head into a clear, structured diagram. I knew exactly what relationships I wanted to show, but making it look coherent and professional in **draw.io** took significant effort. Getting the right balance between technical accuracy and visual presentation—so that the diagram wasn’t cluttered or confusing was far harder than I expected.  
+The biggest challenge I faced was translating the vision in my head into a clear, structured diagram. I knew exactly what relationships I wanted to show, but making it look coherent and professional in **draw.io** took significant effort. Getting the right balance between technical accuracy and visual presentation, so that the diagram wasn’t cluttered or confusing was far harder than I expected.  
 
-Another major hurdle was simply organizing all the documentation. While I enjoy the hands-on technical side troubleshooting, analyzing code, and testing configuration files—the documentation process itself can feel tedious and repetitive. It’s not as intuitive as running tests or configuring servers, but I’ve learned that good documentation is what makes complex assurance arguments understandable to others.  
+Another major hurdle was simply organizing all the documentation. While I enjoy the hands-on technical side troubleshooting, analyzing code, and testing configuration files, the documentation process itself can feel tedious and repetitive. It’s not as intuitive as running tests or configuring servers, but I’ve learned that good documentation is what makes complex assurance arguments understandable to others.  
 
 Despite those frustrations, I found this project extremely rewarding. It helped me connect my passion for technical security work with structured reasoning—transforming what I “know” from hands-on experience into something that can be communicated, justified, and trusted. I’m proud of how the confidentiality case evolved, especially in demonstrating how evidence-based reasoning supports Marimo’s ability to safeguard data in transit.
 
