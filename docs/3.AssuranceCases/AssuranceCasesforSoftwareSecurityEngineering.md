@@ -205,7 +205,7 @@ The biggest challenge I faced was translating the vision in my head into a clear
 
 Another major hurdle was simply organizing all the documentation. While I enjoy the hands-on technical side troubleshooting, analyzing code, and testing configuration files, the documentation process itself can feel tedious and repetitive. It’s not as intuitive as running tests or configuring servers, but I’ve learned that good documentation is what makes complex assurance arguments understandable to others.  
 
-Despite those frustrations, I found this project extremely rewarding. It helped me connect my passion for technical security work with structured reasoning—transforming what I “know” from hands-on experience into something that can be communicated, justified, and trusted. I’m proud of how the confidentiality case evolved, especially in demonstrating how evidence-based reasoning supports Marimo’s ability to safeguard data in transit.
+Despite those frustrations, I found this project extremely rewarding. It helped me connect my passion for technical security work with structured reasoning, transforming what I “know” from hands-on experience into something that can be communicated, justified, and trusted. I’m proud of how the confidentiality case evolved, especially in demonstrating how evidence-based reasoning supports Marimo’s ability to safeguard data in transit.
 
 ---
 # Team Reflection
