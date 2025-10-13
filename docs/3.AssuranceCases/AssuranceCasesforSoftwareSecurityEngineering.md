@@ -213,11 +213,11 @@ C1: The Marimo authentication & authorization mechanism should prevent unauthori
 
 ### 3. Argument Summary
 These are the key arguments for this claim:
-1 - **External Authentication & Authorization mechanisms**: Mechanisms suchs as two factor and RBAC should be used to ensure that only authorized users can access key components.
-2- **SIEM Alerts**: Systems with alerts to ensure that any external debug mode activations are detected and alerted.
-3- **CI/CD pipelines for debug detection**: Systems in place that can prevent publications of production models that could have debug mode features.
+   1 - **External Authentication & Authorization mechanisms**: Mechanisms suchs as two factor and RBAC should be used to ensure that only authorized users can access key components.
+   2- **SIEM Alerts**: Systems with alerts to ensure that any external debug mode activations are detected and alerted.
+   3- **CI/CD pipelines for debug detection**: Systems in place that can prevent publications of production models that could have debug mode features.
 
-###4. Diagram
+### 4. Diagram
 
 ![Marimo Assurance Diagram](Diagrams/Zaid-AssuranceCase.jpeg)
 ---
