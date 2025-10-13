@@ -1,4 +1,4 @@
-<img width="826" height="653" alt="image" src="https://github.com/user-attachments/assets/2e6eb9b0-b1f6-4719-8410-fbce96e6c809" /># Part 1 - Top Level Claims
+
 
 ## Assurance Case: Execution Isolation in Marimo - Justin Tobiason
 
