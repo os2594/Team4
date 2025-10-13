@@ -1,4 +1,4 @@
-# Part 1 - Top Level Claims
+<img width="826" height="653" alt="image" src="https://github.com/user-attachments/assets/2e6eb9b0-b1f6-4719-8410-fbce96e6c809" /># Part 1 - Top Level Claims
 
 ## Assurance Case: Execution Isolation in Marimo - Justin Tobiason
 
@@ -196,7 +196,27 @@ This assurance case provides a **comprehensive and evidence-based argument** tha
 - Verified encryption and continuous testing via the proposed `tests/security` suite  
 
 Collectively, these elements demonstrate that **Marimo ensures confidentiality of data in transit** and establishes a foundation for enhanced security assurance in future releases.
+---
+# Assurance Case: The Marimo authentication & authorization mechanism should prevent unauthorized access to system functions and data - Zaid Kakish
 
+1. Overview
+
+This assurance case focuses on **Authentication and Authorization**, particulary on debug mode. The goal of this assurance case is to evaluate the security measures for Marimo when handling how an external actor could potentially access debug mode, and if there any protection mechanisms like authentication and authorization to prevent this unauthorized access. In addition, security measures for internal actors are also examined and the possibilites of an attack there.
+
+2. Top-Level Claim (C1)
+C1: The Marimo authentication & authorization mechanism should prevent unauthorized access to system functions and data 
+
+**Intent**: This claim focuses the idea that there should always be an authentication and authorization mechanism to protect againt exploitations.
+
+
+3. Argument Summary
+These are the key arguments for this claim:
+1 - **External Authentication & Authorization mechanisms**: Mechanisms suchs as two factor and RBAC should be used to ensure that only authorized users can access key components.
+2- **SIEM Alerts**: Systems with alerts to ensure that any external debug mode activations are detected and alerted.
+3- **CI/CD pipelines for debug detection**: Systems in place that can prevent publications of production models that could have debug mode features.
+
+4. Diagram
+![Marimo Assurance Diagram](Diagrams/Zaid-AssuranceCase.jpeg)
 ---
 # Part 2 - Reflection
 
