@@ -255,7 +255,20 @@ Each of these assurance elements is broken down into subclaims supported by real
 
 I used AI to get help with organizing my ideas, like thinking of possible subclaims and how to word rebuttals more clearly. It was helpful in the beginning to structure my thinking, but I reviewed everything myself and made sure it matched what’s actually in Marimo and what we learned in class. The final diagram and arguments were all built based on my own analysis.
 
-# Part 2 - Reflection
+# Part 2
+
+## Evidence Alignment Summary
+
+### Preeti Timalsina
+In this assurance case, I focused on how Marimo maintains high availability during multi-user collaboration sessions. The evidence I used—such as session timeout tracking, rate-limiting configurations, and session state persistence—matches well with some files found in the Marimo repository. For example:
+
+marimo/_runtime/session_tracker.py shows keystroke tracking that helps manage session timeouts.
+infra/nginx.conf and infra/uwsgi.ini contain some default settings for request and client limits.
+marimo/_server/session_store.py provides serialization logic for preserving session variables.
+
+However, some areas still need improvement or documentation. Specifically, I proposed using hardened default configurations and automatic resource cap enforcement. These settings are only partially implemented and could be misconfigured in production environments. For example, there’s no CI test or alert to verify that rate-limits or session persistence behave as expected. These would require additional work to collect or build as formal assurance evidence.
+---
+## Individual Reflection
 
 ## Justin Tobiason
 
