@@ -71,8 +71,6 @@ The essential interaction is when a financial data analyst writes Python code in
    - **Resources/Access:** Gains access via phishing, misconfiguration, or weak access controls.  
    - **Attack of Choice:** Execute malicious code by abusing notebook execution to run system commands, launch API calls, or modify the system.  
 
----
-
 ###### Misuse Cases
 - **Misuse Case 1:** Execute Malicious Code in Notebook Cell  
 - **Misuse Case 2:** Shell Escape / Execute Unauthorized System Commands  
@@ -248,8 +246,6 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 - **Disruptive Insider** — deliberately runs expensive queries or multiple sessions to degrade availability.  
 - **External Attacker** — abuses misconfigured deployments to flood the system with costly requests.  
 
----
-
 ### Misuse Cases
 
 #### Misuse Case 1
@@ -300,8 +296,6 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
   - Acceptance Criteria
     -- When kill rates or queue delays exceed thresholds (e.g., >5 kills/min or p95 wait >120s), an automated alert is sent to on-call staff with tenant/session details.
 
----
-
 ### Alignment with Marimo Features
 - **Strengths**
   Marimo’s reactive notebooks and plain .py format support reproducibility and auditability. 
@@ -321,14 +315,11 @@ In a financial enterprise environment, analysts rely on marimo notebooks to run 
 - **External Actor:** Unauthenticated user probing the public application with the intention to attack the system.
 - **Internal Actor**: An insider threat purposefully deploying the system to production with debug mode.
 
-
 Interaction: The attacker runs debug mode to access logs and credential.
-
 
 **Why this is essential:**
 
 Debug mode is a very common misconfiguration in python and web applications in various deployment environments If debug mode is present in production environments, it could leak out critical details such as system paths, logs, and potential credentials. Debug mode is not a code vulnerability, but instead an error when it comes to deploying code in production environemnts. This is a critical and easy mistake to make as it relies on ensuring that there are checks in place or alerts for debug mode. If no alerts are presents and a code goes live, it could not be noticed.
-
 
 **Misuse Cases:**
 
@@ -347,8 +338,6 @@ Debug mode is a very common misconfiguration in python and web applications in v
 ![Visual](https://raw.githubusercontent.com/os2594/Team4/refs/heads/main/docs/2.Requirements/Diagrams/Case.drawio)
 ![Visual](https://github.com/os2594/Team4/blob/main/docs/2.Requirements/Diagrams/Screenshot%202025-09-29%20153258.png)
 
-
-
 Security requirements to put into place
 
 1- SR-001 **Debug mode deployment checks**: The system should automatically prevent or refuse deployment in any environment that is labeled as production.
@@ -357,51 +346,7 @@ Security requirements to put into place
 
 3- SR-003 **Role Based Access Control**: All debug features and access should require the proper level of authetication and authroization.
 
-4- SR-004 **Alerts**: Alerts in place to warn the user if debug mode is active.
-
-
----
-
-### Part 1 — Reflection
-Working on this misuse case showed that defaults and documentation are as important as code in preventing exposures.
-A single CLI flag or unclear deployment doc can leak sensitive data.
-OSS projects must therefore combine technical controls (secure defaults) with process controls (coordinated disclosure, operator runbooks).
-My work here complements the other team interactions by ensuring secure deployment and policy baselines that reinforce their features.
-
-**Preeti Timalsina**:
-Working on the Denial of Service misuse case showed me how to turn a broad availability risk into clear, testable requirements. I learned that DoS isn’t just heavy queries and it also includes patterns like storms and slow drains. Writing acceptance criteria was most useful because it made each requirement measurable and practical.
-
----
-
-## Part 2 — Documentation Review
-
-#### Existing
-- `SECURITY.md` with reporting info  
-- CLI docs showing localhost defaults  
-- Auth middleware examples  
-- WASM playground for safe public sharing  
-
-#### Gaps / Improvements
-- Create `docs/deploy-securely.md` (TLS, proxy configs, checklists)  
-- Stronger CLI warnings for `--no-token` and `--host 0.0.0.0`  
-- Add SLA + embargo policy to `SECURITY.md`  
-- Operator runbook for exposed instances  
-- Parameterized SQL in official docs  
-
-#### Planning Snapshot
-- **SECURITY.md** → add SLA + disclosure policy  
-- **Deploy Securely Doc** → create `docs/deploy-securely.md`  
-- **CLI Warnings** → highlight dangers of `--no-token` and public bind  
-- **Publishing Guidance** → WASM playground for public sharing  
-- **SQL Examples** → switch to parameterization  
-
----
-
-### Reflection (Individual Contribution)
-This exercise reinforced that open-source maintainers must provide both **secure defaults** and **clear documentation** to reduce human error.  
-I also learned that security risks often arise from **how features are deployed**, not just how they are coded.  
-My contribution provides the **secure deployment baseline** for our team’s project deliverable.
-
+4- SR-004 **Alerts**: Alerts in place to warn the user if debug mode is active. 
 
 ---
 
@@ -412,7 +357,9 @@ Specifically, I asked for help in:
 - Turning mitigations into **clear, testable requirements**.  
 - Thinking about **residual risks and stronger controls**.  
 
-All analysis, alignment to the rubric, and final documentation were my own work.
+All analysis, alignment to the rubric, and final documentation were the teams own work.
+
+### Reflection (Individual Contribution)
 
 **Preeti Timalsina**: 
 AI Prompt Used: 
@@ -428,6 +375,13 @@ I leveraged a prompt that guided my essential interaction and the possible misus
 Reflection: 
 By using the prompt I was able to identify more scenarios in addition to the potential routes they could take. I was able to juxtapose some of the information into a diagram providing a clear picture of the threats and mitigations that make up the use case. 
 
+**Dominic Lanzante**
+AI Prompt Used:
+AI tools were utilized throughout this project primarily for phrasing assistance, brainstorming rebuttals, and refining the structure of my assurance case. However, many of the generated responses were **incomplete, inaccurate, or inconsistent** with the Marimo project’s actual repository content. While AI helped me organize initial ideas, the technical details and diagrams it produced were often **lacking in precision and reliability**. Because of this, I relied heavily on the **course textbooks, professor-guided videos, and manual verification** to ensure my final submission accurately reflected the required assurance structure and evidence. AI ultimately served as a light editorial tool rather than a dependable source of technical accuracy.
+
+Refelction:
+Working on this misuse case showed that defaults and documentation are as important as code in preventing exposures. A single CLI flag or unclear deployment doc can leak sensitive data. OSS projects must therefore combine technical controls (secure defaults) with process controls (coordinated disclosure, operator runbooks). My work here complements the other team interactions by ensuring secure deployment and policy baselines that reinforce their features. Working on the Denial of Service misuse case showed me how to turn a broad availability risk into clear, testable requirements. I learned that DoS isn’t just heavy queries and it also includes patterns like storms and slow drains. Writing acceptance criteria was most useful because it made each requirement measurable and practical.
+
 ---
 
 # Summarization of Improvements for Marimo
@@ -442,5 +396,3 @@ By using the prompt I was able to identify more scenarios in addition to the pot
 8. I also found that there’s little coverage of monitoring or alerting practices. Operators aren’t given examples of how to track unusual behavior such as repeated query crashes or spikes in resource use. Adding recommendations for integration with tools like Prometheus or Grafana would make it easier to catch and respond to issues early. – Preeti T.
 9. With public facing notebooks, there absolutely needs to be some sort of authorization mechanism to ensure no one can get access to sensitive logs or staes from debug mode. By implementing some sort of authentication mechanism to ensure the person claims they are who they say there, and authorizing them to understand their level access, this could limit the issue of debug mode. - Zaid K
 ---
-
-
