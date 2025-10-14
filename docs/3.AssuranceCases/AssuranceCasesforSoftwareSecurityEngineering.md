@@ -223,8 +223,9 @@ These are the key arguments for this claim:
 
 
 ### 5. AI Summary
+After I structured my diagram and came up with some claims and rebuttals, I prompted AI to help me restructure and organize some ideas around. Particularly, the idea of detection of debug mode activations. I initially had it only set up on the internal actor claim, but with the restructuring ideas that the AI gave me, it opened up the door to include detection activations on the external side, which I did not initially consider. 
 
-After I structured my diagram and came up with some claims and rebuttals, I prompted AI to help me restructure and organize some ideas around. Particularly, the idea of detection of debug mode activitations. I initially had it only set up on the internal actor claim, but with the restructuring ideas that the AI gave me, it opened up the door to include detection activiations on the external side, which I did not initially consider. 
+
 ---
 ## Assurance Case: High Availability in Multi-User Collaboration – Preeti Timalsina
 
