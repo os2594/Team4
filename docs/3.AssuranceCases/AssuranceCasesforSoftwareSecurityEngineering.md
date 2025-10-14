@@ -282,6 +282,16 @@ marimo/_server/session_store.py provides serialization logic for preserving sess
 However, some areas still need improvement or documentation. Specifically, I proposed using hardened default configurations and automatic resource cap enforcement. These settings are only partially implemented and could be misconfigured in production environments. For example, there’s no CI test or alert to verify that rate-limits or session persistence behave as expected. These would require additional work to collect or build as formal assurance evidence.
 
 ---
+
+### Justin Tobiason
+My assurance case attempted to find flaws with the execution environment marimo provides the user. Evaluating what could happen if perhaps an we were not using sandboxing, or an attacker can access the host resources, or least privileges are not enforced.
+
+marimo/_runtime/executor.py is th eonly location a user can execute code. 
+eval() is used in the utils.py python code
+
+I think that there are ways to improve the situation. A configuration file for the runtime environment would be a good step forward. In addition, having some way to implement a Cap List could mititgate breakout attacks from the notebook. 
+
+---
 ## Individual Reflection
 
 ## Justin Tobiason
