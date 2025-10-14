@@ -261,17 +261,9 @@ Each of these assurance elements is broken down into subclaims supported by real
 
 I used AI to get help with organizing my ideas, like thinking of possible subclaims and how to word rebuttals more clearly. It was helpful in the beginning to structure my thinking, but I reviewed everything myself and made sure it matched what’s actually in Marimo and what we learned in class. The final diagram and arguments were all built based on my own analysis.
 
----
-
-### Justin Tobiason
-My assurance case attempted to find flaws with the execution environment marimo provides the user. Evaluating what could happen if perhaps an we were not using sandboxing, or an attacker can access the host resources, or least privileges are not enforced.
-
-marimo/_runtime/executor.py is th eonly location a user can execute code. 
-eval() is used in the utils.py python code
-
-I think that there are ways to improve the situation. A configuration file for the runtime environment would be a good step forward. In addition, having some way to implement a Cap List could mititgate breakout attacks from the notebook. 
 
 ---
+
 ## Individual Reflection
 
 ## Justin Tobiason
@@ -279,6 +271,13 @@ I think that there are ways to improve the situation. A configuration file for t
 This assignment challenged my ability to question everything. I had to consider avenues that were not as obvious. Considering the depth of what was possible there is a certain threshhold for accuratly mitigating risk based on evidence in the project.
 
 The most valuable thing in this assignment was learning how to build out one of these diagrams. Wording each piece in a way that made sense and helped with the flow of each claim, rebuttal, evidence, inference, etc.
+
+My assurance case attempted to find flaws with the execution environment marimo provides the user. Evaluating what could happen if perhaps an we were not using sandboxing, or an attacker can access the host resources, or least privileges are not enforced.
+
+marimo/_runtime/executor.py is th eonly location a user can execute code. 
+eval() is used in the utils.py python code
+
+I think that there are ways to improve the situation. A configuration file for the runtime environment would be a good step forward. In addition, having some way to implement a Cap List could mititgate breakout attacks from the notebook. 
 
 ## Osmar Carboney
 
