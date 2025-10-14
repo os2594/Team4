@@ -220,6 +220,11 @@ These are the key arguments for this claim:
 ### 4. Diagram
 
 ![Marimo Assurance Diagram](Diagrams/Zaid-AssuranceCase.jpeg)
+
+
+### 5. AI Summary
+
+After I structured my diagram and came up with some claims and rebuttals, I prompted AI to help me restructure and organize some ideas around. Particularly, the idea of detection of debug mode activitations. I initially had it only set up on the internal actor claim, but with the restructuring ideas that the AI gave me, it opened up the door to include detection activiations on the external side, which I did not initially consider. 
 ---
 ## Assurance Case: High Availability in Multi-User Collaboration – Preeti Timalsina
 
@@ -290,6 +295,10 @@ Working on this assurance case deepened my understanding of how security claims 
 The biggest challenge I faced was translating the structure I envisioned into a clear, professional diagram in **draw.io**. I knew how the relationships between claims, rebuttals, and evidence should flow, but achieving that balance between **technical accuracy and visual clarity** took considerable effort. At the same time, organizing all the documentation, connecting it to specific evidence, and ensuring consistency across the argument forced me to slow down and think systematically rather than just technically.  
 
 Despite those challenges, this project was extremely rewarding. It helped me connect my hands-on network security experience with formal assurance reasoning, transforming what I intuitively understand into something that can be **communicated, justified, and trusted** by others. I’m proud of how my confidentiality case evolved, especially in demonstrating how evidence-based reasoning and structured documentation can reinforce Marimo’s ability to safeguard data in transit and highlight future opportunities for stronger, test-driven assurance.  
+
+## Zaid Kakish
+
+The assurance case I worked was super interesting for me to think about how SIEM tools and other mechanisms could be used to detect certain things. It made me think like a security engineer, trying to build a system in place that can remediate threats, and improve security. The assignment certainly helped me udnerstand some aspect I did not think about before, especially how dangeours internal threat actors can be. The other part which impressed me was the similarities in approaching internal threat actor and external threat actors.
 
 ## Preeti Timalsina
 
