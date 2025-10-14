@@ -359,9 +359,12 @@ Specifically, I asked for help in:
 
 All analysis, alignment to the rubric, and final documentation were the teams own work.
 
-### Reflection (Individual Contribution)
+---
+
+## Reflection (Individual Contribution)
 
 **Preeti Timalsina**: 
+
 AI Prompt Used: 
 I used the same prompt provided by the professor, but adapted it to my misuse case of Denial of Service. The prompt asked an expert software security requirements engineer to suggest misuse cases and countermeasures for the use case: “A financial analyst runs queries in a notebook to analyze large transaction datasets,” focusing on DoS risks like runaway queries, storms, and amplification patterns.
 
@@ -369,18 +372,34 @@ Reflection:
 The prompt was useful for identifying the right actors (analyst, insider, external attacker) and the specific actions they might take that could cause a Denial of Service. It also helped me think more thoroughly about how to define acceptance criteria for each security requirement so they would be clear and testable. In addition, I used the AI for minor guidance on designing my draw.io diagram, which made it easier to keep the layout consistent with my teammates’ diagrams.
 
 **Justin Tobiason**: 
+
 AI Prompt Used: 
 I leveraged a prompt that guided my essential interaction and the possible misuse cases. It read, "A financial data analyst executes a python cell in marimo to return analytics". The prompt lead me down a path that focuses on the potential to run malicious code in the cell and what that could look like. Then I attempted to determine additional scenarios that could be achieved at each level by an attacker. 
 
 Reflection: 
 By using the prompt I was able to identify more scenarios in addition to the potential routes they could take. I was able to juxtapose some of the information into a diagram providing a clear picture of the threats and mitigations that make up the use case. 
 
-**Dominic Lanzante**
+**Dominic Lanzante**:
+
 AI Prompt Used:
 AI tools were utilized throughout this project primarily for phrasing assistance, brainstorming rebuttals, and refining the structure of my assurance case. However, many of the generated responses were **incomplete, inaccurate, or inconsistent** with the Marimo project’s actual repository content. While AI helped me organize initial ideas, the technical details and diagrams it produced were often **lacking in precision and reliability**. Because of this, I relied heavily on the **course textbooks, professor-guided videos, and manual verification** to ensure my final submission accurately reflected the required assurance structure and evidence. AI ultimately served as a light editorial tool rather than a dependable source of technical accuracy.
 
 Refelction:
 Working on this misuse case showed that defaults and documentation are as important as code in preventing exposures. A single CLI flag or unclear deployment doc can leak sensitive data. OSS projects must therefore combine technical controls (secure defaults) with process controls (coordinated disclosure, operator runbooks). My work here complements the other team interactions by ensuring secure deployment and policy baselines that reinforce their features. Working on the Denial of Service misuse case showed me how to turn a broad availability risk into clear, testable requirements. I learned that DoS isn’t just heavy queries and it also includes patterns like storms and slow drains. Writing acceptance criteria was most useful because it made each requirement measurable and practical.
+
+**Osmar Carboney**:
+
+AI Prompts Used:
+
+Reflection:
+
+**Zaid Kakish**:
+
+AI Prompts Used:
+
+
+Reflection: 
+
 
 ---
 
@@ -388,11 +407,16 @@ Working on this misuse case showed that defaults and documentation are as import
 
 1. Importing a module that can trigger a package installation means all the runtime code and dependencry resolution are dynamic and this could definetly be exploited. This could provide an attack vector to a malicious actor looking to install something to give them more access, break the software, or retreive data. I would like to evaluate the functionality and how easy it is to install malicious packages. - JT
 2. User isolation was another concern. If multiple financial analysts are using the notebook could they affect each others environment or read another user's data? I think we can experiment and validate the truth to this. - JT
-3. What I found most interesting about this assignment was seeing how a small configuration choice, like a CLI flag or default binding, can create a huge security risk if not properly managed. It showed me that security isn’t just about writing strong code but also about guiding users with safe defaults, warnings, and clear documentation. This made me appreciate how much influence deployment and human behavior have in shaping the overall security of an open-source system. - DL
-4. The main concern I identified in the Marimo project is that while it offers authentication middleware and defaults to localhost, these protections can be easily bypassed with simple flags like --no-token or --host 0.0.0.0. This creates the risk of exposing sensitive notebooks or dashboards to the public internet. By incorporating my misuse case into their roadmap, Marimo could improve security by making safer defaults non-optional, adding stronger CLI warnings, and creating clear deployment guides and operator runbooks. These steps would help prevent accidental disclosures and make it easier for maintainers and users to follow secure practices directly from the project’s GitHub. - DL
-5. **Authentication & RBAC** : Marimo offers token abstractions (`AuthToken`) and ASGI middleware hooks, but does not ship with enterprise SSO, RBAC, or MFA integrations. Maybe these implementations are done through an other environment that Institutions must put in place. - Osmar C.
-6. **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors. - Osmar C.
-7. One area I noticed missing in Marimo’s documentation is guidance on resource management. There’s no mention of query timeouts, memory caps, or concurrency controls that could prevent users from unintentionally overloading the system. Clear documentation around these safeguards would help reduce the risk of denial of service. – Preeti T.
-8. I also found that there’s little coverage of monitoring or alerting practices. Operators aren’t given examples of how to track unusual behavior such as repeated query crashes or spikes in resource use. Adding recommendations for integration with tools like Prometheus or Grafana would make it easier to catch and respond to issues early. – Preeti T.
-9. With public facing notebooks, there absolutely needs to be some sort of authorization mechanism to ensure no one can get access to sensitive logs or staes from debug mode. By implementing some sort of authentication mechanism to ensure the person claims they are who they say there, and authorizing them to understand their level access, this could limit the issue of debug mode. - Zaid K
+   
+4. What I found most interesting about this assignment was seeing how a small configuration choice, like a CLI flag or default binding, can create a huge security risk if not properly managed. It showed me that security isn’t just about writing strong code but also about guiding users with safe defaults, warnings, and clear documentation. This made me appreciate how much influence deployment and human behavior have in shaping the overall security of an open-source system. - DL
+5. The main concern I identified in the Marimo project is that while it offers authentication middleware and defaults to localhost, these protections can be easily bypassed with simple flags like --no-token or --host 0.0.0.0. This creates the risk of exposing sensitive notebooks or dashboards to the public internet. By incorporating my misuse case into their roadmap, Marimo could improve security by making safer defaults non-optional, adding stronger CLI warnings, and creating clear deployment guides and operator runbooks. These steps would help prevent accidental disclosures and make it easier for maintainers and users to follow secure practices directly from the project’s GitHub. - DL
+   
+7. **Authentication & RBAC** : Marimo offers token abstractions (`AuthToken`) and ASGI middleware hooks, but does not ship with enterprise SSO, RBAC, or MFA integrations. Maybe these implementations are done through an other environment that Institutions must put in place. - Osmar C.
+8. **Input sanitization** : While Marimo’s SQL cells can leverage parameterized drivers, there is no enforcement mechanism to prevent raw string concatenation—placing the onus on notebook authors. - Osmar C.
+   
+10. One area I noticed missing in Marimo’s documentation is guidance on resource management. There’s no mention of query timeouts, memory caps, or concurrency controls that could prevent users from unintentionally overloading the system. Clear documentation around these safeguards would help reduce the risk of denial of service. – Preeti T.
+11. I also found that there’s little coverage of monitoring or alerting practices. Operators aren’t given examples of how to track unusual behavior such as repeated query crashes or spikes in resource use. Adding recommendations for integration with tools like Prometheus or Grafana would make it easier to catch and respond to issues early. – Preeti T.
+    
+13. With public facing notebooks, there absolutely needs to be some sort of authorization mechanism to ensure no one can get access to sensitive logs or staes from debug mode. By implementing some sort of authentication mechanism to ensure the person claims they are who they say there, and authorizing them to understand their level access, this could limit the issue of debug mode. - Zaid K
+    
 ---
