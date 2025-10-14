@@ -261,26 +261,6 @@ Each of these assurance elements is broken down into subclaims supported by real
 
 I used AI to get help with organizing my ideas, like thinking of possible subclaims and how to word rebuttals more clearly. It was helpful in the beginning to structure my thinking, but I reviewed everything myself and made sure it matched what’s actually in Marimo and what we learned in class. The final diagram and arguments were all built based on my own analysis.
 
-# Part 2
-
-## Evidence Alignment Summary
-
-### Zaid Kakish
-While I did not find any mentiond of debug routes or debug modes set to false in Marimo, some potential tests could be included in the repository to test debug routes. Particularly if we look at the test/ folder, there could be some automated scripts in there that can be used to test of scripts.
-
-What is present hwoever, is commtiting and pr reviews, which are important to include confirmation that nothing wrong is set up. 
-
----
-
-### Preeti Timalsina
-In this assurance case, I focused on how Marimo maintains high availability during multi-user collaboration sessions. The evidence I used—such as session timeout tracking, rate-limiting configurations, and session state persistence—matches well with some files found in the Marimo repository. For example:
-
-marimo/_runtime/session_tracker.py shows keystroke tracking that helps manage session timeouts.
-infra/nginx.conf and infra/uwsgi.ini contain some default settings for request and client limits.
-marimo/_server/session_store.py provides serialization logic for preserving session variables.
-
-However, some areas still need improvement or documentation. Specifically, I proposed using hardened default configurations and automatic resource cap enforcement. These settings are only partially implemented and could be misconfigured in production environments. For example, there’s no CI test or alert to verify that rate-limits or session persistence behave as expected. These would require additional work to collect or build as formal assurance evidence.
-
 ---
 
 ### Justin Tobiason
@@ -318,10 +298,33 @@ Despite those challenges, this project was extremely rewarding. It helped me con
 
 The assurance case I worked was super interesting for me to think about how SIEM tools and other mechanisms could be used to detect certain things. It made me think like a security engineer, trying to build a system in place that can remediate threats, and improve security. The assignment certainly helped me udnerstand some aspect I did not think about before, especially how dangeours internal threat actors can be. The other part which impressed me was the similarities in approaching internal threat actor and external threat actors.
 
+While I did not find any mentiond of debug routes or debug modes set to false in Marimo, some potential tests could be included in the repository to test debug routes. Particularly if we look at the test/ folder, there could be some automated scripts in there that can be used to test of scripts.
+
+What is present hwoever, is commtiting and pr reviews, which are important to include confirmation that nothing wrong is set up. 
+
 ## Preeti Timalsina
 
 This assignment helped me think more clearly about how to show that a system is secure. I learned how to break down a big idea into smaller claims and back them up with real proof. Making the diagram also helped me understand how different parts of the system work together and what could go wrong. It was a good way to see how technical work connects to trust and safety.
 
+In this assurance case, I focused on how Marimo maintains high availability during multi-user collaboration sessions. The evidence I used—such as session timeout tracking, rate-limiting configurations, and session state persistence—matches well with some files found in the Marimo repository. For example:
+
+marimo/_runtime/session_tracker.py shows keystroke tracking that helps manage session timeouts.
+infra/nginx.conf and infra/uwsgi.ini contain some default settings for request and client limits.
+marimo/_server/session_store.py provides serialization logic for preserving session variables.
+
+However, some areas still need improvement or documentation. Specifically, I proposed using hardened default configurations and automatic resource cap enforcement. These settings are only partially implemented and could be misconfigured in production environments. For example, there’s no CI test or alert to verify that rate-limits or session persistence behave as expected. These would require additional work to collect or build as formal assurance evidence.
+
+
+
 ---
 # Team Reflection
 
+Our team’s collective work on the Marimo Assurance Case Project represents a comprehensive application of structured assurance reasoning across multiple domains of software security. Each member focused on a distinct but complementary area that together created a holistic view of Marimo’s security posture. Justin Tobiason examined Execution Isolation and how untrusted code is prevented from accessing host resources. Osmar Carboney analyzed Data Loss Prevention to mitigate both internal and external data exfiltration risks. Dominic Lanzante investigated Confidentiality of Data in Transit to ensure secure and verifiable communication between client and server. Preeti Timalsina focused on High Availability during Multi-User Collaboration to maintain reliability and uptime. Zaid Kakish evaluated Authentication and Authorization mechanisms within Debug Mode to ensure secure access controls and prevent accidental or unauthorized exposure. Together, these cases formed a complete and interdependent security narrative for Marimo.
+
+From the beginning, our goal was to build interconnected assurance cases that could support one another logically and structurally. We agreed on a standardized format consisting of Claim, Argument, Rebuttal, Evidence, Diagram, and Reflection to ensure consistency and academic quality. This shared approach allowed us to align our technical analyses, link evidence directly to repository artifacts, and maintain clarity across all submissions. Justin’s assurance on sandboxed execution supported Dominic’s confidentiality case, while Osmar’s layered access control and audit logging measures reinforced Zaid’s authentication analysis. Likewise, Preeti’s focus on availability and rate-limiting complemented Justin’s runtime safeguards, creating a layered and well-balanced defense model.
+
+Collaboration and organization played an essential role in completing this project. Justin and Dominic took the lead in developing and refining the project structure, ensuring that each case adhered to the same framework and presented verifiable evidence. Osmar consistently delivered early and high-quality work that gave the team time to integrate his section efficiently. Preeti and Zaid made valuable contributions, but delays in their submissions near the end of the timeline limited our ability to polish the final integration as much as planned. Despite these timing challenges, the team maintained professionalism, upheld quality standards, and ultimately produced a cohesive and technically sound assurance submission.
+
+The most important lesson learned from this project was the need for stronger time management, early participation, and consistent communication. Future projects would benefit from internal deadlines set well before the submission date, along with scheduled midweek progress checks to ensure even participation. This approach would allow more thorough peer review and refinement, strengthening both accuracy and presentation. Overall, this project reinforced how software assurance depends not only on technical depth but also on coordination, communication, and evidence-based collaboration. Our team demonstrated that by connecting isolation, confidentiality, data protection, authentication, and availability within a unified assurance structure, security can be systematically analyzed and justified in a clear and professional manner.
+
+In conclusion, this project pushed us to grow not only as individual analysts but as a coordinated team capable of producing structured, evidence-driven work. It gave us a deeper appreciation for the rigor behind software assurance and the teamwork required to achieve consistency at this level. We are grateful for the opportunity to learn from this process and for your continued support and guidance throughout the semester.
