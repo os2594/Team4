@@ -221,6 +221,40 @@ These are the key arguments for this claim:
 
 ![Marimo Assurance Diagram](Diagrams/Zaid-AssuranceCase.jpeg)
 ---
+## Assurance Case: High Availability in Multi-User Collaboration – Preeti Timalsina
+
+### 1. Overview
+
+This assurance case addresses **High Availability during Multi-User Collaboration** in Marimo, the open-source reactive notebook platform. Because Marimo supports multiple users editing notebooks in shared environments, system reliability and continuous availability are crucial for maintaining productive and secure collaborative workflows.
+
+The risk of degraded performance, session drops, or loss of in-progress work increases significantly in concurrent-use scenarios, especially during long-running sessions or unexpected handoffs. This case investigates whether Marimo’s architecture can maintain uptime, session persistence, and usability for concurrent users.
+
+### 2. Top-Level Claim (C1)
+
+**C1:**
+*Marimo maintains high availability during multi-user collaboration sessions.*
+
+**Intent:**
+This claim asserts that Marimo provides reliable execution, session stability, and consistent access for multiple concurrent users by mitigating key availability threats such as session timeouts, performance degradation, and handoff errors.
+
+### 3. Argument Summary
+
+The claim is supported through three primary assurance dimensions that collectively uphold system availability during collaborative use:
+
+1. **Active Session Management:** Marimo detects live user activity, such as cell execution or keystrokes to automatically extend active sessions. This reduces the likelihood of accidental timeouts during multi-user editing scenarios. It ensures that collaborative sessions remain uninterrupted while users are actively engaging with the notebook interface.
+2. **Request Throttling & Load Protection:** To mitigate performance degradation from denial-of-service (DoS) scenarios or overly aggressive usage, Marimo leverages Tornado’s built-in rate-limiting. Additionally, reverse proxy and application-level configurations (e.g., nginx.conf, uwsgi.ini) enforce sensible request and timeout boundaries to ensure system stability under varying loads.
+3. **Session Continuity & Recovery:** To survive service restarts or backend handoffs, Marimo serializes session state to memory or disk. This allows in-progress sessions to resume without data loss or requiring users to reinitialize their environment—preserving work in shared notebooks even in failure conditions.
+
+Each of these assurance elements is broken down into subclaims supported by real evidence from the Marimo repository, with rebuttals exploring potential edge cases or configuration gaps that could undermine the claim.
+
+### 4. Diagram
+
+![](https://github.com/os2594/Team4/blob/main/docs/3.AssuranceCases/Diagrams/AssuranceCasePreetiT.drawio.png)
+
+### 5. AI Summary
+
+I used AI to get help with organizing my ideas, like thinking of possible subclaims and how to word rebuttals more clearly. It was helpful in the beginning to structure my thinking, but I reviewed everything myself and made sure it matched what’s actually in Marimo and what we learned in class. The final diagram and arguments were all built based on my own analysis.
+
 # Part 2 - Reflection
 
 ## Justin Tobiason
@@ -242,6 +276,10 @@ Working on this assurance case deepened my understanding of how security claims 
 The biggest challenge I faced was translating the structure I envisioned into a clear, professional diagram in **draw.io**. I knew how the relationships between claims, rebuttals, and evidence should flow, but achieving that balance between **technical accuracy and visual clarity** took considerable effort. At the same time, organizing all the documentation, connecting it to specific evidence, and ensuring consistency across the argument forced me to slow down and think systematically rather than just technically.  
 
 Despite those challenges, this project was extremely rewarding. It helped me connect my hands-on network security experience with formal assurance reasoning, transforming what I intuitively understand into something that can be **communicated, justified, and trusted** by others. I’m proud of how my confidentiality case evolved, especially in demonstrating how evidence-based reasoning and structured documentation can reinforce Marimo’s ability to safeguard data in transit and highlight future opportunities for stronger, test-driven assurance.  
+
+## Preeti Timalsina
+
+
 
 ---
 # Team Reflection
