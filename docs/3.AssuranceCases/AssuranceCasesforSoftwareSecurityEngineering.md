@@ -265,6 +265,11 @@ I used AI to get help with organizing my ideas, like thinking of possible subcla
 
 ## Evidence Alignment Summary
 
+### Zaid Kakish
+While I did not find any mentiond of debug routes or debug modes set to false in Marimo, some potential tests could be included in the repository to test debug routes. Particularly if we look at the test/ folder, there could be some automated scripts in there that can be used to test of scripts.
+
+What is present hwoever, is commtiting and pr reviews, which are important to include confirmation that nothing wrong is set up. 
+
 ### Preeti Timalsina
 In this assurance case, I focused on how Marimo maintains high availability during multi-user collaboration sessions. The evidence I used—such as session timeout tracking, rate-limiting configurations, and session state persistence—matches well with some files found in the Marimo repository. For example:
 
