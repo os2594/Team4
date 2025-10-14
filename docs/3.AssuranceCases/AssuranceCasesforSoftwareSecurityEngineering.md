@@ -267,6 +267,7 @@ infra/nginx.conf and infra/uwsgi.ini contain some default settings for request a
 marimo/_server/session_store.py provides serialization logic for preserving session variables.
 
 However, some areas still need improvement or documentation. Specifically, I proposed using hardened default configurations and automatic resource cap enforcement. These settings are only partially implemented and could be misconfigured in production environments. For example, there’s no CI test or alert to verify that rate-limits or session persistence behave as expected. These would require additional work to collect or build as formal assurance evidence.
+
 ---
 ## Individual Reflection
 
@@ -292,7 +293,7 @@ Despite those challenges, this project was extremely rewarding. It helped me con
 
 ## Preeti Timalsina
 
-
+This assignment helped me think more clearly about how to show that a system is secure. I learned how to break down a big idea into smaller claims and back them up with real proof. Making the diagram also helped me understand how different parts of the system work together and what could go wrong. It was a good way to see how technical work connects to trust and safety.
 
 ---
 # Team Reflection
