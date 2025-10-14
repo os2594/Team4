@@ -348,8 +348,6 @@ Security requirements to put into place
 
 4- SR-004 **Alerts**: Alerts in place to warn the user if debug mode is active. 
 
----
-
 ### AI Assistance Note
 I used AI tools to help **structure my misuse case analysis**.  
 Specifically, I asked for help in:  
@@ -390,16 +388,26 @@ Working on this misuse case showed that defaults and documentation are as import
 **Osmar Carboney**:
 
 AI Prompts Used:
+I used a structured prompt that asked: “As a software security engineer analyzing a misuse case involving data exfiltration through notebook exports or SQL queries, identify potential misuse cases, aggravating factors, and detailed countermeasures for both internal and external threat actors.”
+
+This prompt helped me refine how to frame both insider and outsider perspectives within a single misuse case while staying aligned with realistic risks a financial analyst system might face. I also used it to generate multiple layers of mitigations from basic access control to logging and input validation then selected the most relevant and testable ones for Marimo’s context.
 
 Reflection:
+Working on the data exfiltration misuse case deepened my understanding of how insider misuse and external exploitation can often share the same technical entry points but differ in intent and context. It taught me that effective mitigation needs both preventive and detective controls: strict role-based access controls to prevent unauthorized actions, and immutable audit logs to ensure accountability.
+
+Through this exercise, I also realized the importance of balancing usability with security. While analysts need flexibility to export and query data, too much freedom without monitoring can lead to catastrophic leaks. This assignment helped me appreciate how layered defenses access control, input sanitization, and DLP scanning combine to protect sensitive financial data within systems like Marimo.
 
 **Zaid Kakish**:
 
 AI Prompts Used:
+I used a targeted prompt that asked: “Analyze the security implications of running a Python-based web application in debug mode in production. Identify the actors, misuse cases, and specific technical security requirements that should prevent debug mode exposure or data leakage.”
 
+This guided me toward clearly identifying both internal and external threat scenarios such as a careless developer or an external attacker exploiting verbose debug output and articulating actionable mitigations like deployment checks, error sanitization, and runtime alerts.
 
 Reflection: 
+This misuse case helped me understand how something as small as a configuration flag can turn into a major security issue. Debug mode is often overlooked because it’s useful during development, but in production it exposes critical data that attackers can exploit easily. I learned that the best defenses are often automated and preventive ensuring that systems refuse to start with unsafe configurations, rather than relying solely on human diligence.
 
+By converting common deployment oversights into clear, testable requirements (like SR-001 through SR-004), I was able to see how operational safeguards complement code-level security. This exercise strengthened my understanding of the “security by default” mindset—how good defaults, alerts, and deployment policies protect organizations even when human error is inevitable.
 
 ---
 
