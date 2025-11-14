@@ -120,8 +120,8 @@ All work was coordinated through GitHub commits, messaging, and shared file edit
 
 ## Individual Reflections
 Below are the individual reflections from each team member based on the required questions:
-**“What did you learn from this assignment?”** and  
-**“What did you find most useful?”**
+
+**“What did you learn from this assignment?” and “What did you find most useful?”**
 
 ### **Justin Tobiason**
 
@@ -132,6 +132,11 @@ Below are the individual reflections from each team member based on the required
 ### **Zaid Kakish**
 
 ### **Dominic Lanzante**
+**What I learned:**  
+From this assignment, I learned how to more clearly summarize Level 0 and Level 1 diagrams and how important it is to express system architecture at the right level of abstraction. I also became much more acquainted with the Microsoft Threat Modeling Tool. Although it felt difficult at first, once I understood the workflow and how the tool mapped threats to our diagrams, it became very intuitive and even enjoyable to use. This helped me build confidence in creating DFDs, interpreting threat outputs, and aligning them with our security requirements.
+
+**What I found most useful:**  
+The most useful part of this assignment was learning how the Level 1 diagram drives threat generation in TMT and how the tool highlights interactions across trust boundaries. Using the tool made the relationships between components, threats, and mitigations very clear. I also found it valuable to practice simplifying diagrams so they capture only what matters—this made the entire process smoother and aligned more directly with the goals of the assignment. Overall, getting hands-on experience with TMT made threat modeling feel far more approachable and practical.
 
 ## Team Reflection
 
