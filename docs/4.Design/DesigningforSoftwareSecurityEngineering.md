@@ -153,9 +153,7 @@ Overall, this assignment sharpened our skills in secure design, STRIDE analysis,
 # Optional: AI-Assisted STRIDE Analysis (Per Interaction)
 
 To enhance the threat modeling exercise, we applied AI-based STRIDE analysis to our Marimo Level 1 DFD.  
-This aligns with the optional component described by Dr. Gandhi and focuses on threats **per interaction** across trust boundaries.
-
----
+This aligns with the optional component and focuses on threats **per interaction** across trust boundaries.
 
 ## AI Prompt Used
 
@@ -179,9 +177,8 @@ Your mitigation recommendations should include:
 
 Where appropriate, explain tradeoffs, constraints, and how Marimo’s trust boundaries shape the threat surface.
 
-Finally, summarize global design guardrails that apply across all interactions—such as authentication, sandboxing, authorization principles, logging patterns, or container isolation—that would prevent whole categories of issues rather than addressing them one at a time."
+Finally, summarize global design guardrails that apply across all interactions such as authentication, sandboxing, authorization principles, logging patterns, or container isolation—that would prevent whole categories of issues rather than addressing them one at a time."
 
----
 
 ## STRIDE Analysis Per Interaction
 
