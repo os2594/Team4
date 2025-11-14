@@ -146,6 +146,6 @@ As a team, we gained practical experience in applying STRIDE using a real-world 
 **What we found most useful:**  
 We found the automation of threat enumeration to be a helpful starting point, but the real value was in refining the relevance of each threat and determining appropriate mitigations. The exercise also strengthened our ability to analyze security gaps in OSS projects and improved our understanding of how architecture shapes security posture.
 
-Overall, this assignment sharpened our skills in secure design, STRIDE analysis, and system-level reasoning—key competencies for secure software engineering.
+Overall, this assignment sharpened our skills in secure design, STRIDE analysis, and system-level reasoning key competencies for secure software engineering.
 
 ---
