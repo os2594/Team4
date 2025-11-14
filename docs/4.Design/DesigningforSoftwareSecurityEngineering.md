@@ -118,6 +118,21 @@ Team Repository Link:
 
 All work was coordinated through GitHub commits, messaging, and shared file editing.
 
+## 👤 Individual Reflections
+Below are the individual reflections from each team member based on the required questions:
+**“What did you learn from this assignment?”** and  
+**“What did you find most useful?”**
+
+### **Justin Tobiason**
+
+### **Osmar Carboney**
+
+### **Preeti Timalsina**
+
+### **Zaid Kakish**
+
+### **Dominic Lanzante**
+
 ## Team Reflection
 
 **What we learned:**  
