@@ -149,3 +149,195 @@ We found the automation of threat enumeration to be a helpful starting point, bu
 Overall, this assignment sharpened our skills in secure design, STRIDE analysis, and system-level reasoning key competencies for secure software engineering.
 
 ---
+
+# Optional: AI-Assisted STRIDE Analysis (Per Interaction)
+
+To enhance the threat modeling exercise, we applied AI-based STRIDE analysis to our Marimo Level 1 DFD.  
+This aligns with the optional component described by Dr. Gandhi and focuses on threats **per interaction** across trust boundaries.
+
+---
+
+## AI Prompt Used
+
+The following prompt was used to generate the optional AI-assisted STRIDE analysis.  
+
+"For the given Marimo Level 1 DFD diagram, apply STRIDE per Interaction.  
+Focus only on interactions that cross a trust boundary, such as:
+
+- External Web Client → Marimo Backend Server (API Requests)  
+- Backend Server → External Web Client (API Responses)  
+- Backend Server → Internal Storage (File Reads/Writes)  
+- Internal Storage → Backend Server (Returned Notebook/Data)
+
+For each interaction, enumerate plausible Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege threats.
+
+For each threat, propose mitigations that align with Marimo’s architecture, not ones that fight against it.  
+Your mitigation recommendations should include:
+
+1. **Quick wins** that can be implemented immediately, and  
+2. **Structural guardrails** that prevent entire classes of vulnerabilities at the architectural level.
+
+Where appropriate, explain tradeoffs, constraints, and how Marimo’s trust boundaries shape the threat surface.
+
+Finally, summarize global design guardrails that apply across all interactions—such as authentication, sandboxing, authorization principles, logging patterns, or container isolation—that would prevent whole categories of issues rather than addressing them one at a time."
+
+---
+
+## STRIDE Analysis Per Interaction
+
+For Marimo’s Level 1 architecture, the primary trust-boundary-crossing interactions are:
+
+1. **External Web Client → Backend Server** (API Requests)  
+2. **Backend Server → External Web Client** (API Responses)  
+3. **Backend Server → Internal Storage System** (File Reads/Writes)  
+4. **Internal Storage System → Backend Server** (File/Data Returned)
+
+Below is a structured STRIDE-per-interaction analysis with mitigations aligned to the Marimo architecture.
+
+---
+
+### 1. Interaction: API Request (External Web Client → Backend Server)
+
+#### Spoofing
+An attacker may impersonate a legitimate user to send crafted API requests.  
+**Mitigations:**  
+- Require authentication/authorization before any cell execution or file operation.  
+- Use session tokens or OAuth2-style bearer tokens (quick win).  
+- **Structural guardrail:** centralized identity provider with token validation.
+
+#### Tampering
+User-controlled input (cell code, notebook state updates) may be modified in transit.  
+**Mitigations:**  
+- TLS 1.3 for all traffic.  
+- Strict server-side input validation and allowlisting.  
+- **Structural guardrail:** enforce server-centric business rules.
+
+#### Repudiation
+Users may deny executing certain code or issuing specific backend commands.  
+**Mitigations:**  
+- Authenticated request logs with timestamps and request hashing.  
+- **Structural guardrail:** immutable audit storage.
+
+#### Information Disclosure
+Requests may contain sensitive notebook content.  
+**Mitigations:**  
+- Enforce HTTPS.  
+- Avoid exposing sensitive identifiers in URLs.  
+- **Structural guardrail:** data classification and access controls.
+
+#### Denial of Service
+Attackers may abuse execution endpoints.  
+**Mitigations:**  
+- Rate limiting and execution timeouts.  
+- **Structural guardrail:** containerized per-user execution limits.
+
+#### Elevation of Privilege
+User code may escape sandbox boundaries.  
+**Mitigations:**  
+- Restricted Python runtime, no `eval`.  
+- **Structural guardrail:** OS-level isolation (containers, seccomp).
+
+---
+
+### 2. Interaction: API Response (Backend Server → External Web Client)
+
+#### Spoofing
+Attackers may deliver fake pages or responses.  
+**Mitigations:** TLS + HSTS; CSP.  
+**Structural guardrail:** signed responses.
+
+#### Tampering
+Responses modified in transit.  
+**Mitigations:** HTTPS integrity; checksums.
+
+#### Repudiation
+Backend denies sending data.  
+**Mitigations:** Response logging; immutable logs.
+
+#### Information Disclosure
+Backend may leak another user’s notebook data.  
+**Mitigations:** Per-record authorization checks.
+
+#### Denial of Service
+Attackers request large content repeatedly.  
+**Mitigations:** Pagination; caching; async rendering.
+
+#### Elevation of Privilege
+Users access restricted fields via JS modifications.  
+**Mitigations:** Enforce data-level authorization on API endpoints.
+
+---
+
+### 3. Interaction: File Operations (Backend → Internal Storage)
+
+#### Spoofing
+Backend may write to wrong storage location.  
+**Mitigations:** Signed storage credentials; validated paths.
+
+#### Tampering
+User code may write/overwrite internal files.  
+**Mitigations:** Path sanitation; workspace directory isolation.
+
+#### Repudiation
+Storage denies write occurred.  
+**Mitigations:** File write logs; structured metadata.
+
+#### Information Disclosure
+Leaks through exposed paths.  
+**Mitigations:** Path normalization; tokenized filenames.
+
+#### DoS
+Large writes fill disk.  
+**Mitigations:** Quotas; async processing.
+
+#### EoP
+Backend file writes escalate privileges.  
+**Mitigations:** Drop privileges; scoped permissions.
+
+---
+
+### 4. Interaction: Storage → Backend (Data Returned)
+
+#### Spoofing
+Fake files mimic notebooks.  
+**Mitigations:** MIME validation.
+
+#### Tampering
+Files corrupted or maliciously modified.  
+**Mitigations:** Hash validation; WORM storage.
+
+#### Repudiation
+Storage denies file return.  
+**Mitigations:** Read logs with metadata.
+
+#### Information Disclosure
+Directory traversal exposes system files.  
+**Mitigations:** Directory-based scoping; chroot.
+
+#### DoS
+Backend hangs on large/corrupt files.  
+**Mitigations:** File size limits; staged reads.
+
+#### EoP
+Malicious file content injects privileges.  
+**Mitigations:** Strict parsing; safe serialization.
+
+---
+
+## Structural Design Guardrails (Global Recommendations)
+
+1. **Explicit Trust Boundaries via API Gateways**  
+2. **Layered Defense (TLS, validation, WAF, logging, RBAC)**  
+3. **Security-by-Design Frameworks**  
+4. **Containerization & OS-Level Sandbox**  
+5. **Centralized Authorization Policies**  
+6. **Immutable Logging Systems**
+
+---
+
+## Summary of Optional AI Analysis
+
+This AI-generated STRIDE-per-interaction analysis reveals deeper architectural threats beyond those produced by TMT, particularly around notebook execution, file handling, and cross-boundary communication.  
+It complements the TM7 report by highlighting **structural mitigations**, **quick wins**, and **global guardrails** that strengthen Marimo’s security posture.
+
+---
