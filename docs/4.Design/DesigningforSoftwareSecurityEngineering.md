@@ -45,12 +45,19 @@ It captures the major architectural elements:
 - Internal File/Storage System  
 - Internet and Storage Trust Boundaries  
 
+## Microsoft TMT Project File (.tm7)
+
+You can download the full TMT project file here:
+[Level1_Marimo_Threat_Model_Diagram.tm7](./Diagrams/Level1_Marimo_Threat_Model_Diagram.tm7)
+
+Below is a preview of the diagram contained in the `.tm7` file:
+
 ### **Level 1 Diagram**
 ![Marimo Level 1 Diagram](./Diagrams/Threat_Model_Diagram_Picture.png)
 
 ---
 
-# 📝 Part 2: Observations, Collaborations, and Team Reflection
+# Part 2: Observations, Collaborations, and Team Reflection
 
 This section compares the mitigations expected from our threat model to what is actually implemented in the open-source Marimo project. It also includes our collaboration evidence and team reflection.
 
