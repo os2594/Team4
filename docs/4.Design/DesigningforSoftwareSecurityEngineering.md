@@ -13,7 +13,7 @@ We provide both the **HTML preview** (for full detail) and the **diagram snapsho
 Click below to view the fully rendered threat modeling report:
 
 **HTML Preview:**  
-https://htmlpreview.github.io/?https://github.com/os2594/Team4/blob/main/docs/4.Design/Marimo_Threat_Modeling_Report_Level1.htm
+https://htmlpreview.github.io/?https://github.com/os2594/Team4/blob/main/docs/4.Design/Diagrams/Marimo_Threat_Modeling_Report.htm
 
 > This preview contains the full STRIDE threat list, mitigations, assumptions, external dependencies,  
 > and all auto-generated Microsoft Threat Modeling Tool content.
