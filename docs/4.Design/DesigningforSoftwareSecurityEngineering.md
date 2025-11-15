@@ -139,7 +139,16 @@ This assignment had it's challenges. Trying to evaluate the design of the applic
 Using the Microsoft TMT tool was very valuable to me. I wasn't aware of the tool previous to this assignment so being able to get some hands on experience gave me something to add to the metaphorical tool box. Designing these diagrams and failing to capture exactly what I wanted the first couple rounds required me to reconsider the current solution for the problem. 
 
 ### **Osmar Carboney**
+What I learned:
+- How to apply STRIDE threat modeling to a real application architecture and map threats to trust boundaries.
+- The differences between tool-generated mitigations and practical, deployment-dependent controls (such as the limits of Python-level sandboxing vs. OS/container isolation).
+- The importance of balancing quick wins (TLS, auth tokens, rate limits) with structural guardrails (containerization, centralized auth, immutable logs).
 
+What I found most useful:
+- Using the Microsoft Threat Modeling Tool to generate and organize threats, then refining those findings with team discussion.
+- Comparing the ideal mitigations from the model with Marimo’s actual implementation to identify actionable gaps (auth, TLS enforcement, logging).
+- Learning concrete architectural controls (sandboxing strategies, per-user execution isolation, and auditability) that can be recommended to improve real deployments.
+  
 ### **Preeti Timalsina**
 
 ### **Zaid Kakish**
