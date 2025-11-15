@@ -90,7 +90,7 @@ These controls address multiple threats across Spoofing, Tampering, and Elevatio
 Our analysis also revealed that several critical security mitigations are **not** implemented directly by Marimo:
 
 - **No Built-in Authentication or Authorization:**  
-  Any user with access to the backend port can issue API commands.
+  Any user with access to the backend port can issue API commands. It's up to the organization to apply and implement the access controls.
 
 - **No TLS Enforcement:**  
   Security depends entirely on the deployment environment and reverse proxy.
@@ -102,7 +102,7 @@ Our analysis also revealed that several critical security mitigations are **not*
   Leaves Marimo vulnerable to resource exhaustion and DoS attacks.
 
 - **Not OS-Level Sandboxed:**  
-  Python-level sandboxing is not fully isolated (e.g., seccomp, namespaces, containers).
+  Python-level sandboxing is not fully isolated (e.g., seccomp, namespaces, containers). This requires the infrastructure teams to implement a 'safe' environment.
 
 - **Deployment-Specific Security Posture:**  
   Core mitigations depend on external infrastructure rather than Marimo itself.
@@ -119,6 +119,7 @@ Team 4 collaborated using a shared GitHub repository containing:
 - Shared notes and design documents  
 - Markdown documentation  
 - Iterative updates and commit history
+- Evaluating and resolving the potential risks
 
 Team Repository Link:  
 -> https://github.com/os2594/Team4
@@ -131,6 +132,11 @@ Below are the individual reflections from each team member based on the required
 **“What did you learn from this assignment?” and “What did you find most useful?”**
 
 ### **Justin Tobiason**
+**What I learned:**
+This assignment had it's challenges. Trying to evaluate the design of the application in the context of our use case made coming up with the level 1 diagram more of a controversial discussion regarding what does and does not belong. Once we dialed that in attempting to mitigate or deterime what wasn't applicaple in the analysis did require some thought as being a financial institution it seemed like most of these SHOULD be mitigated since our risk appetite is a lot less than other businesses would be interested in. 
+
+**What I found most useful**
+Using the Microsoft TMT tool was very valuable to me. I wasn't aware of the tool previous to this assignment so being able to get some hands on experience gave me something to add to the metaphorical tool box. Designing these diagrams and failing to capture exactly what I wanted the first couple rounds required me to reconsider the current solution for the problem. 
 
 ### **Osmar Carboney**
 
