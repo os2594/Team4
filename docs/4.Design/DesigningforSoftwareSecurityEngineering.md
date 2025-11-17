@@ -152,6 +152,11 @@ What I found most useful:
 ### **Preeti Timalsina**
 
 ### **Zaid Kakish**
+** What I learned:**
+I learned a lot about structuring the diagram for data flows and how ot provide abstraction. I also really liked the Threat Modeling tool that we used, and helped apply a lot of the theoretical threats and mitigations into practice, and provide a wider image of Marimo. Overall, I think it was very interesting to see how our previous case flow into constructing a DFD and being able to capture everything,
+
+**What I found most useful:**
+The Microsoft TMT was very intriguing to me and I found it very useful in summarizing the potential threats that the tool may encounter. Some of the threat I did not think beforehand, so it was interesting ot see those mentioned. I think it was also very useful in helping us form mitigations to counter act these threats, and pinpoint where we need them the most. 
 
 ### **Dominic Lanzante**
 **What I learned:**  
