@@ -150,11 +150,11 @@ What I found most useful:
 - Learning concrete architectural controls (sandboxing strategies, per-user execution isolation, and auditability) that can be recommended to improve real deployments.
   
 ### **Preeti Timalsina**
-**What I learned:**
-- From this assignment, I learned how important trust boundaries are and how much they shape the rest of the threat modeling work. Using a real open-source tool like Marimo made it easier to imagine real scenarios instead of something purely theoretical. At first I was confused about how Level 0, 1, and 2 diagrams should be different, but by the end it started to make sense and I could see how each level adds just enough detail without overwhelming the model. I also realized that once the diagrams are right, looking through the STRIDE analysis in TMT and seeing what needs to be done is actually pretty straightforward.
+**What I learned:** 
+From this assignment, I learned how important trust boundaries are and how much they shape the rest of the threat modeling work. Using a real open-source tool like Marimo made it easier to imagine real scenarios instead of something purely theoretical. At first I was confused about how Level 0, 1, and 2 diagrams should be different, but by the end it started to make sense and I could see how each level adds just enough detail without overwhelming the model. I also realized that once the diagrams are right, looking through the STRIDE analysis in TMT and seeing what needs to be done is actually pretty straightforward.
 
 **What I found most useful:**
-- The most useful part for me was working directly in the Microsoft Threat Modeling Tool which I genuinely enjoyed using. It made it easy to connect the DFD with the threats and see them together instead of as separate steps. Going through the list and deciding what is relevant, how it should be mitigated, or why it might not apply helped me practice how I’d explain security decisions in a real setting. I feel like this will help me in the future, both in using tools like TMT again and in thinking more naturally in terms of trust boundaries and concrete mitigations when I look at any system design.
+The most useful part for me was working directly in the Microsoft Threat Modeling Tool which I genuinely enjoyed using. It made it easy to connect the DFD with the threats and see them together instead of as separate steps. Going through the list and deciding what is relevant, how it should be mitigated, or why it might not apply helped me practice how I’d explain security decisions in a real setting. I feel like this will help me in the future, both in using tools like TMT again and in thinking more naturally in terms of trust boundaries and concrete mitigations when I look at any system design.
 
 ### **Zaid Kakish**
 ** What I learned:**
