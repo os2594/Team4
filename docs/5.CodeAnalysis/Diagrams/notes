@@ -1,1 +1,132 @@
 
+High level metrics from the Bandit run:
+
+Files scanned: 600+ Python files
+
+Issues reported: dozens of findings with a mix of low, medium, and high severity
+
+Report artifacts: bandit-report.json and bandit-report.txt under docs/5.CodeAnalysis/
+
+Bandit produced a broad set of warnings. We focused on those that intersect with our CWE checklist and misuse cases.
+
+3.2 Representative Bandit Findings
+
+Use of subprocess with potentially variable input (CWE 78 – OS Command Injection)
+
+Pattern: calls to subprocess.run or similar functions with non literal arguments.
+
+Risk: if untrusted input ever flows into these arguments in the future, there is a path toward OS command injection.
+
+Mitigation direction: ensure that any subprocess use is limited to controlled commands or uses argument lists with strict validation rather than shell strings.
+
+Use of dynamic evaluation features such as eval or exec (CWE 95 – Eval Injection)
+
+Pattern: dynamic execution of constructed strings in example tools.
+
+Risk: if user controlled content can reach these strings, arbitrary code execution becomes possible.
+
+Mitigation direction: isolate this behavior to clearly documented example code, avoid it in core runtime paths, and provide sandboxing guidance.
+
+Broad or empty exception handlers (CWE 209 – Information Exposure Through an Error Message)
+
+Pattern: except Exception: handlers that log or surface errors in a generic way.
+
+Risk: if these handlers print exception objects or tracebacks directly to users, they can expose sensitive implementation details or data fragments.
+
+Mitigation direction: narrow exception types where practical and route full details to server side logs while showing generic messages to users.
+
+Warnings about use of assert for security relevant checks (CWE 703 – Improper Check or Handling of Exceptional Conditions)
+
+Pattern: assert statements used for invariants that could be disabled with optimized Python flags.
+
+Risk: security relevant checks implemented only as asserts may not run in production if optimization is enabled.
+
+Mitigation direction: replace asserts with explicit conditionals and error handling for any security relevant logic.
+
+Network and HTTP calls using high level libraries
+
+Pattern: calls to urllib or similar modules without explicit timeouts.
+
+Risk: unbounded network calls may contribute to resource exhaustion or unexpected blocking.
+
+Mitigation direction: prefer explicit timeouts and robust error handling for external requests.
+
+Bandit’s results complemented Semgrep by highlighting Python specific patterns and helped us confirm that our CWE checklist remained appropriate for the Marimo codebase.
+
+Part 2: Key Findings and Contributions
+2.1 Summary of Key Findings and Risk
+
+The table below summarizes the most important findings across manual and automated review. These drive our perception of risk in a financial analysis environment.
+
+ID	Source (Manual or Tool)	CWE(s)	Short description	Risk in financial environment
+KF 1	Manual (M 1)	CWE 200, CWE 250	Public binding combined with tokenless access can expose internal notebooks	Unauthorized analysts or external actors could reach sensitive notebooks if network segments are misconfigured.
+KF 2	Manual (M 2)	CWE 209, CWE 200	Verbose tracebacks and debug mode can leak internal details	Detailed error messages may reveal paths, queries, and system information useful for targeted attacks.
+KF 3	Manual (M 3)	CWE 400	Lack of built in resource limits on notebook execution	Heavy notebooks or malicious code can exhaust CPU or memory, leading to denial of service for other analysts.
+KF 4	Automated (Semgrep)	CWE 250, CWE 95	Containers run as root and example code uses exec and eval	Exploited notebooks or misused examples could lead to high impact compromise inside containers or hosts.
+KF 5	Automated (Semgrep)	CWE 79, CWE 352, CWE 353	XSS prone rendering and insecure example templates	Downstream teams that copy examples without hardening may deploy applications with XSS, CSRF, or CDN based script injection risks.
+KF 6	Automated (Bandit)	CWE 78, CWE 209	Subprocess and exception handling patterns in Python modules	Poorly guarded subprocess calls or logging may turn into command injection or information leakage issues in certain configurations.
+
+Overall, we found that Marimo does not exhibit obvious catastrophic vulnerabilities in the core runtime based on our sample, but it does rely heavily on deployment choices, container configuration, and example patterns. In a financial environment, this means secure defaults and hardened documentation are critical.
+
+2.2 Planned and Ongoing Contributions to Marimo
+
+Based on our analysis, our planned or ongoing contributions to the upstream Marimo project include:
+
+Documentation and design changes
+
+Proposing clearer secure deployment guidance, including a secure deployment checklist for binding, tokens, TLS, and reverse proxy use.
+
+Strengthening examples to favor parameterized SQL and safe query patterns.
+
+Improving documentation around authentication and token based access for public facing apps.
+
+Code and configuration improvements
+
+Recommending stricter behavior or higher visibility warnings for flags such as --no-token and host binds to 0.0.0.0.
+
+Suggesting improvements to error handling so that production deployments default to sanitized error messages.
+
+Recommending or contributing initial hooks for execution time limits, memory caps, and sandbox enhancements.
+
+Security communications
+
+Aligning SECURITY.md with our findings by clarifying expectations for responsible disclosure and by adding a short section on secure notebook deployment in regulated environments.
+
+2.2.1 OSS Project Interactions
+
+At the time of this report, we are in the planning and drafting phase for upstream contributions. We have identified the following candidate issues and pull requests to file against the main Marimo repository:
+
+Issue: “Clarify secure deployment guidance for public apps,” to document secure binding, authentication, and reverse proxy recommendations.
+
+Issue or pull request: “Run Docker containers as non root by default,” to reduce the impact of a compromised notebook environment.
+
+Issue: “Harden example applications with CSRF, SRI, and secure rendering patterns,” to align examples with secure defaults.
+
+These interactions build directly on the misuse cases and CWEs that emerged from our code review.
+
+2.3 Team Repository and Collaboration
+
+Team 4 used the GitHub repository at https://github.com/os2594/Team4
+ to coordinate work on this assignment. Our collaboration approach included:
+
+Dividing code review responsibilities primarily by directory and misuse case: one member focused on marimo/_server and error handling, another on marimo/_runtime and execution behavior, and others on Docker files and example applications.
+
+Sharing Semgrep and Bandit outputs through committed artifacts under docs/5.CodeAnalysis/, so that each team member could review findings without rerunning tools locally.
+
+Using pull requests, commits, and markdown documents under docs/ to track progress, discuss interpretations of findings, and refine the final narrative.
+
+This process helped us maintain a shared understanding of risk while still allowing focused, parallel work.
+
+2.4 Team Reflection
+
+As a team, we learned several lessons from this assignment:
+
+Scenario based scoping is essential. Starting from misuse cases, threat models, and assurance claims kept our review focused on code that mattered instead of being overwhelmed by the full repository.
+
+CWE based checklists are practical. Having a specific CWE list gave us concrete targets to look for in both manual review and tool output, and made it easier to explain findings in a structured way.
+
+Automated tools are powerful but imperfect. Semgrep and Bandit quickly surfaced patterns we might have missed, but we also had to invest time in triaging false positives and understanding the real impact of each warning.
+
+Deployment and examples matter as much as core code. Many of our highest impact findings related to how Marimo is deployed or how example code might be copied, not just to core runtime logic.
+
+AI assistance can accelerate, but not replace, human judgment. Using AI chat to explain complex functions or suggest CWE mappings helped us move faster, but we still had to validate each claim and reason about risk in our specific financial environment.
