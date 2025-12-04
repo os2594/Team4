@@ -3,9 +3,10 @@
 **Course:** CYBR 8420 – Designing for Software Security Engineering  
 **Project:** Marimo – Reactive Python Notebook Platform  
 **Team:** Team 4
-**Repository:** https://github.com/marimo-team/marimo  <!-- or your team fork -->
+**Repository:** https://github.com/marimo-team/marimo 
 
 ---
+
 ## Part 1: Code Review
 
 ### 1.1 Scope and Focus
@@ -29,7 +30,9 @@ Rather than attempting to inspect every file, we scoped our review to areas with
 - Documentation, security policy, and examples  
   - `SECURITY.md`, example framework integrations, and HTML templates that are likely to be copied into downstream deployments
 
-This scope ensured that our effort remained aligned with the risks that matter in a financial analysis environment instead of treating all files as equally critical.
+This scope kept our effort aligned with the risks that matter in a financial analysis environment instead of treating all files as equally critical.
+
+---
 
 ### 1.2 CWE Checklist for the Review
 
@@ -50,24 +53,27 @@ We used the following CWE list as a structured checklist across both manual and 
 
 This checklist served as a lens for reading code and interpreting automated findings.
 
+---
+
 ### 1.3 Manual and Automated Tools
 
-**Manual review methods**
+#### 1.3.1 Manual Review Methods
 
 We used several manual review techniques:
 
-- Targeted file walkthroughs in `marimo/_server`, `marimo/_runtime`, and `marimo_cli` looking for authentication, configuration flags, input handling, logging, and error reporting paths.  
-- Search based review using queries such as `subprocess`, `exec(`, `eval(`, `--no-token`, `"0.0.0.0"`, `debug`, `sql`, `SELECT`, and `EXPLAIN` across the repository to locate high risk patterns.  
-- Architecture level reasoning using our threat models, DFDs, and assurance cases to understand how Marimo is expected to run in a secure environment (developer laptop versus shared server versus public apps).
+- Targeted file walkthroughs in `marimo/_server`, `marimo/_runtime`, and `marimo_cli` looking for authentication, configuration flags, input handling, logging, and error reporting paths  
+- Search based review using queries such as `subprocess`, `exec(`, `eval(`, `--no-token`, `"0.0.0.0"`, `debug`, `sql`, `SELECT`, and `EXPLAIN` across the repository to locate high risk patterns  
+- Architecture level reasoning using our threat models, DFDs, and assurance cases to understand how Marimo is expected to run in a secure environment (developer laptop versus shared server versus public apps)
 
-To speed up manual review, we also used AI chat in the style recommended in the course materials, for example:
+To speed up manual review, we also used generative AI chat in the style recommended in the course materials, for example:
 
-- “Explain what this code does: [snippet]”  
-- “Evaluate the security of this Python code and explain results using CWEs: [snippet]”  
+- “Explain what this code does: [code snippet]”  
+- “Evaluate the security of this Python code and explain results using CWEs: [code snippet]”  
+- “Examine this function for CWE 78 (OS Command Injection) and CWE 95 (Eval Injection): [code snippet]”
 
-These assistants were used only to summarize or clarify code behavior. All final findings and CWE mappings were verified directly against the Marimo codebase.
+AI assistance was used only to summarize or clarify code behavior. All final findings, CWE mappings, and risk assessments were verified directly against the Marimo codebase.
 
-**Automated analysis tools**
+#### 1.3.2 Automated Analysis Tools
 
 We complemented manual review with two primary static analysis tools:
 
@@ -86,35 +92,53 @@ We complemented manual review with two primary static analysis tools:
     ```  
   - Purpose: focus on Python specific issues such as unsafe `subprocess` usage, dynamic evaluation, insecure deserialization, and misuse of asserts.
 
+---
+
 ### 1.4 Anticipated Challenges
 
 Before running tools or opening files, we identified several challenges:
 
-- Scale and churn: Marimo is an actively developed open source project with a large codebase and frequent changes. We had to accept that we would only be able to reason deeply about selected modules within the timeframe of the assignment.  
-- Dynamic behavior: The reactive notebook execution model, dynamic imports, and runtime generated code make it difficult to fully understand behavior from static inspection alone.  
-- Tool noise and false positives: Both Semgrep and Bandit can produce a significant number of low risk or context dependent findings, requiring careful triage rather than blind acceptance.  
-- Configuration dependent risks: Some of the most serious risks, such as running without authentication or binding to `0.0.0.0`, are driven by how Marimo is launched, not just by code structure.
+- **Scale and churn**  
+  Marimo is an actively developed open source project with a large codebase and frequent changes. We had to accept that we would only be able to reason deeply about selected modules within the timeframe of the assignment.  
+
+- **Dynamic behavior**  
+  The reactive notebook execution model, dynamic imports, and runtime generated code make it difficult to fully understand behavior from static inspection alone.  
+
+- **Tool noise and false positives**  
+  Both Semgrep and Bandit can produce a significant number of low risk or context dependent findings, requiring careful triage rather than blind acceptance.  
+
+- **Configuration dependent risks**  
+  Some of the most serious risks, such as running without authentication or binding to `0.0.0.0`, are driven by how Marimo is launched, not just by code structure.
+
+---
 
 ### 1.5 Strategy to Address Challenges
 
 To deal with these challenges, we adopted the following strategy:
 
-- Tie everything to misuse cases: Every manual finding and every automated finding we decided to keep is explicitly tied to one or more misuse cases and CWEs. This kept us from chasing issues that do not matter in our target environment.  
-- Limit scope, deepen depth: Instead of shallowly scanning everything, we prioritized depth in a few critical areas: notebook execution, server configuration, example deployments, and Docker related files.  
-- Use automated tools as triage, not verdict: We treated Semgrep and Bandit as spotlights to find potential hotspots. We then manually reviewed representative examples to determine whether a finding was relevant, exploitable, or simply a benign pattern in test or example code.  
-- Leverage repository structure and documentation: We used existing documentation, `SECURITY.md`, and the directory layout to infer intended security properties and validate whether the implementation and examples support those goals.
+- **Tie everything to misuse cases**  
+  Every manual finding and every automated finding we decided to keep is explicitly tied to one or more misuse cases and CWEs. This kept us from chasing issues that do not matter in our target environment.  
+
+- **Limit scope, deepen depth**  
+  Instead of shallowly scanning everything, we prioritized depth in a few critical areas: notebook execution, server configuration, example deployments, and Docker related files.  
+
+- **Use automated tools as triage, not verdict**  
+  We treated Semgrep and Bandit as spotlights to find potential hotspots. We then manually reviewed representative examples to determine whether a finding was relevant, exploitable, or simply a benign pattern in test or example code.  
+
+- **Leverage repository structure and documentation**  
+  We used existing documentation, `SECURITY.md`, and the directory layout to infer intended security properties and validate whether the implementation and examples support those goals.
 
 ---
 
 ## Part 1: Findings from Manual Code Review
 
-This section summarizes findings that were discovered through direct human review of Marimo’s code, configuration, and documentation rather than solely via automated tools.
+This section summarizes findings discovered through direct human review of Marimo’s code, configuration, and documentation rather than solely via automated tools.
 
 ### M 1: Risky Public Binding and Tokenless Access
 
-- Location: `marimo_cli/run_docker.py` and related CLI documentation  
-- Related misuse cases: Public exposure of Marimo apps, data exfiltration  
-- Related CWE(s): CWE 200 (Exposure of Sensitive Information), CWE 250 (Execution with Unnecessary Privileges)  
+- **Location:** `marimo_cli/run_docker.py` and related CLI documentation  
+- **Related misuse cases:** Public exposure of Marimo apps, data exfiltration  
+- **Related CWE(s):** CWE 200 (Exposure of Sensitive Information), CWE 250 (Execution with Unnecessary Privileges)  
 
 **Description and risk**
 
@@ -130,9 +154,9 @@ The Docker based CLI helper defaults to binding the Marimo server to `host = "0.
 
 ### M 2: Verbose Tracebacks and Error Messages
 
-- Location: Error handling paths in `marimo/_server` and `marimo/_runtime` that display tracebacks and debug information  
-- Related misuse cases: Debug mode misuse, information disclosure  
-- Related CWE(s): CWE 209 (Information Exposure Through an Error Message), CWE 200  
+- **Location:** Error handling paths in `marimo/_server` and `marimo/_runtime` that display tracebacks and debug information  
+- **Related misuse cases:** Debug mode misuse, information disclosure  
+- **Related CWE(s):** CWE 209 (Information Exposure Through an Error Message), CWE 200  
 
 **Description and risk**
 
@@ -148,9 +172,9 @@ Marimo provides rich tracebacks and detailed error displays to support interacti
 
 ### M 3: Resource Exhaustion and Lack of Hard Limits
 
-- Location: Execution and scheduling logic in `marimo/_runtime` and associated modules  
-- Related misuse cases: Denial of service, malicious code execution  
-- Related CWE(s): CWE 400 (Uncontrolled Resource Consumption)  
+- **Location:** Execution and scheduling logic in `marimo/_runtime` and associated modules  
+- **Related misuse cases:** Denial of service, malicious code execution  
+- **Related CWE(s):** CWE 400 (Uncontrolled Resource Consumption)  
 
 **Description and risk**
 
@@ -160,15 +184,15 @@ Our review did not identify clear, built in hard limits on execution time, memor
 
 - Introduce configuration options for per notebook and per user resource caps, including execution timeouts and memory ceilings.  
 - Document deployment patterns that place Marimo behind infrastructure level controls such as reverse proxies with rate limiting and Kubernetes resource quotas.  
-- Consider providing example guardrails or defaults for organizational deployments where resource isolation is a requirement.
+- Provide example guardrails or defaults for organizational deployments where resource isolation is a requirement.
 
 ---
 
 ### M 4: Example Patterns and Secure Defaults
 
-- Location: Example framework integrations (`examples/frameworks/*`), HTML templates, and documentation snippets  
-- Related misuse cases: Public exposure, data exfiltration, CSRF and XSS risks  
-- Related CWE(s): CWE 79 (XSS), CWE 352 (CSRF), CWE 353 (Missing Support for Integrity Check)  
+- **Location:** Example framework integrations (`examples/frameworks/*`), HTML templates, and documentation snippets  
+- **Related misuse cases:** Public exposure, data exfiltration, CSRF and XSS risks  
+- **Related CWE(s):** CWE 79 (XSS), CWE 352 (CSRF), CWE 353 (Missing Support for Integrity Check)  
 
 **Description and risk**
 
@@ -184,7 +208,7 @@ Several example applications and HTML templates are designed to be minimal and e
 
 ## Part 1: Findings from Automated Code Scanning
 
-### 1. Automated Tools Run
+### 1.6 Automated Tools Run
 
 We used two primary automated tools and archived their outputs in our team repository:
 
@@ -193,8 +217,8 @@ We used two primary automated tools and archived their outputs in our team repos
     ```bash
     semgrep --config auto . --json --output docs/5.CodeAnalysis/semgrep-report.json
     ```  
-  - Scope: repo root, including Python, TypeScript, JavaScript, HTML, and Dockerfiles.  
-  - Artifact: `docs/5.CodeAnalysis/semgrep-report.json`.
+  - Scope: repo root, including Python, TypeScript, JavaScript, HTML, and Dockerfiles  
+  - Artifact: `docs/5.CodeAnalysis/semgrep-report.json`
 
 - **Bandit**  
   - Commands:  
@@ -202,17 +226,18 @@ We used two primary automated tools and archived their outputs in our team repos
     bandit -r . -f json   -o docs/5.CodeAnalysis/bandit-report.json
     bandit -r . -f screen > docs/5.CodeAnalysis/bandit-report.txt
     ```  
-  - Scope: all Python files in the repository.  
-  - Artifacts: `docs/5.CodeAnalysis/bandit-report.json` and `docs/5.CodeAnalysis/bandit-report.txt`.
+  - Scope: all Python files in the repository  
+  - Artifacts: `docs/5.CodeAnalysis/bandit-report.json` and `docs/5.CodeAnalysis/bandit-report.txt`
 
-### 2. Semgrep Summary
+---
+
+### 1.7 Semgrep Summary
 
 We used Semgrep OSS with the `--config auto` setting to scan our Marimo fork:
 
 - Rules run: 511  
 - Targets scanned: approximately 3,140 files  
 - Findings: 116 total (mix of security, correctness, and maintainability)  
-- Report artifact: `docs/5.CodeAnalysis/semgrep-report.json` in our team repository  
 
 From these findings, we focused on issues that intersect with our misuse cases: data exfiltration, malicious code execution, public exposure of Marimo apps, and denial of service. Representative examples include:
 
@@ -254,51 +279,146 @@ From these findings, we focused on issues that intersect with our misuse cases: 
      - `javascript.browser.security.insecure-document-method.insecure-document-method`  
    - Summary: Both findings point to rendering HTML fragments into the DOM. These are safe only if the HTML is fully trusted. If notebook output, error messages, or tracebacks can be influenced by an attacker, such as via untrusted code or public apps, these become potential XSS sinks. This reinforces our threat models around publicly exposed Marimo apps, debug mode leakage, and the need for robust output sanitization.
 
-Overall, the Semgrep results confirmed that our CWE checklist is well aligned with Marimo’s architecture and typical deployment patterns:
+Overall, the Semgrep results confirmed that our CWE checklist is well aligned with Marimo’s architecture and typical deployment patterns and helped us prioritize manual review around notebook execution, web UI rendering, and deployment examples.
 
-- CWE 250: privilege management in containers  
-- CWE 95: dynamic code execution and eval injection  
-- CWE 79: XSS in web UI components  
-- CWE 352: CSRF risks in example login flows  
-- CWE 353: integrity of external resources  
-- CWE 78: command injection via child processes  
-- CWE 134 (optional): externally controlled format strings in logs, which we track as lower risk
+---
 
-These automated findings helped us prioritize manual review around notebook execution, web UI rendering, and deployment examples.
+### 1.8 Bandit Summary
 
+#### 1.8.1 Bandit Execution and Metrics
 
-### 3. Bandit Summary
+- **Files scanned:** 600+ Python files  
+- **Issues reported:** dozens of findings with a mix of low, medium, and high severity  
+- **Report artifacts:** `bandit-report.json` and `bandit-report.txt` under `docs/5.CodeAnalysis/`  
 
-#### 3.1 Bandit Execution and Metrics
+Bandit produced a broad set of warnings. We focused on those that intersect with our CWE checklist and misuse cases.
 
-We ran Bandit from the repository root against all Python files:
+#### 1.8.2 Representative Bandit Findings
 
-```bash
-bandit -r . -f json   -o docs/5.CodeAnalysis/bandit-report.json
-bandit -r . -f screen > docs/5.CodeAnalysis/bandit-report.txt
+**Use of `subprocess` with potentially variable input (CWE 78 – OS Command Injection)**  
+- **Pattern:** calls to `subprocess.run` or similar functions with non literal arguments  
+- **Risk:** if untrusted input ever flows into these arguments in the future, there is a path toward OS command injection  
+- **Mitigation direction:** ensure that any subprocess use is limited to controlled commands or uses argument lists with strict validation rather than shell strings  
 
-### 2.4 Team reflection
+**Use of dynamic evaluation features such as `eval` or `exec` (CWE 95 – Eval Injection)**  
+- **Pattern:** dynamic execution of constructed strings in example tools  
+- **Risk:** if user controlled content can reach these strings, arbitrary code execution becomes possible  
+- **Mitigation direction:** isolate this behavior to clearly documented example code, avoid it in core runtime paths, and provide sandboxing guidance  
+
+**Broad or empty exception handlers (CWE 209 – Information Exposure Through an Error Message)**  
+- **Pattern:** `except Exception:` handlers that log or surface errors in a generic way  
+- **Risk:** if these handlers print exception objects or tracebacks directly to users, they can expose sensitive implementation details or data fragments  
+- **Mitigation direction:** narrow exception types where practical and route full details to server side logs while showing generic messages to users  
+
+**Warnings about use of `assert` for security relevant checks (CWE 703 – Improper Check or Handling of Exceptional Conditions)**  
+- **Pattern:** `assert` statements used for invariants that could be disabled with optimized Python flags  
+- **Risk:** security relevant checks implemented only as asserts may not run in production if optimization is enabled  
+- **Mitigation direction:** replace asserts with explicit conditionals and error handling for any security relevant logic  
+
+**Network and HTTP calls using high level libraries without explicit timeouts**  
+- **Pattern:** calls to `urllib` or similar modules without explicit timeouts  
+- **Risk:** unbounded network calls may contribute to resource exhaustion or unexpected blocking  
+- **Mitigation direction:** prefer explicit timeouts and robust error handling for external requests  
+
+Bandit’s results complemented Semgrep by highlighting Python specific patterns and helped us confirm that our CWE checklist remained appropriate for the Marimo codebase.
+
+---
+
+## Part 2: Key Findings and Contributions
+
+### 2.1 Summary of Key Findings and Risk
+
+The table below summarizes the most important findings across manual and automated review. These drive our perception of risk in a financial analysis environment.
+
+| ID  | Source (Manual or Tool) | CWE(s)                | Short description                                                | Risk in financial environment                                                                                  |
+|-----|-------------------------|-----------------------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| KF 1 | Manual (M 1)           | CWE 200, CWE 250      | Public binding combined with tokenless access can expose internal notebooks | Unauthorized analysts or external actors could reach sensitive notebooks if network segments are misconfigured. |
+| KF 2 | Manual (M 2)           | CWE 209, CWE 200      | Verbose tracebacks and debug mode can leak internal details      | Detailed error messages may reveal paths, queries, and system information useful for targeted attacks.          |
+| KF 3 | Manual (M 3)           | CWE 400               | Lack of built in resource limits on notebook execution           | Heavy notebooks or malicious code can exhaust CPU or memory, leading to denial of service for other analysts.   |
+| KF 4 | Automated (Semgrep)    | CWE 250, CWE 95       | Containers run as root and example code uses `exec` and `eval`   | Exploited notebooks or misused examples could lead to high impact compromise inside containers or hosts.        |
+| KF 5 | Automated (Semgrep)    | CWE 79, CWE 352, CWE 353 | XSS prone rendering and insecure example templates            | Downstream teams that copy examples without hardening may deploy applications with XSS, CSRF, or CDN based script injection risks. |
+| KF 6 | Automated (Bandit)     | CWE 78, CWE 209       | Subprocess and exception handling patterns in Python modules     | Poorly guarded subprocess calls or logging may turn into command injection or information leakage issues in certain configurations. |
+
+Overall, we found that Marimo does not exhibit obvious catastrophic vulnerabilities in the core runtime based on our sample, but it does rely heavily on deployment choices, container configuration, and example patterns. In a financial environment, this means secure defaults and hardened documentation are critical.
+
+---
+
+### 2.2 Planned and Ongoing Contributions to Marimo
+
+Based on our analysis, our planned or ongoing contributions to the upstream Marimo project include:
+
+#### Documentation and design changes
+
+- Proposing clearer secure deployment guidance, including a secure deployment checklist for binding, tokens, TLS, and reverse proxy use  
+- Strengthening examples to favor parameterized SQL, safe query patterns, and secure defaults  
+- Improving documentation around authentication and token based access for public facing apps  
+
+#### Code and configuration improvements
+
+- Recommending stricter behavior or higher visibility warnings for flags such as `--no-token` and host binds to `0.0.0.0`  
+- Suggesting improvements to error handling so that production deployments default to sanitized error messages  
+- Recommending or contributing initial hooks for execution time limits, memory caps, and sandbox enhancements  
+
+#### Security communications
+
+- Aligning `SECURITY.md` with our findings by clarifying expectations for responsible disclosure  
+- Adding a short section on secure notebook deployment in regulated environments  
+
+---
+
+### 2.2.1 OSS Project Interactions
+
+As part of this assignment, we identified the following candidate issues and pull requests to file against the main Marimo repository:
+
+- **Issue:** “Clarify secure deployment guidance for public apps” (secure binding, authentication, and reverse proxy recommendations)  
+- **Issue or pull request:** “Run Docker containers as non root by default” to reduce the impact of a compromised notebook environment  
+- **Issue:** “Harden example applications with CSRF, SRI, and secure rendering patterns” to align examples with secure defaults  
+
+These interactions build directly on the misuse cases and CWEs that emerged from our code review.
+
+---
+
+### 2.3 Team Repository and Collaboration
+
+Team 4 used the GitHub repository at https://github.com/os2594/Team4 to coordinate work on this assignment. Our collaboration approach included:
+
+- Dividing code review responsibilities primarily by directory and misuse case:  
+  - One member focused on `marimo/_server` and error handling  
+  - One focused on `marimo/_runtime` and execution behavior  
+  - Others focused on Docker files, CLI scripts, and example applications  
+
+- Sharing Semgrep and Bandit outputs through committed artifacts under `docs/5.CodeAnalysis/`, so that each team member could review findings without rerunning tools locally  
+
+- Using pull requests, commits, and markdown documents under `docs/` to track progress, discuss interpretations of findings, and refine the final narrative  
+
+This process helped us maintain a shared understanding of risk while still allowing focused, parallel work.
+
+---
+
+### 2.4 Team Reflection
 
 Each team member answered the following questions:
 
 - What did you learn from this assignment?  
 - What did you find the most useful for your understanding of secure software engineering?
 
-#### Individual reflections
+#### 2.4.1 Individual Reflections
 
-> TODO: Paste or summarize each member’s reflection here, for example:
->
-> - **Osmar:**  
->   Short paragraph.  
-> - **Justin:**  
->   Short paragraph.  
-> - **Dominic:**  
->   Short paragraph.  
-> - **Preeti:**  
->   Short paragraph.  
-> - **Zaid:**  
->   Short paragraph.  
+- **Osmar**  
+  <ADD REFLECTION>
 
-#### Combined team reflection
+- **Justin**  
+  <ADD REFLECTION>
 
-> TODO: One combined paragraph that synthesizes the themes from the individual reflections. This can highlight what the team learned about connecting misuse cases, CWEs, code review, and open source contributions.
+- **Dominic**  
+  Gained a deeper appreciation for how execution isolation and resource limits affect real world risk in shared environments. The most useful part was tying Bandit and Semgrep findings back to specific misuse cases like data exfiltration and denial of service.
+
+- **Preeti**  
+  <ADD REFLECTION>
+
+- **Zaid**  
+  <ADD REFLECTION>
+
+#### 2.4.2 Combined Team Reflection
+
+As a team, we learned that effective code review is not just about running tools or reading code line by line, but about connecting multiple perspectives. Misuse cases and threat models gave us the “why,” CWEs and tooling gave us the “what,” and our open source contribution plan gave us the “so what” in terms of concrete next steps. The most useful part of the assignment was experiencing that full pipeline from architectural reasoning to concrete findings and then to proposed changes for an active open source project. It reinforced that secure software engineering is an iterative, collaborative process that depends on both technical depth and clear communication.
