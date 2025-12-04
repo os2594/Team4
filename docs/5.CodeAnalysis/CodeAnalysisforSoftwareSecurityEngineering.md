@@ -80,15 +80,21 @@ We complemented manual review with two primary static analysis tools:
 - **Semgrep** (multi language SAST)  
   - Command:  
     ```bash
-    semgrep --config auto . --json --output docs/5.CodeAnalysis/semgrep-report.json
+    semgrep --config auto . --json --output semgrep-report.json
     ```  
   - Purpose: enforce language and framework agnostic security rules covering Python, TypeScript, HTML, and Dockerfiles and map findings to CWEs where possible.
 
 - **Bandit** (Python security scanner)  
   - Commands:  
     ```bash
-    bandit -r . -f json   -o docs/5.CodeAnalysis/bandit-report.json
-    bandit -r . -f screen > docs/5.CodeAnalysis/bandit-report.txt
+    bandit -r . -f html -o bandit_report.html
+    [main]  INFO    profile include tests: None
+    [main]  INFO    profile exclude tests: None
+    [main]  INFO    cli include tests: None
+    [main]  INFO    cli exclude tests: None
+    [main]  INFO    running on Python 3.10.0
+    Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:25
+    [html]  INFO    HTML output written to file: bandit_report.html
     ```  
   - Purpose: focus on Python specific issues such as unsafe `subprocess` usage, dynamic evaluation, insecure deserialization, and misuse of asserts.
 
@@ -215,19 +221,19 @@ We used two primary automated tools and archived their outputs in our team repos
 - **Semgrep**  
   - Command:  
     ```bash
-    semgrep --config auto . --json --output docs/5.CodeAnalysis/semgrep-report.json
+    semgrep --config auto . --json --output docs/5.CodeAnalysis/Diagrams/semgrep-report.json
     ```  
   - Scope: repo root, including Python, TypeScript, JavaScript, HTML, and Dockerfiles  
-  - Artifact: `docs/5.CodeAnalysis/semgrep-report.json`
+  - Artifact: `docs/5.CodeAnalysis/Diagrams/semgrep-report.json`
 
 - **Bandit**  
   - Commands:  
     ```bash
-    bandit -r . -f json   -o docs/5.CodeAnalysis/bandit-report.json
+    bandit -r . -f json   -o docs/5.CodeAnalysis/Diagrams/bandit_report.html
     bandit -r . -f screen > docs/5.CodeAnalysis/bandit-report.txt
     ```  
   - Scope: all Python files in the repository  
-  - Artifacts: `docs/5.CodeAnalysis/bandit-report.json` and `docs/5.CodeAnalysis/bandit-report.txt`
+  - Artifacts: `[docs/5.CodeAnalysis/Diagrams/bandit_report.html](https://github.com/os2594/Team4/blob/main/docs/5.CodeAnalysis/Diagrams/bandit_report.html)` and `[docs/5.CodeAnalysis/Diagrams/semgrep-report.json](https://github.com/os2594/Team4/blob/main/docs/5.CodeAnalysis/Diagrams/semgrep-report.json)`
 
 ---
 
