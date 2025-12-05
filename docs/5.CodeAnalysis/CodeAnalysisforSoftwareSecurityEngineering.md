@@ -457,7 +457,7 @@ Each team member answered the following questions:
   \<ADD REFLECTION\>
 
 - **Justin**  
-  \<ADD REFLECTION\>
+  After reviewing the analysis from both automatic and manual review. I've determined there is a lot of value and potential missed opportunities in the code. I appreciate that we were able to put some different tools together to test this and get back some fascinating results. 
 
 - **Dominic**  
   Gained a deeper appreciation for how execution isolation and resource limits affect real world risk in shared environments. The most useful part was tying Bandit and Semgrep findings back to specific misuse cases like data exfiltration and denial of service, and seeing how the `_runtime` execution model means that deployment choices matter as much as code-level fixes.
