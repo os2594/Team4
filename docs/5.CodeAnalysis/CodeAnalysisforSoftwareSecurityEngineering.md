@@ -2,7 +2,7 @@
 
 **Course:** CYBR 8420 – Designing for Software Security Engineering  
 **Project:** Marimo – Reactive Python Notebook Platform  
-**Team:** Team 4
+**Team:** Team 4  
 **Repository:** https://github.com/marimo-team/marimo 
 
 ---
@@ -22,9 +22,9 @@ Rather than attempting to inspect every file, we scoped our review to areas with
 - `marimo/_server/…`  
   - HTTP server, WebSocket handling, authentication, middleware, error handling, and API endpoints
 - `marimo/_secrets/secrets.py`
-  - Secrets.py is the high-level glue that exposes secret-management operations to the rest of the application inluding _get_providers, get_secret_keys, write_secret().  
+  - `secrets.py` is the high-level glue that exposes secret-management operations to the rest of the application including `_get_providers`, `get_secret_keys`, `write_secret()`.  
 - `marimo/_runtime/…`  
-  - Notebook execution engine, dependency management, execution context, and sandbox behavior  
+  - Notebook execution engine, dependency management, execution context, and sandbox behavior. The `_runtime` package is effectively the **code execution control plane** for Marimo: it compiles and executes notebook cells, manages reactive re-execution, and coordinates state. Because executing user-provided Python is a core feature, `_runtime` cannot itself be treated as a security boundary; any compromise of a notebook is, by design, a compromise of the process running the runtime.  
 - CLI and deployment entrypoints  
   - `marimo_cli/run_docker.py`, `marimo_cli/sandbox.py`, and related scripts that control flags such as `--no-token`, host binding, and Docker based deployment  
 - Data access and SQL related modules  
@@ -32,7 +32,7 @@ Rather than attempting to inspect every file, we scoped our review to areas with
 - Documentation, security policy, and examples  
   - `SECURITY.md`, example framework integrations, and HTML templates that are likely to be copied into downstream deployments
 
-This scope kept our effort aligned with the risks that matter in a financial analysis environment instead of treating all files as equally critical.
+This scope kept our effort aligned with the risks that matter in a financial analysis environment instead of treating all files as equally critical, and it let us focus on the boundary between **untrusted notebook code** and the **Marimo runtime and server infrastructure**.
 
 ---
 
@@ -53,7 +53,7 @@ We used the following CWE list as a structured checklist across both manual and 
 | CWE-353 | Missing Support for Integrity Check | Lack of subresource integrity on CDN resources can allow script injection via third party compromise. |
 | CWE-400 | Uncontrolled Resource Consumption | Unbounded execution, memory use, or repeated queries in notebooks can lead to denial of service in multi tenant deployments. |
 
-This checklist served as a lens for reading code and interpreting automated findings.
+This checklist served as a lens for reading code and interpreting automated findings, and it mapped cleanly onto our misuse cases for **untrusted code execution inside Marimo’s runtime** and **web exposure of notebook-backed apps**.
 
 ---
 
@@ -66,6 +66,13 @@ We used several manual review techniques:
 - Targeted file walkthroughs in `marimo/_server`, `marimo/_runtime`, and `marimo_cli` looking for authentication, configuration flags, input handling, logging, and error reporting paths  
 - Search based review using queries such as `subprocess`, `exec(`, `eval(`, `--no-token`, `"0.0.0.0"`, `debug`, `sql`, `SELECT`, and `EXPLAIN` across the repository to locate high risk patterns  
 - Architecture level reasoning using our threat models, DFDs, and assurance cases to understand how Marimo is expected to run in a secure environment (developer laptop versus shared server versus public apps)
+
+For `_runtime` specifically, we treated it as the **execution core** rather than a sandbox, and focused on:
+
+- How cells are executed (e.g., use of Python’s `exec` model)  
+- How global namespaces and execution contexts are constructed and reused  
+- Whether any runtime internals or privileged objects are injected into notebook-visible namespaces  
+- How runtime behavior might interact with caching or serialization mechanisms
 
 To speed up manual review, we also used generative AI chat in the style recommended in the course materials, for example:
 
@@ -110,7 +117,7 @@ Before running tools or opening files, we identified several challenges:
   Marimo is an actively developed open source project with a large codebase and frequent changes. We had to accept that we would only be able to reason deeply about selected modules within the timeframe of the assignment.  
 
 - **Dynamic behavior**  
-  The reactive notebook execution model, dynamic imports, and runtime generated code make it difficult to fully understand behavior from static inspection alone.  
+  The reactive notebook execution model, dynamic imports, and runtime generated code make it difficult to fully understand behavior from static inspection alone. `_runtime` exists specifically to orchestrate arbitrary Python execution in response to user actions, which means many security properties depend on how Marimo is *deployed and isolated*, not just how the code is written.  
 
 - **Tool noise and false positives**  
   Both Semgrep and Bandit can produce a significant number of low risk or context dependent findings, requiring careful triage rather than blind acceptance.  
@@ -128,7 +135,7 @@ To deal with these challenges, we adopted the following strategy:
   Every manual finding and every automated finding we decided to keep is explicitly tied to one or more misuse cases and CWEs. This kept us from chasing issues that do not matter in our target environment.  
 
 - **Limit scope, deepen depth**  
-  Instead of shallowly scanning everything, we prioritized depth in a few critical areas: notebook execution, server configuration, example deployments, and Docker related files.  
+  Instead of shallowly scanning everything, we prioritized depth in a few critical areas: notebook execution, server configuration, example deployments, Docker related files, and execution control paths in `_runtime`.  
 
 - **Use automated tools as triage, not verdict**  
   We treated Semgrep and Bandit as spotlights to find potential hotspots. We then manually reviewed representative examples to determine whether a finding was relevant, exploitable, or simply a benign pattern in test or example code.  
@@ -188,6 +195,8 @@ Marimo provides rich tracebacks and detailed error displays to support interacti
 
 Our review did not identify clear, built in hard limits on execution time, memory usage, or request rate for notebook code. While this is common for notebook style systems, it means that a single notebook can submit expensive queries, allocate large dataframes, or enter long running loops without an obvious mechanism for global resource control. In a multi user environment, this creates opportunities for unintentional or intentional resource exhaustion attacks that degrade service for other analysts.
 
+Because `_runtime` is responsible for orchestrating all cell execution and re-execution, the absence of built-in limits there means that any long-running or malicious notebook directly impacts the process hosting the runtime.
+
 **Suggested mitigation**
 
 - Introduce configuration options for per notebook and per user resource caps, including execution timeouts and memory ceilings.  
@@ -196,7 +205,34 @@ Our review did not identify clear, built in hard limits on execution time, memor
 
 ---
 
-### M 4: Example Patterns and Secure Defaults
+### M 4: Runtime Execution Engine and Isolation Boundary
+
+- **Location:** `marimo/_runtime/…` (execution engine, dependency graph, and context management)  
+- **Related misuse cases:** Malicious code execution, data exfiltration, denial of service  
+- **Related CWE(s):** CWE 95 (Eval Injection), CWE 250 (Execution with Unnecessary Privileges), CWE 400 (Uncontrolled Resource Consumption)  
+
+**Description and risk**
+
+The `_runtime` package is intentionally designed to execute arbitrary user-provided Python code in response to notebook edits and UI events. Static review confirmed that the runtime behaves like a standard Python execution environment: once a notebook is loaded, its code runs with the same OS-level privileges as the Marimo process. There is no indication of an internal sandbox, separate interpreter, or per-notebook process isolation within `_runtime` itself.
+
+This means:
+
+- Any user who can run or modify a notebook effectively controls a general-purpose Python execution environment.  
+- The blast radius of a compromised notebook is determined by **how Marimo is deployed** (container, user account, network position), not by `_runtime` logic.  
+- Any caching or state reuse at the runtime level must be treated as potentially sensitive, especially if multiple users share a single runtime process.
+
+This behavior is not a bug—arbitrary code execution is the product’s core feature—but it is an important architectural constraint for secure deployment.
+
+**Suggested mitigation**
+
+- Treat `_runtime` as **untrusted-code infrastructure** and never as a security boundary.  
+- Run Marimo in containers or VMs using a non-root user with strictly limited filesystem and network access.  
+- Avoid sharing a single runtime process across mutually untrusted users; prefer per-user or per-notebook isolation where feasible.  
+- Clearly document that execution isolation and host protection must be provided by the deployment environment (e.g., Docker, Kubernetes, or OS-level sandboxing).
+
+---
+
+### M 5: Example Patterns and Secure Defaults
 
 - **Location:** Example framework integrations (`examples/frameworks/*`), HTML templates, and documentation snippets  
 - **Related misuse cases:** Public exposure, data exfiltration, CSRF and XSS risks  
@@ -338,16 +374,17 @@ Bandit’s results complemented Semgrep by highlighting Python specific patterns
 
 The table below summarizes the most important findings across manual and automated review. These drive our perception of risk in a financial analysis environment.
 
-| ID  | Source (Manual or Tool) | CWE(s)                | Short description                                                | Risk in financial environment                                                                                  |
-|-----|-------------------------|-----------------------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| KF 1 | Manual (M 1)           | CWE 200, CWE 250      | Public binding combined with tokenless access can expose internal notebooks | Unauthorized analysts or external actors could reach sensitive notebooks if network segments are misconfigured. |
-| KF 2 | Manual (M 2)           | CWE 209, CWE 200      | Verbose tracebacks and debug mode can leak internal details      | Detailed error messages may reveal paths, queries, and system information useful for targeted attacks.          |
-| KF 3 | Manual (M 3)           | CWE 400               | Lack of built in resource limits on notebook execution           | Heavy notebooks or malicious code can exhaust CPU or memory, leading to denial of service for other analysts.   |
-| KF 4 | Automated (Semgrep)    | CWE 250, CWE 95       | Containers run as root and example code uses `exec` and `eval`   | Exploited notebooks or misused examples could lead to high impact compromise inside containers or hosts.        |
-| KF 5 | Automated (Semgrep)    | CWE 79, CWE 352, CWE 353 | XSS prone rendering and insecure example templates            | Downstream teams that copy examples without hardening may deploy applications with XSS, CSRF, or CDN based script injection risks. |
-| KF 6 | Automated (Bandit)     | CWE 78, CWE 209       | Subprocess and exception handling patterns in Python modules     | Poorly guarded subprocess calls or logging may turn into command injection or information leakage issues in certain configurations. |
+| ID  | Source (Manual or Tool) | CWE(s)                       | Short description                                                             | Risk in financial environment                                                                                  |
+|-----|-------------------------|------------------------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| KF 1 | Manual (M 1)           | CWE 200, CWE 250             | Public binding combined with tokenless access can expose internal notebooks  | Unauthorized analysts or external actors could reach sensitive notebooks if network segments are misconfigured. |
+| KF 2 | Manual (M 2)           | CWE 209, CWE 200             | Verbose tracebacks and debug mode can leak internal details                  | Detailed error messages may reveal paths, queries, and system information useful for targeted attacks.          |
+| KF 3 | Manual (M 3)           | CWE 400                      | Lack of built in resource limits on notebook execution                       | Heavy notebooks or malicious code can exhaust CPU or memory, leading to denial of service for other analysts.   |
+| KF 4 | Manual (M 4)           | CWE 95, CWE 250, CWE 400     | Runtime execution engine is not a sandbox; arbitrary user code runs with process privileges | Compromised notebooks have the full power of the Marimo process; isolation must be provided by containers and OS, not by `_runtime` itself. |
+| KF 5 | Automated (Semgrep)    | CWE 250, CWE 95              | Containers run as root and example code uses `exec` and `eval`               | Exploited notebooks or misused examples could lead to high impact compromise inside containers or hosts.        |
+| KF 6 | Automated (Semgrep)    | CWE 79, CWE 352, CWE 353     | XSS prone rendering and insecure example templates                           | Downstream teams that copy examples without hardening may deploy applications with XSS, CSRF, or CDN based script injection risks. |
+| KF 7 | Automated (Bandit)     | CWE 78, CWE 209              | Subprocess and exception handling patterns in Python modules                  | Poorly guarded subprocess calls or logging may turn into command injection or information leakage issues in certain configurations. |
 
-Overall, we found that Marimo does not exhibit obvious catastrophic vulnerabilities in the core runtime based on our sample, but it does rely heavily on deployment choices, container configuration, and example patterns. In a financial environment, this means secure defaults and hardened documentation are critical.
+Overall, we found that Marimo does not exhibit obvious catastrophic vulnerabilities in the core runtime based on our sample, but it does rely heavily on deployment choices, container configuration, and example patterns. In a financial environment, this means secure defaults, **strong runtime isolation**, and hardened documentation are critical.
 
 ---
 
@@ -360,17 +397,20 @@ Based on our analysis, our planned or ongoing contributions to the upstream Mari
 - Proposing clearer secure deployment guidance, including a secure deployment checklist for binding, tokens, TLS, and reverse proxy use  
 - Strengthening examples to favor parameterized SQL, safe query patterns, and secure defaults  
 - Improving documentation around authentication and token based access for public facing apps  
+- Explicitly documenting that `_runtime` is not a sandbox and that execution isolation must be provided by containers, VMs, or other infrastructure
 
 #### Code and configuration improvements
 
 - Recommending stricter behavior or higher visibility warnings for flags such as `--no-token` and host binds to `0.0.0.0`  
 - Suggesting improvements to error handling so that production deployments default to sanitized error messages  
 - Recommending or contributing initial hooks for execution time limits, memory caps, and sandbox enhancements  
+- Proposing Dockerfile changes so Marimo containers run as a non root user by default
 
 #### Security communications
 
 - Aligning `SECURITY.md` with our findings by clarifying expectations for responsible disclosure  
 - Adding a short section on secure notebook deployment in regulated environments  
+- Highlighting common pitfalls when exposing notebook-backed apps directly to the internet
 
 ---
 
@@ -381,6 +421,7 @@ As part of this assignment, we identified the following candidate issues and pul
 - **Issue:** “Clarify secure deployment guidance for public apps” (secure binding, authentication, and reverse proxy recommendations)  
 - **Issue or pull request:** “Run Docker containers as non root by default” to reduce the impact of a compromised notebook environment  
 - **Issue:** “Harden example applications with CSRF, SRI, and secure rendering patterns” to align examples with secure defaults  
+- **Issue:** “Document runtime isolation expectations for `_runtime` and notebook execution” to make it clear that the project assumes container or OS-level sandboxing
 
 These interactions build directly on the misuse cases and CWEs that emerged from our code review.
 
@@ -413,20 +454,20 @@ Each team member answered the following questions:
 #### 2.4.1 Individual Reflections
 
 - **Osmar**  
-  <ADD REFLECTION>
+  \<ADD REFLECTION\>
 
 - **Justin**  
-  <ADD REFLECTION>
+  \<ADD REFLECTION\>
 
 - **Dominic**  
-  Gained a deeper appreciation for how execution isolation and resource limits affect real world risk in shared environments. The most useful part was tying Bandit and Semgrep findings back to specific misuse cases like data exfiltration and denial of service.
+  Gained a deeper appreciation for how execution isolation and resource limits affect real world risk in shared environments. The most useful part was tying Bandit and Semgrep findings back to specific misuse cases like data exfiltration and denial of service, and seeing how the `_runtime` execution model means that deployment choices matter as much as code-level fixes.
 
 - **Preeti**  
-  <ADD REFLECTION>
+  \<ADD REFLECTION\>
 
 - **Zaid**  
-  <ADD REFLECTION>
+  \<ADD REFLECTION\>
 
 #### 2.4.2 Combined Team Reflection
 
-As a team, we learned that effective code review is not just about running tools or reading code line by line, but about connecting multiple perspectives. Misuse cases and threat models gave us the “why,” CWEs and tooling gave us the “what,” and our open source contribution plan gave us the “so what” in terms of concrete next steps. The most useful part of the assignment was experiencing that full pipeline from architectural reasoning to concrete findings and then to proposed changes for an active open source project. It reinforced that secure software engineering is an iterative, collaborative process that depends on both technical depth and clear communication.
+As a team, we learned that effective code review is not just about running tools or reading code line by line, but about connecting multiple perspectives. Misuse cases and threat models gave us the “why,” CWEs and tooling gave us the “what,” and our open source contribution plan gave us the “so what” in terms of concrete next steps. The most useful part of the assignment was experiencing that full pipeline from architectural reasoning to concrete findings and then to proposed changes for an active open source project. It reinforced that secure software engineering is an iterative, collaborative process that depends on both technical depth and clear communication, especially when dealing with systems like Marimo that are designed to execute arbitrary code by design.
