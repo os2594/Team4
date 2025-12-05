@@ -20,7 +20,9 @@ Our code review followed a scenario based and weakness based approach directly t
 Rather than attempting to inspect every file, we scoped our review to areas with the highest security impact:
 
 - `marimo/_server/…`  
-  - HTTP server, WebSocket handling, authentication, middleware, error handling, and API endpoints  
+  - HTTP server, WebSocket handling, authentication, middleware, error handling, and API endpoints
+-  `marimo/_secrets/secrets.py`
+  - Secrets.py is the high-level glue that exposes secret-management operations to the rest of the application inluding _get_providers, get_secret_keys, write_secret().
 - `marimo/_runtime/…`  
   - Notebook execution engine, dependency management, execution context, and sandbox behavior  
 - CLI and deployment entrypoints  
