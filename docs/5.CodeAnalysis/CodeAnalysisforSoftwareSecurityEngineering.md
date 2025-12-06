@@ -52,8 +52,14 @@ We used the following CWE list as a structured checklist across both manual and 
 | CWE-352 | Cross Site Request Forgery (CSRF) | Example login forms without CSRF protections could influence downstream adopters who copy patterns into production. |
 | CWE-353 | Missing Support for Integrity Check | Lack of subresource integrity on CDN resources can allow script injection via third party compromise. |
 | CWE-400 | Uncontrolled Resource Consumption | Unbounded execution, memory use, or repeated queries in notebooks can lead to denial of service in multi tenant deployments. |
+| CWE-312 | Cleartext Storage of a Password | Marimo supports dotenv providers and writes secrets to .env files in plain key=value format (tests demonstrate literal values written). Plaintext secrets at rest can be exposed if files are accessible or accidentally committed. |
+| CWE-285 | Improper Authorization | Secret creation and mutation endpoints (e.g., create_secret) rely on application authorization (requires("edit")). If authorization is misconfigured, attackers could create/overwrite secrets. |
+| CWE-703 | Improper Check or Handling of Exceptional Conditions | Some provider implementations (e.g., delete_key in env provider) are incomplete/buggy and provider.write_key calls are not consistently wrapped with robust error handling, which can lead to inconsistent state or unintended information leakage. |
+| CWE-20  | Improper Input Validation | Client-side sanitization exists for secret keys, but server-side validation of secret keys, provider names, and values is not clearly enforced in the write path; this could allow malformed keys or filesystem path manipulation in provider implementations. |
+| CWE-798 | Use of Hard-coded Credentials | Example files and templates can encourage or accidentally include hard-coded secrets; copying examples into deployments could introduce hard-coded credentials in repos or images. |
 
 This checklist served as a lens for reading code and interpreting automated findings, and it mapped cleanly onto our misuse cases for **untrusted code execution inside Marimo’s runtime** and **web exposure of notebook-backed apps**.
+
 
 ---
 
@@ -66,6 +72,7 @@ We used several manual review techniques:
 - Targeted file walkthroughs in `marimo/_server`, `marimo/_runtime`, and `marimo_cli` looking for authentication, configuration flags, input handling, logging, and error reporting paths  
 - Search based review using queries such as `subprocess`, `exec(`, `eval(`, `--no-token`, `"0.0.0.0"`, `debug`, `sql`, `SELECT`, and `EXPLAIN` across the repository to locate high risk patterns  
 - Architecture level reasoning using our threat models, DFDs, and assurance cases to understand how Marimo is expected to run in a secure environment (developer laptop versus shared server versus public apps)
+- Generative assistance for comprehension: we used short, focused prompts to explain what functions do or to get a second look at complex code paths; we then validated results manually. 
 
 For `_runtime` specifically, we treated it as the **execution core** rather than a sandbox, and focused on:
 
@@ -250,6 +257,100 @@ Several example applications and HTML templates are designed to be minimal and e
 
 ---
 
+### M 6: Cleartext dotenv storage and plaintext secret writes
+
+- **Location:**  
+  - marimo/_secrets/secrets.py (write_secret) — invokes provider.write_key  
+  - marimo/_secrets/env_provider.py (DotEnv provider implementation)  
+  - tests/_secrets/test_secrets.py (verifies literal 'NEW_SECRET="new_value"' written to .env)  
+  - frontend code that may trigger secret writes via server endpoints (write-secret-modal.tsx)  
+
+- **Description and risk:**  
+  - write_secret delegates secret persistence to DotEnvSecretsProvider which writes key=value entries to files on disk. The test suite demonstrates the secret value is present literally in the .env file after write. This means secrets are stored at rest in cleartext (CWE-312). If these files are accessible to other users, processes, backups, or are accidentally committed to git, the secret values can be exfiltrated (CWE-200).  
+
+- **Suggested mitigation:**  
+  - Avoid long-lived plaintext storage for high-value secrets; recommend using OS-native or cloud secret stores (e.g., AWS Secrets Manager, HashiCorp Vault, Keychain).  
+  - If filesystem-backed providers are required: (1) write files atomically (write temp file + fsync + rename), (2) set restrictive file permissions (600) and ownership, (3) avoid storing secrets in repo or build artifacts and add dotenv patterns to .gitignore, (4) scan git history for accidental commits (git-secrets, truffleHog) and rotate any exposed secrets.  
+  - Update tests and provider implementations to assert permissions and atomic writes.
+
+---
+
+### M 7: Generated code may inline default secret values (client-side artifact leakage)
+
+- **Location:** frontend/src/components/editor/database/as-code.ts (formatting code that emits os.environ.get with defaults) and frontend as-code generation flows.
+
+- **Description and risk:**  
+  - The frontend generation logic can produce Python snippets like os.environ.get("KEY", "default_value") and stores those default strings in generated artifacts. If the UI or users provide default values that are actual secrets (or if client-side state includes secret strings), the generated code or saved scripts may contain secret values in plaintext. This is an information exposure risk (CWE-312, CWE-200).  
+
+- **Suggested mitigation:**  
+  - Never embed secret values as literal defaults in generated code. Only emit env lookup expressions without defaults, or use placeholders.  
+  - On the frontend, avoid storing actual secret values in code-generation maps; only keep the env key names.  
+  - Add server-side checks to strip any secret-like literals from generated artifacts before saving or exporting, and document this behavior.
+
+---
+
+### M 8: Exposure of secret key names and provider metadata to the UI
+
+- **Location:**  
+  - marimo/_secrets/secrets.py (get_secret_keys) — collects provider type, provider name, and keys  
+  - marimo/_runtime/runtime.py (SecretsCallbacks.list_secrets) — broadcasts SecretKeysResult to UI
+
+- **Description and risk:**  
+  - The system returns secret key names and provider names to the frontend so users can select keys. While this does not return secret values, enumerating key names reveals presence and types of credentials (e.g., AWS keys) which is a sensitive disclosure (CWE-200). In multi-tenant or shared deployments, exposing key names or provider paths to unauthorized users increases attack surface.
+
+- **Suggested mitigation:**  
+  - Only return key names and provider metadata to authenticated and authorized users — enforce least privilege.  
+  - Consider redacting provider internal names or file paths from the UI and only present friendly labels.  
+  - Log accesses to secret listings for audit, and implement UI controls that avoid overexposing environment layout.
+
+---
+
+### M 9: Authorization reliance and secret write surface
+
+- **Location:** marimo/_server/api/endpoints/secrets.py (create_secret endpoint) which is decorated with @requires("edit"), and marimo/_secrets/secrets.py (write_secret) invoked by the endpoint.
+
+- **Description and risk:**  
+  - The create_secret API performs privileged write operations (writes secret values to providers). This endpoint is protected by a requires("edit") decorator, but the effectiveness depends on the requires implementation and the session auth pipeline. If authorization checks are missing, bypassable, or misconfigured, attackers could create or overwrite secrets (CWE-285).
+
+- **Suggested mitigation:**  
+  - Audit and harden the requires(...) decorator and authentication/session management. Ensure server-side checks validate both identity and permissions, not rely solely on client-sent data.  
+  - Add CSRF protection and anti-replay measures to mutate endpoints.  
+  - Add server-side validation of provider name, provider type, and key names against an allow-list before performing writes.  
+  - Maintain an audit log of create/update/delete operations for secrets that records actor (user/session), time, target provider and key (without logging secret values).
+
+---
+
+### M 10: Provider implementation bugs and insufficient error handling
+
+- **Location:**  
+  - marimo/_secrets/env_provider.py — delete_key currently implemented as "del key" then raise NotImplementedError (bug)  
+  - marimo/_secrets/models.py — provider abstract API expects get_keys/write_key/delete_key  
+  - marimo/_secrets/secrets.py — write_secret calls provider.write_key without try/except
+
+- **Description and risk:**  
+  - The env provider's delete_key implementation is a no-op/bug and does not remove keys from storage. write_secret does not catch provider exceptions; a failed write can leave partial state or bubble up internal errors to callers causing information exposure (CWE-703). Additionally, malformed inputs might be passed to provider implementations, creating opportunities for path traversal or corruption (CWE-20).
+
+- **Suggested mitigation:**  
+  - Fix provider implementations (implement delete_key to update the underlying .env file correctly). Ensure write_key/delete_key perform safe, atomic updates and set secure file permissions.  
+  - Add robust server-side input validation (allowed key name pattern, max length, provider whitelist).  
+  - Wrap provider calls in controlled try/except that returns sanitized error messages to callers while logging full details to secure server logs.  
+  - Add unit tests that assert correct delete behavior, atomicity, and error handling.
+
+---
+
+### M 11: Client-side sanitization without server-side validation
+
+- **Location:** frontend/src/components/editor/chrome/panels/write-secret-modal.tsx (client-side replaceInvalid) and marimo/_secrets/secrets.py (no visible server-side validation in write path)
+
+- **Description and risk:**  
+  - The UI removes non-word characters from secret key input, but client-side sanitization can be bypassed. The server-side write path shown does not perform explicit validation of key or value content before delegating to the provider, risking malformed keys or abuse of provider semantics (CWE-20).
+
+- **Suggested mitigation:**  
+  - Implement and enforce server-side validation of secret key names (regex whitelist), maximum lengths, and allowed provider targets. Reject requests that fail validation with clear, non-sensitive error responses.  
+  - Keep client sanitization as UX convenience only; rely on server validation for security.
+
+---
+
 ## Part 1: Findings from Automated Code Scanning
 
 ### 1.6 Automated Tools Run
@@ -383,6 +484,12 @@ The table below summarizes the most important findings across manual and automat
 | KF 5 | Automated (Semgrep)    | CWE 250, CWE 95              | Containers run as root and example code uses `exec` and `eval`               | Exploited notebooks or misused examples could lead to high impact compromise inside containers or hosts.        |
 | KF 6 | Automated (Semgrep)    | CWE 79, CWE 352, CWE 353     | XSS prone rendering and insecure example templates                           | Downstream teams that copy examples without hardening may deploy applications with XSS, CSRF, or CDN based script injection risks. |
 | KF 7 | Automated (Bandit)     | CWE 78, CWE 209              | Subprocess and exception handling patterns in Python modules                  | Poorly guarded subprocess calls or logging may turn into command injection or information leakage issues in certain configurations. |
+| KF 8 | Manual (M 6)           | CWE 312, CWE 200             | Cleartext dotenv storage and plaintext secret writes to .env files           | Secrets written to disk in plaintext can be exfiltrated via backups, repo commits, or access by other processes — high impact for credentials. |
+| KF 9 | Manual (M 7)           | CWE 312, CWE 200             | Generated code may inline default secret values in artifacts                 | Secrets embedded in generated scripts or exported code may leak to version control or artifacts. |
+| KF 10 | Manual (M 8)          | CWE 200                      | Exposure of secret key names and provider metadata to UI                     | Enumeration of keys/providers increases attacker reconnaissance and targeted attacks. |
+| KF 11 | Manual (M 9)          | CWE 285                      | Authorization reliance for secret-create endpoint (requires("edit"))         | Misconfiguration or bypass could allow unauthorized secret creation/overwrite. |
+| KF 12 | Manual (M 10)         | CWE 703, CWE 20              | Provider implementation bugs and insufficient error handling (delete_key bug, no wrapping of writes) | Inconsistent secret state, errors leaking internal details, potential path traversal/abuse of provider semantics. |
+| KF 13 | Manual (M 11)         | CWE 20                       | Client-side sanitization without server-side validation for secret keys      | Attackers can bypass client checks to create malformed keys or abuse provider semantics; server-side validation required. |
 
 Overall, we found that Marimo does not exhibit obvious catastrophic vulnerabilities in the core runtime based on our sample, but it does rely heavily on deployment choices, container configuration, and example patterns. In a financial environment, this means secure defaults, **strong runtime isolation**, and hardened documentation are critical.
 
@@ -432,7 +539,8 @@ These interactions build directly on the misuse cases and CWEs that emerged from
 Team 4 used the GitHub repository at https://github.com/os2594/Team4 to coordinate work on this assignment. Our collaboration approach included:
 
 - Dividing code review responsibilities primarily by directory and misuse case:  
-  - One member focused on `marimo/_server` and error handling  
+  - One member focused on `marimo/_server` and error handling
+  - One member focused on `marimo/_secrets/secrets.py` and error handling  
   - One focused on `marimo/_runtime` and execution behavior  
   - Others focused on Docker files, CLI scripts, and example applications  
 
@@ -454,7 +562,7 @@ Each team member answered the following questions:
 #### 2.4.1 Individual Reflections
 
 - **Osmar**  
-  \<ADD REFLECTION\>
+  Through this review I gained a much deeper, practical appreciation for   the difference between code-level security issues and deployment/operational risks. Reading       Marimo’s runtime and secrets handling showed me how design choices (e.g., storing secrets in dotenv files, or relying on deployment defaults) can create larger, emergent vulnerabilities even when the code looks reasonable.
 
 - **Justin**  
   After reviewing the analysis from both automatic and manual review. I've determined there is a lot of value and potential missed opportunities in the code. I appreciate that we were able to put some different tools together to test this and get back some fascinating results. 
