@@ -351,6 +351,46 @@ Several example applications and HTML templates are designed to be minimal and e
 
 ---
 
+### M 12: SQL helper APIs and injection-prone data access patterns
+
+- **Location:**  
+  - `marimo/_data/…` modules that expose SQL query, preview, and summary helpers to notebooks
+
+- **Related misuse cases:**  
+  - Data exfiltration, unauthorized modification of financial data, abuse of shared database resources
+
+- **Related CWE(s):**  
+  - CWE-89 (SQL Injection)  
+  - CWE-200 (Exposure of Sensitive Information to an Unauthorized Actor)  
+  - CWE-20 (Improper Input Validation)
+
+**Description and risk**
+
+Marimo’s data helpers are designed to let notebooks run SQL queries and display results inside the notebook UI. During manual review of the `marimo/_data` modules and their surrounding usage patterns, we observed that the primary abstraction expects notebooks to pass raw SQL strings directly into helper functions. This is expected for an analysis-focused tool, but it also means:
+
+- There is no framework-level requirement to use parameterized queries when interpolating user-influenced values.  
+- Nothing in the helper API distinguishes “static analyst-written SQL” from SQL strings that might contain request parameters or other untrusted input in a published app.  
+- Query helpers focus on execution and display, not on enforcing column/row filters or hiding sensitive fields by default.
+
+In a single-user environment where only a trusted analyst writes notebooks, this is mostly a correctness/usability concern. But in our hypothetical **financial analysis** context, where notebooks can be turned into shareable apps or exposed over the network, it becomes a security issue:
+
+- If notebook authors build queries with string concatenation or f-strings around user inputs, the helper APIs will happily execute them, providing a path for **SQL injection (CWE-89)**.  
+- Over-broad queries (e.g., `SELECT *` on large tables) combined with previews in the UI increase the chance of **unintentional data exposure (CWE-200)** beyond what a given user or role should see.  
+
+The risk is amplified when the same Marimo deployment is used by multiple teams or when the database contains both production and analytical data. A single vulnerable query in a popular notebook/app could become a pivot point into more sensitive tables.
+
+**Suggested mitigation**
+
+- At the API level, provide **first-class parameterized query helpers**, for example functions that take `(sql_template, params)` and internally use the database driver’s safe parameter binding instead of encouraging string concatenation.  
+- In documentation and examples, clearly distinguish between:
+  - “Trusted analyst SQL in private notebooks” and  
+  - “SQL built from user input in published apps”, with explicit guidance that the latter **must use parameterization and strict input validation**.  
+- Offer safer defaults in any “query builder” or convenience functions:
+  - Discourage `SELECT *` in examples; demonstrate explicit column lists and limited result sets.  
+  - Show patterns for adding row-level filters appropriate for multi-tenant or role-based scenarios.  
+- Add tests or linting rules (even simple ones) that flag obviously dangerous patterns in example notebooks, such as string concatenation around `WHERE` clauses with user-provided values. This nudges downstream users towards safer composition when they copy patterns from Marimo’s examples.
+
+
 ## Part 1: Findings from Automated Code Scanning
 
 ### 1.6 Automated Tools Run
@@ -490,6 +530,7 @@ The table below summarizes the most important findings across manual and automat
 | KF 11 | Manual (M 9)          | CWE 285                      | Authorization reliance for secret-create endpoint (requires("edit"))         | Misconfiguration or bypass could allow unauthorized secret creation/overwrite. |
 | KF 12 | Manual (M 10)         | CWE 703, CWE 20              | Provider implementation bugs and insufficient error handling (delete_key bug, no wrapping of writes) | Inconsistent secret state, errors leaking internal details, potential path traversal/abuse of provider semantics. |
 | KF 13 | Manual (M 11)         | CWE 20                       | Client-side sanitization without server-side validation for secret keys      | Attackers can bypass client checks to create malformed keys or abuse provider semantics; server-side validation required. |
+| KF 14 | Manual (M 12)         | CWE 89, CWE 200, CWE 20 | SQL helper APIs execute raw SQL strings passed from notebooks; without strong guidance and parameterization patterns, notebooks that incorporate user input can introduce SQL injection and overbroad data exposure in shared financial databases. |
 
 Overall, we found that Marimo does not exhibit obvious catastrophic vulnerabilities in the core runtime based on our sample, but it does rely heavily on deployment choices, container configuration, and example patterns. In a financial environment, this means secure defaults, **strong runtime isolation**, and hardened documentation are critical.
 
@@ -571,7 +612,7 @@ Each team member answered the following questions:
   Gained a deeper appreciation for how execution isolation and resource limits affect real world risk in shared environments. The most useful part was tying Bandit and Semgrep findings back to specific misuse cases like data exfiltration and denial of service, and seeing how the `_runtime` execution model means that deployment choices matter as much as code-level fixes.
 
 - **Preeti**  
-  \<ADD REFLECTION\>
+  For me, this assignment finally made CWE IDs and misuse cases feel concrete instead of abstract lists. When I looked at the `marimo/_data` SQL helper modules, I had to think not just “is this code correct?” but “what happens if someone uses this helper in a public app with untrusted input?” That lens helped me see how CWE-89 (SQL injection) and CWE-200 (data exposure) actually show up in a realistic analytics tool, even when the framework itself is doing the “right” thing of just executing SQL it is given. The most useful part was learning to combine our earlier threat models with a focused manual review — it gave me a repeatable way to read code in terms of scenarios and risk, not just style or performance.
 
 - **Zaid**  
   \<ADD REFLECTION\>
