@@ -390,7 +390,15 @@ The risk is amplified when the same Marimo deployment is used by multiple teams 
   - Show patterns for adding row-level filters appropriate for multi-tenant or role-based scenarios.  
 - Add tests or linting rules (even simple ones) that flag obviously dangerous patterns in example notebooks, such as string concatenation around `WHERE` clauses with user-provided values. This nudges downstream users towards safer composition when they copy patterns from Marimo’s examples.
 
+---
 
+### M13: HTML and XSS Rendering
+
+- **Location:** marimo/frontend/src/plugins/core/sanitize.ts
+
+- **Description and Risks:** On the frontend side, all inputs are santizied to prevent any exploits like injections. However, once a code cell is execute, all output is now treated as trusted, and sanitization is no longer used on these output lines. While this would be fine in a dev environment, it couild be very risky in production. These outputs potentially contain malicious code, or data that if shared could attack other viewes or customers. This is particularly dangerous when it comes to publishing notebooks. There is also a mention that is a user has already run one cell, santiziation is no longer needed.
+  
+- **Suggested Mitigation:** A single santiizer API that requires all HTML to go through it, could potentially work for this. Including different trust levels could also benefit the app in a sense that santization should occur on both the publisher, and the viewer of the notebook. Such practices can make it even harder for malicious exploits to occur and could protect aand remediate this risk. 
 ## Part 1: Findings from Automated Code Scanning
 
 ### 1.6 Automated Tools Run
@@ -615,7 +623,7 @@ Each team member answered the following questions:
   For me, this assignment finally made CWE IDs and misuse cases feel concrete instead of abstract lists. When I looked at the `marimo/_data` SQL helper modules, I had to think not just “is this code correct?” but “what happens if someone uses this helper in a public app with untrusted input?” That lens helped me see how CWE-89 (SQL injection) and CWE-200 (data exposure) actually show up in a realistic analytics tool, even when the framework itself is doing the “right” thing of just executing SQL it is given. The most useful part was learning to combine our earlier threat models with a focused manual review — it gave me a repeatable way to read code in terms of scenarios and risk, not just style or performance.
 
 - **Zaid**  
-  \<ADD REFLECTION\>
+ This assignment was interesting in a sense that I had to look through already published code, and understand what is happening there. It also taught me how important documentation is, and how many areas of an application you might think is safe, but could still be vulnerable. 
 
 #### 2.4.2 Combined Team Reflection
 
