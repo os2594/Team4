@@ -540,6 +540,7 @@ The table below summarizes the most important findings across manual and automat
 | KF 13 | Manual (M 11)         | CWE 20                       | Client-side sanitization without server-side validation for secret keys      | Attackers can bypass client checks to create malformed keys or abuse provider semantics; server-side validation required. |
 | KF 14 | Manual (M 12) | CWE 89, CWE 200, CWE 20 | SQL helper APIs execute raw SQL strings passed from notebooks; without strong guidance and parameterization patterns, notebooks that incorporate user input can introduce SQL injection and overbroad data exposure in shared financial databases. | In a shared financial environment, a single vulnerable notebook or app that builds SQL from attacker-controlled input could read or tamper with other customers’ records, turning one compromised analysis into a full loss of confidentiality and integrity for critical financial data. |
 | KF 15 | Manual (M 13)         | CWE 20                       | HTML and XSS Rendering                                                       | A malicious attacker could attempt to output malicious code to use trusted output to exploit systems. |
+
 Overall, we found that Marimo does not exhibit obvious catastrophic vulnerabilities in the core runtime based on our sample, but it does rely heavily on deployment choices, container configuration, and example patterns. In a financial environment, this means secure defaults, **strong runtime isolation**, and hardened documentation are critical.
 
 ---
